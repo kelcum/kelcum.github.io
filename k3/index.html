@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>k3</title>
+<meta name="description" content="Free browser tools, Discord bots, a client mod and a cleanup toolkit, all made by k3.">
+<meta property="og:title" content="k3">
+<meta property="og:description" content="Free browser tools, Discord bots, a client mod and a cleanup toolkit.">
+<meta property="og:url" content="https://xan.gripe/k3">
+<meta property="og:type" content="profile">
+<meta name="theme-color" content="#55C6F2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C1826'/%3E%3Ccircle cx='16' cy='13' r='5' fill='%2355C6F2'/%3E%3Crect x='14' y='16' width='4' height='9' rx='2' fill='%2355C6F2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  /* same palette and type as Blacksite, so every page on xan.gripe reads as one place */
+  :root {
+    color-scheme: dark;
+    --bg: #050B13;
+    --bg-elevated: #0C1826;
+    --bg-hover: #0F1F31;
+    --border: #16283A;
+    --border-hover: #1B4B7A;
+    --text: #EAF3FA;
+    --text-dim: #5E7996;
+    --text-mid: #9AB3CB;
+    --accent: #55C6F2;
+    --accent-soft: #10222F;
+    --display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    padding-inline: 16px;
+    padding-block: max(40px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-bottom));
+    background:
+      radial-gradient(900px 480px at 85% -10%, rgba(85, 198, 242, 0.09), transparent 70%),
+      var(--bg);
+    color: var(--text);
+    font: 15px/1.6 var(--mono);
+    min-height: 100vh;
+  }
+  .page { max-width: 760px; margin-inline: auto; display: grid; gap: 48px; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ── header ── */
+  .crumb { font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
+  .crumb b { color: var(--accent); font-weight: 500; }
+  .name {
+    margin: 6px 0 0; font: 800 clamp(88px, 22vw, 152px)/0.82 var(--display);
+    letter-spacing: -0.01em; text-transform: uppercase;
+  }
+  .status {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 18px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+  }
+  .status .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 10px var(--accent); display: inline-block; margin-right: 6px;
+  }
+  .bio { margin: 18px 0 0; max-width: 58ch; color: var(--text-mid); font-size: 15px; }
+  .socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+    border: 1px solid var(--border-hover); border-radius: 999px; background: var(--accent-soft);
+    color: var(--accent); font: 500 12.5px var(--mono); letter-spacing: 0.02em;
+    text-decoration: none; cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .chip:hover { border-color: var(--accent); background: #13293A; }
+  .chip svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
+  .chip .copied { color: var(--text); }
+
+  /* ── sections ── */
+  section { display: grid; gap: 14px; }
+  .label {
+    display: flex; align-items: baseline; gap: 10px; margin: 0;
+    font: 400 10.5px var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim);
+  }
+  .label::after { content: ""; flex: 1; height: 1px; background: var(--border); transform: translateY(-3px); }
+  .label span { color: var(--accent); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+
+  .card {
+    display: flex; flex-direction: column; gap: 10px; padding: 18px;
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px;
+    text-decoration: none; transition: border-color .15s, background .15s, transform .15s;
+  }
+  a.card:hover { border-color: var(--border-hover); background: var(--bg-hover); transform: translateY(-2px); }
+  .card-head { display: flex; align-items: center; gap: 12px; }
+  .card-head img { width: 34px; height: 34px; border-radius: 9px; background: var(--accent-soft); flex: none; }
+  .glyph {
+    width: 34px; height: 34px; border-radius: 9px; flex: none; display: grid; place-items: center;
+    background: var(--accent-soft); border: 1px solid var(--border-hover); color: var(--accent);
+    font: 700 17px var(--display);
+  }
+  .card h3 { margin: 0; font: 700 25px/1 var(--display); letter-spacing: 0.01em; }
+  .stars { margin-left: auto; font-size: 11.5px; color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stars[hidden] { display: none; }
+  .card p { margin: 0; color: var(--text-mid); font-size: 13px; line-height: 1.6; flex: 1; }
+  .path { font-size: 12px; color: var(--accent); display: flex; justify-content: space-between; gap: 8px; }
+  .path .arrow { transition: transform .15s; }
+  a.card:hover .arrow { transform: translateX(3px); }
+  .btn {
+    align-self: flex-start; padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--border-hover); background: var(--accent-soft); color: var(--accent);
+    font: 500 12.5px var(--mono); letter-spacing: 0.03em; text-decoration: none; transition: border-color .15s;
+  }
+  .btn:hover { border-color: var(--accent); }
+
+  .install {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+    background: var(--bg); border: 1px solid var(--border); font-size: 12px; color: var(--text-mid);
+    overflow-x: auto;
+  }
+  .install code { white-space: nowrap; }
+  .install .prompt { color: var(--accent); user-select: none; }
+
+  footer {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
+    padding-top: 20px; border-top: 1px solid var(--border);
+    font-size: 11.5px; color: var(--text-dim); letter-spacing: 0.04em;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  footer nav { display: flex; gap: 16px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header>
+    <div class="crumb"><b>xan.gripe</b> / k3</div>
+    <h1 class="name">k3</h1>
+    <div class="status">
+      <span><i class="dot"></i>building things</span>
+      <span>@xan.pl</span>
+      <span>kelcum on github</span>
+    </div>
+    <p class="bio">I make free tools that run right in your browser, Discord bots, a client mod and a cleanup kit for your PC. No sign-ups, no uploads, no nonsense.</p>
+    <div class="socials">
+      <a class="chip" href="https://www.instagram.com/xan.pl/" rel="me">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
+        instagram
+      </a>
+      <a class="chip" href="https://github.com/kelcum" rel="me">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 016 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0012 .3"/></svg>
+        github
+      </a>
+      <button class="chip" type="button" id="discord" data-handle="kochajacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.6 1.3a18.3 18.3 0 00-5.6 0L8.6 3a19.7 19.7 0 00-4.9 1.4C.5 9 -.3 13.6.1 18.1a19.9 19.9 0 006 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0012.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.9 19.9 0 006-3c.5-5.2-.8-9.7-3.6-13.7zM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>
+        <span id="discord-text">@kochajacy</span>
+      </button>
+    </div>
+  </header>
+
+  <section aria-labelledby="sites">
+    <h2 class="label" id="sites">sites <span>3</span></h2>
+    <div class="grid">
+      <a class="card" href="/transmute/">
+        <div class="card-head"><div class="glyph">T</div><h3>Transmute</h3><span class="stars" data-repo="transmute" hidden></span></div>
+        <p>Convert any file right in your browser: images, video, audio, documents and PDFs. Nothing gets uploaded.</p>
+        <div class="path"><span>xan.gripe/transmute</span><span class="arrow">→</span></div>
+      </a>
+      <a class="card" href="/bg-remover/">
+        <div class="card-head"><div class="glyph">P</div><h3>Peel</h3><span class="stars" data-repo="bg-remover" hidden></span></div>
+        <p>Remove the background from photos, logos and animated GIFs. The AI runs on your device.</p>
+        <div class="path"><span>xan.gripe/bg-remover</span><span class="arrow">→</span></div>
+      </a>
+      <a class="card" href="/lockdown-status/">
+        <div class="card-head"><div class="glyph">B</div><h3>Blacksite</h3><span class="stars" data-repo="lockdown-status" hidden></span></div>
+        <p>Home base for my bots: Lockdown quotes and what Wavelength is playing right now.</p>
+        <div class="path"><span>xan.gripe/lockdown-status</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="discord-stuff">
+    <h2 class="label" id="discord-stuff">discord <span>3</span></h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head"><img src="https://cdn.discordapp.com/app-icons/1543028384215474206/8ad2fcba0b5a965e719d9131ebac6805.png" alt="" loading="lazy"><h3>Lockdown</h3></div>
+        <p>Moderation, economy, tickets, giveaways, server setup tools and a cold AI chat personality.</p>
+        <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1543028384215474206&amp;permissions=1374795721798&amp;scope=bot+applications.commands">Add to server</a>
+      </div>
+      <div class="card">
+        <div class="card-head"><img src="https://cdn.discordapp.com/app-icons/1545520920704319518/8610c3c9b160fadf4b4e19875b65006c.png" alt="" loading="lazy"><h3>Wavelength</h3></div>
+        <p>24/7 voice bot with YouTube and Spotify playback, live synced lyrics and a real queue.</p>
+        <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1545520920704319518&amp;permissions=36817984&amp;scope=bot+applications.commands">Add to server</a>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="glyph">D</div><h3>Deadbolt</h3><span class="stars" data-repo="Deadbolt" hidden></span></div>
+        <p>My Discord client mod, forked from Equicord: 300+ plugins plus a few of my own.</p>
+        <a class="btn" href="https://github.com/kelcum/Deadbolt/releases/latest/download/DeadboltSetup.exe">Download installer</a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="tools">
+    <h2 class="label" id="tools">tools <span>1</span></h2>
+    <a class="card" href="https://github.com/kelcum/void">
+      <div class="card-head"><div class="glyph">V</div><h3>VOID</h3><span class="stars" data-repo="void" hidden></span></div>
+      <p>Clean junk, uninstall apps along with their leftovers, and watch your system live. For Windows and macOS.</p>
+      <div class="install"><span class="prompt">PS&gt;</span><code>irm https://raw.githubusercontent.com/kelcum/void/main/install.ps1 | iex</code></div>
+      <div class="path"><span>github.com/kelcum/void</span><span class="arrow">→</span></div>
+    </a>
+  </section>
+
+  <footer>
+    <span>xan.gripe · k3</span>
+    <nav aria-label="Legal">
+      <a href="/envy-bot-legal/tos">bot terms</a>
+      <a href="/envy-bot-legal/privacy">privacy</a>
+    </nav>
+  </footer>
+
+</main>
+
+<script>
+  // copy the Discord username (Discord has no link that opens a DM for everyone)
+  const discordBtn = document.getElementById('discord');
+  const discordText = document.getElementById('discord-text');
+  discordBtn.addEventListener('click', async () => {
+    const handle = discordBtn.dataset.handle;
+    try {
+      await navigator.clipboard.writeText(handle);
+      discordText.textContent = 'copied';
+      discordText.classList.add('copied');
+    } catch {
+      discordText.textContent = handle;
+    }
+    setTimeout(() => { discordText.textContent = '@' + handle; discordText.classList.remove('copied'); }, 1600);
+  });
+
+  // live star counts from GitHub; the cards read fine without them if the request fails
+  fetch('https://api.github.com/users/kelcum/repos?per_page=100')
+    .then(r => r.ok ? r.json() : [])
+    .then(repos => {
+      const stars = Object.fromEntries(repos.map(r => [r.name.toLowerCase(), r.stargazers_count]));
+      document.querySelectorAll('.stars[data-repo]').forEach(el => {
+        const n = stars[el.dataset.repo.toLowerCase()];
+        if (n > 0) { el.textContent = '★ ' + n; el.hidden = false; }
+      });
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
