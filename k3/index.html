@@ -9,24 +9,24 @@
 <meta property="og:description" content="Free browser tools, Discord bots, a client mod and a cleanup toolkit.">
 <meta property="og:url" content="https://xan.gripe/k3">
 <meta property="og:type" content="profile">
-<meta name="theme-color" content="#55C6F2">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C1826'/%3E%3Ccircle cx='16' cy='13' r='5' fill='%2355C6F2'/%3E%3Crect x='14' y='16' width='4' height='9' rx='2' fill='%2355C6F2'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#050B13">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C1826'/%3E%3Cpath d='M16 26s-9-5.6-9-12a5 5 0 019-3 5 5 0 019 3c0 6.4-9 12-9 12z' fill='%2355C6F2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-  /* same palette and type as Blacksite, so every page on xan.gripe reads as one place */
+  /* same palette and type as Blacksite, so everything on xan.gripe reads as one place */
   :root {
     color-scheme: dark;
     --bg: #050B13;
     --bg-elevated: #0C1826;
-    --bg-hover: #0F1F31;
     --border: #16283A;
     --border-hover: #1B4B7A;
     --text: #EAF3FA;
     --text-dim: #5E7996;
     --text-mid: #9AB3CB;
     --accent: #55C6F2;
+    --accent-ice: #BDEBFF;
     --accent-soft: #10222F;
     --display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", sans-serif;
     --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -36,82 +36,118 @@
   body {
     margin: 0;
     padding-inline: 16px;
-    padding-block: max(40px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-bottom));
-    background:
-      radial-gradient(900px 480px at 85% -10%, rgba(85, 198, 242, 0.09), transparent 70%),
-      var(--bg);
+    padding-block: max(28px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-bottom));
+    background: var(--bg);
     color: var(--text);
     font: 15px/1.6 var(--mono);
     min-height: 100vh;
+    overflow-x: hidden;
   }
-  .page { max-width: 760px; margin-inline: auto; display: grid; gap: 48px; }
+  /* faint blueprint grid + a cold glow behind the heart */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background:
+      radial-gradient(640px 520px at 78% 12%, rgba(85, 198, 242, 0.13), transparent 70%),
+      linear-gradient(rgba(85, 198, 242, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+      linear-gradient(90deg, rgba(85, 198, 242, 0.035) 1px, transparent 1px) 0 0 / 44px 44px;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 95%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 95%);
+  }
+  .page { max-width: 880px; margin-inline: auto; display: grid; gap: 56px; }
   a { color: inherit; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  /* ── header ── */
+  /* load-in: everything settles into place once, then stays put */
+  .rise { animation: rise .8s cubic-bezier(.2, .75, .2, 1) both; animation-delay: calc(var(--d, 0) * 90ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  /* ── hero ── */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 12px; }
   .crumb { font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
   .crumb b { color: var(--accent); font-weight: 500; }
   .name {
-    margin: 6px 0 0; font: 800 clamp(88px, 22vw, 152px)/0.82 var(--display);
-    letter-spacing: -0.01em; text-transform: uppercase;
+    margin: 4px 0 0; font: 900 clamp(120px, 26vw, 210px)/0.8 var(--display);
+    letter-spacing: -0.02em; text-transform: uppercase;
+    background: linear-gradient(180deg, var(--text) 30%, #7fa6c4 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .status {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 18px;
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 20px;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim);
   }
   .status .dot {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 10px var(--accent); display: inline-block; margin-right: 6px;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block;
+    margin-right: 7px; box-shadow: 0 0 10px var(--accent); animation: blink 2.4s ease-in-out infinite;
   }
-  .bio { margin: 18px 0 0; max-width: 58ch; color: var(--text-mid); font-size: 15px; }
-  .socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  @keyframes blink { 50% { opacity: .35; box-shadow: 0 0 2px var(--accent); } }
+  .bio { margin: 18px 0 0; max-width: 46ch; color: var(--text-mid); font-size: 15px; }
+  .socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
   .chip {
     display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
     border: 1px solid var(--border-hover); border-radius: 999px; background: var(--accent-soft);
     color: var(--accent); font: 500 12.5px var(--mono); letter-spacing: 0.02em;
-    text-decoration: none; cursor: pointer; transition: border-color .15s, background .15s;
+    text-decoration: none; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s;
   }
-  .chip:hover { border-color: var(--accent); background: #13293A; }
+  .chip:hover { border-color: var(--accent); background: #13293A; box-shadow: 0 0 18px rgba(85, 198, 242, .18); }
   .chip svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
-  .chip .copied { color: var(--text); }
+
+  /* the heart: ~200 copies of "xan.gripe" placed along a heart curve in 3D, spinning */
+  .stage {
+    position: relative; width: 100%; max-width: 400px; aspect-ratio: 1; justify-self: center;
+    perspective: 1000px; display: grid; place-items: center;
+  }
+  .tilt { transform-style: preserve-3d; transform: rotateX(-8deg); }
+  .spin { transform-style: preserve-3d; animation: spin 14s linear infinite; }
+  .beat { transform-style: preserve-3d; animation: beat 2.6s ease-in-out infinite; }
+  .heart { position: relative; width: 0; height: 0; transform-style: preserve-3d; }
+  .w {
+    position: absolute; left: 0; top: 0; white-space: nowrap;
+    font: 500 10px/1 var(--mono); letter-spacing: 0.06em;
+    text-shadow: 0 0 7px rgba(85, 198, 242, .75);
+  }
+  @keyframes spin { to { transform: rotateY(360deg); } }
+  @keyframes beat { 0%, 30%, 60%, 100% { transform: scale(1); } 12% { transform: scale(1.07); } 44% { transform: scale(1.04); } }
 
   /* ── sections ── */
   section { display: grid; gap: 14px; }
   .label {
     display: flex; align-items: baseline; gap: 10px; margin: 0;
-    font: 400 10.5px var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim);
+    font: 400 10.5px var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
   }
-  .label::after { content: ""; flex: 1; height: 1px; background: var(--border); transform: translateY(-3px); }
+  .label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); transform: translateY(-3px); }
   .label span { color: var(--accent); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
 
+  /* cards light up where the cursor is */
   .card {
-    display: flex; flex-direction: column; gap: 10px; padding: 18px;
-    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 12px;
-    text-decoration: none; transition: border-color .15s, background .15s, transform .15s;
+    --mx: 50%; --my: 0%;
+    position: relative; display: flex; flex-direction: column; gap: 10px; padding: 18px;
+    background:
+      radial-gradient(360px circle at var(--mx) var(--my), rgba(85, 198, 242, .10), transparent 60%),
+      var(--bg-elevated);
+    border: 1px solid var(--border); border-radius: 14px;
+    text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s;
   }
-  a.card:hover { border-color: var(--border-hover); background: var(--bg-hover); transform: translateY(-2px); }
+  .card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 12px 34px -14px rgba(85, 198, 242, .35); }
   .card-head { display: flex; align-items: center; gap: 12px; }
-  .card-head img { width: 34px; height: 34px; border-radius: 9px; background: var(--accent-soft); flex: none; }
+  .card-head img { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-soft); flex: none; }
   .glyph {
-    width: 34px; height: 34px; border-radius: 9px; flex: none; display: grid; place-items: center;
+    width: 36px; height: 36px; border-radius: 10px; flex: none; display: grid; place-items: center;
     background: var(--accent-soft); border: 1px solid var(--border-hover); color: var(--accent);
-    font: 700 17px var(--display);
+    font: 800 18px var(--display);
   }
-  .card h3 { margin: 0; font: 700 25px/1 var(--display); letter-spacing: 0.01em; }
+  .card h3 { margin: 0; font: 700 26px/1 var(--display); letter-spacing: 0.01em; }
   .stars { margin-left: auto; font-size: 11.5px; color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .stars[hidden] { display: none; }
   .card p { margin: 0; color: var(--text-mid); font-size: 13px; line-height: 1.6; flex: 1; }
   .path { font-size: 12px; color: var(--accent); display: flex; justify-content: space-between; gap: 8px; }
   .path .arrow { transition: transform .15s; }
-  a.card:hover .arrow { transform: translateX(3px); }
+  a.card:hover .arrow { transform: translateX(4px); }
   .btn {
     align-self: flex-start; padding: 7px 16px; border-radius: 999px;
     border: 1px solid var(--border-hover); background: var(--accent-soft); color: var(--accent);
-    font: 500 12.5px var(--mono); letter-spacing: 0.03em; text-decoration: none; transition: border-color .15s;
+    font: 500 12.5px var(--mono); letter-spacing: 0.03em; text-decoration: none; transition: border-color .15s, box-shadow .15s;
   }
-  .btn:hover { border-color: var(--accent); }
-
+  .btn:hover { border-color: var(--accent); box-shadow: 0 0 16px rgba(85, 198, 242, .2); }
   .install {
     display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
     background: var(--bg); border: 1px solid var(--border); font-size: 12px; color: var(--text-mid);
@@ -129,38 +165,51 @@
   footer a:hover { color: var(--accent); }
   footer nav { display: flex; gap: 16px; }
 
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; }
+    .stage { order: -1; max-width: 300px; margin-block: -10px -30px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rise, .beat, .status .dot { animation: none; }
+    .spin { animation: none; transform: rotateY(-28deg); }
+    * { transition: none !important; }
+  }
 </style>
 </head>
 <body>
 <main class="page">
 
-  <header>
-    <div class="crumb"><b>xan.gripe</b> / k3</div>
-    <h1 class="name">k3</h1>
-    <div class="status">
-      <span><i class="dot"></i>building things</span>
-      <span>@xan.pl</span>
-      <span>kelcum on github</span>
+  <header class="hero">
+    <div>
+      <div class="crumb rise"><b>xan.gripe</b> / k3</div>
+      <h1 class="name rise" style="--d:1">k3</h1>
+      <div class="status rise" style="--d:2">
+        <span><i class="dot"></i>building things</span>
+        <span>@xan.pl</span>
+        <span>kelcum on github</span>
+      </div>
+      <p class="bio rise" style="--d:3">I make free tools that run right in your browser, Discord bots, a client mod and a cleanup kit for your PC. No sign-ups, no uploads, no nonsense.</p>
+      <div class="socials rise" style="--d:4">
+        <a class="chip" href="https://www.instagram.com/xan.pl/" rel="me">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
+          instagram
+        </a>
+        <a class="chip" href="https://github.com/kelcum" rel="me">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 016 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0012 .3"/></svg>
+          github
+        </a>
+        <button class="chip" type="button" id="discord" data-handle="kochajacy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.6 1.3a18.3 18.3 0 00-5.6 0L8.6 3a19.7 19.7 0 00-4.9 1.4C.5 9 -.3 13.6.1 18.1a19.9 19.9 0 006 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0012.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.9 19.9 0 006-3c.5-5.2-.8-9.7-3.6-13.7zM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>
+          <span id="discord-text">@kochajacy</span>
+        </button>
+      </div>
     </div>
-    <p class="bio">I make free tools that run right in your browser, Discord bots, a client mod and a cleanup kit for your PC. No sign-ups, no uploads, no nonsense.</p>
-    <div class="socials">
-      <a class="chip" href="https://www.instagram.com/xan.pl/" rel="me">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z"/></svg>
-        instagram
-      </a>
-      <a class="chip" href="https://github.com/kelcum" rel="me">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 016 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0012 .3"/></svg>
-        github
-      </a>
-      <button class="chip" type="button" id="discord" data-handle="kochajacy">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0015.4 3l-.6 1.3a18.3 18.3 0 00-5.6 0L8.6 3a19.7 19.7 0 00-4.9 1.4C.5 9 -.3 13.6.1 18.1a19.9 19.9 0 006 3l1.3-2.1c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0012.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.9 19.9 0 006-3c.5-5.2-.8-9.7-3.6-13.7zM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>
-        <span id="discord-text">@kochajacy</span>
-      </button>
+    <div class="stage" aria-hidden="true">
+      <div class="tilt"><div class="spin"><div class="beat"><div class="heart" id="heart"></div></div></div></div>
     </div>
   </header>
 
-  <section aria-labelledby="sites">
+  <section aria-labelledby="sites" class="rise" style="--d:5">
     <h2 class="label" id="sites">sites <span>3</span></h2>
     <div class="grid">
       <a class="card" href="/transmute/">
@@ -181,7 +230,7 @@
     </div>
   </section>
 
-  <section aria-labelledby="discord-stuff">
+  <section aria-labelledby="discord-stuff" class="rise" style="--d:6">
     <h2 class="label" id="discord-stuff">discord <span>3</span></h2>
     <div class="grid">
       <div class="card">
@@ -202,7 +251,7 @@
     </div>
   </section>
 
-  <section aria-labelledby="tools">
+  <section aria-labelledby="tools" class="rise" style="--d:7">
     <h2 class="label" id="tools">tools <span>1</span></h2>
     <a class="card" href="https://github.com/kelcum/void">
       <div class="card-head"><div class="glyph">V</div><h3>VOID</h3><span class="stars" data-repo="void" hidden></span></div>
@@ -223,19 +272,64 @@
 </main>
 
 <script>
+  // ── the heart ─────────────────────────────────────────────────────────
+  // Classic heart curve: x = 16 sin³t, y = 13 cos t − 5 cos 2t − 2 cos 3t − cos 4t.
+  // Words sit across the curve like rungs of a ladder, evenly spaced by arc length,
+  // on three layers in depth so the ribbon has thickness when it turns.
+  (function buildHeart() {
+    const heart = document.getElementById('heart');
+    const WORD = 'xan.gripe', RUNGS = 74, LAYERS = [-17, 0, 17];
+    const small = matchMedia('(max-width: 720px)').matches;
+    const S = small ? 6.2 : 7.6;                     // px per curve unit
+    const M = 2400, pts = [];
+    for (let k = 0; k <= M; k++) {
+      const t = (k / M) * Math.PI * 2;
+      pts.push([16 * Math.sin(t) ** 3, -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))]);
+    }
+    const cum = [0];
+    for (let k = 1; k <= M; k++) cum.push(cum[k - 1] + Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]));
+    const total = cum[M];
+    const ys = pts.map(p => p[1]), midY = (Math.min(...ys) + Math.max(...ys)) / 2;
+    const lerp = (a, b, f) => Math.round(a + (b - a) * f);
+    const frag = document.createDocumentFragment();
+    let k = 0;
+    for (let i = 0; i < RUNGS; i++) {
+      const target = (total * i) / RUNGS;
+      while (k < M - 1 && cum[k + 1] < target) k++;
+      const [x0, y0] = pts[k], [x1, y1] = pts[k + 1];
+      const angle = Math.atan2(y1 - y0, x1 - x0) + Math.PI / 2;   // across the ribbon
+      const x = x0 * S, y = (y0 - midY) * S;
+      const f = (Math.sin((i / RUNGS) * Math.PI * 2) + 1) / 2;   // cyan → ice along the curve
+      LAYERS.forEach((z, li) => {
+        const w = document.createElement('span');
+        w.className = 'w';
+        w.textContent = WORD;
+        w.style.color = `rgb(${lerp(85, 189, f)}, ${lerp(198, 235, f)}, ${lerp(242, 255, f)})`;
+        w.style.opacity = [0.55, 1, 0.55][li];
+        w.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z}px) rotate(${angle.toFixed(3)}rad) translate(-50%, -50%)`;
+        frag.appendChild(w);
+      });
+    }
+    heart.appendChild(frag);
+  })();
+
+  // cards glow where the cursor is
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+
   // copy the Discord username (Discord has no link that opens a DM for everyone)
   const discordBtn = document.getElementById('discord');
   const discordText = document.getElementById('discord-text');
   discordBtn.addEventListener('click', async () => {
     const handle = discordBtn.dataset.handle;
-    try {
-      await navigator.clipboard.writeText(handle);
-      discordText.textContent = 'copied';
-      discordText.classList.add('copied');
-    } catch {
-      discordText.textContent = handle;
-    }
-    setTimeout(() => { discordText.textContent = '@' + handle; discordText.classList.remove('copied'); }, 1600);
+    try { await navigator.clipboard.writeText(handle); discordText.textContent = 'copied'; }
+    catch { discordText.textContent = handle; }
+    setTimeout(() => { discordText.textContent = '@' + handle; }, 1600);
   });
 
   // live star counts from GitHub; the cards read fine without them if the request fails
