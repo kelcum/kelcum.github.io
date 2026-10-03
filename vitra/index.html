@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitra Launcher</title>
+<meta name="description" content="Vitra is a personal desktop launcher for Minecraft: Java Edition with mod, modpack and skin management.">
+<meta property="og:title" content="Vitra Launcher">
+<meta property="og:description" content="A fast desktop launcher for Minecraft: Java Edition.">
+<meta property="og:image" content="https://xan.gripe/vitra/home.png">
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --bg: #06070c;
+    --text: #f2f4fa;
+    --muted: rgb(222 228 248 / 0.68);
+    --faint: rgb(222 228 248 / 0.45);
+    --line: rgb(255 255 255 / 0.09);
+    --card: rgb(18 22 36 / 0.6);
+    --accent: #8ea8ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(60% 50% at 15% 0%, rgb(124 156 255 / 0.28), transparent 70%),
+      radial-gradient(50% 40% at 90% 10%, rgb(150 100 255 / 0.22), transparent 70%),
+      var(--bg);
+    color: var(--text);
+    font: 16px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  main { max-width: 920px; margin: 0 auto; padding: 56px 16px 72px; }
+  header { display: flex; align-items: center; gap: 18px; }
+  header img { width: 64px; height: 64px; }
+  h1 { margin: 0; font-size: 40px; letter-spacing: -0.03em; line-height: 1.1; }
+  .tag { margin: 4px 0 0; color: var(--muted); }
+  h2 { margin: 48px 0 12px; font-size: 22px; letter-spacing: -0.01em; }
+  p { color: var(--muted); margin: 0 0 12px; }
+  .lead { font-size: 18px; margin-top: 28px; }
+  ul { color: var(--muted); padding-left: 20px; margin: 0; }
+  li { margin: 6px 0; }
+  b { color: var(--text); font-weight: 600; }
+  .shot {
+    display: block; width: 100%; height: auto; margin-top: 28px;
+    border-radius: 16px; border: 1px solid var(--line);
+    box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.7);
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  .grid img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+  ol { color: var(--muted); padding-left: 20px; margin: 0; }
+  code { font-family: Consolas, ui-monospace, monospace; font-size: 14px; color: var(--accent); overflow-wrap: anywhere; }
+  footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--faint); font-size: 14px; }
+  @media (max-width: 640px) {
+    h1 { font-size: 30px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.png" alt="">
+    <div>
+      <h1>Vitra Launcher</h1>
+      <p class="tag">A desktop launcher for Minecraft: Java Edition</p>
+    </div>
+  </header>
+
+  <p class="lead">
+    Vitra is a personal, non-commercial launcher for Windows, built with Tauri (Rust) and React.
+    It installs and launches Minecraft: Java Edition, manages separate game instances, and installs
+    mods, modpacks, resource packs and shaders from Modrinth.
+  </p>
+
+  <img class="shot" src="home.png" alt="Vitra home screen showing the selected instance, recent worlds and Minecraft update news">
+
+  <h2>What it does</h2>
+  <ul>
+    <li>Installs official game files from Mojang's servers and checks every file against its published checksum.</li>
+    <li>Supports vanilla Minecraft and the Fabric, Quilt, Forge and NeoForge mod loaders.</li>
+    <li>Downloads the Java runtime Mojang specifies for each Minecraft version.</li>
+    <li>Browses and installs content from Modrinth, resolving required dependencies.</li>
+    <li>Lets players preview skins in 3D and change their own skin and cape.</li>
+  </ul>
+
+  <div class="grid">
+    <img src="mods.png" alt="An instance's installed mods list">
+    <img src="discover.png" alt="Browsing mods from Modrinth">
+  </div>
+
+  <h2>Microsoft account sign-in</h2>
+  <div class="card">
+    <p>Vitra uses the official Microsoft sign-in so players can launch the copy of Minecraft they own:</p>
+    <ol>
+      <li>Microsoft OAuth <b>device code flow</b> (scope <code>XboxLive.signin offline_access</code>). The player signs in on Microsoft's own website.</li>
+      <li>Xbox Live user authentication, then XSTS for <code>rp://api.minecraftservices.com/</code>.</li>
+      <li><code>/authentication/login_with_xbox</code> to get a Minecraft access token.</li>
+      <li><code>/entitlements/mcstore</code> and <code>/minecraft/profile</code> to check ownership and read the player's name and UUID.</li>
+      <li>The profile skin and cape endpoints, only when the player chooses to change their own skin or cape.</li>
+    </ol>
+  </div>
+
+  <h2>Privacy and security</h2>
+  <ul>
+    <li>Vitra never sees, asks for or stores the player's Microsoft password.</li>
+    <li>Sign-in tokens stay on the player's own computer, encrypted with a key kept in the Windows Credential Manager.</li>
+    <li>No account data is sent anywhere except Microsoft's and Mojang's own services.</li>
+    <li>Players who don't own the game can only start the official demo.</li>
+  </ul>
+
+  <footer>
+    Vitra is not an official Minecraft product and is not approved by or associated with Mojang or Microsoft.
+  </footer>
+</main>
+</body>
+</html>
