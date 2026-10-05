@@ -475,8 +475,10 @@ footer a:hover { color: var(--text); }
 .legal a { color: var(--pink); }
 
 /* ------------------------------------------------------------ reveal */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1.1s var(--ease); }
-.reveal.in { opacity: 1; transform: none; }
+/* Only hidden when the script runs (it adds .js), so the page never ends
+   up blank without JavaScript. */
+.js .reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1.1s var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
 
 /* ------------------------------------------------------------ responsive */
 @media (max-width: 960px) {
@@ -513,5 +515,5 @@ footer a:hover { color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
 }
