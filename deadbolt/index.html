@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deadbolt - a cold, no-frills Discord client mod</title>
+<meta name="description" content="Deadbolt is a personal Equicord fork: 300+ plugins, a custom boot splash, animated profile badges, and installs for Windows, macOS and Linux.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090c">
+<link rel="canonical" href="https://xan.gripe/deadbolt/">
+
+<link rel="icon" type="image/svg+xml" href="assets/crest.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+<!-- what Discord and other apps show when the link is pasted in a chat -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Deadbolt">
+<meta property="og:description" content="A cold, no-frills Discord client mod. 300+ plugins, a custom boot splash, animated badges. Windows, macOS and Linux.">
+<meta property="og:url" content="https://xan.gripe/deadbolt/">
+<meta property="og:image" content="https://xan.gripe/deadbolt/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #08090c;
+  --bg-2: #0e1015;
+  --tile: #171a21;
+  --line: rgba(255, 255, 255, .07);
+  --line-2: rgba(255, 255, 255, .13);
+  --text: #e9eef4;
+  --text-2: #aab3be;
+  --muted: #7f8895;
+  --violet: #7c6ff0;
+  --chrome: linear-gradient(100deg, #f4f7fb 0%, #a7b1bd 22%, #ffffff 40%, #8c96a3 58%, #cfd6df 78%, #9ca6b2 100%);
+  --font-display: "Archivo", "Segoe UI Black", system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-2);
+  font: 16px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+code { font-family: var(--font-mono); font-size: .88em; color: var(--text); }
+:focus-visible { outline: 2px solid #cfd8e3; outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8, 9, 12, .64);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand {
+  display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--text);
+  font: 800 .9rem/1 var(--font-display); font-stretch: 118%; letter-spacing: .16em; text-transform: uppercase;
+}
+.brand svg { width: 30px; height: 30px; flex: none; }
+.nav-links { display: flex; align-items: center; gap: 1.7rem; font-size: .92rem; }
+.nav-links a { color: var(--text-2); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+.nav-links .btn { color: #0a0b0f; }
+.nav-links .btn:hover { color: #0a0b0f; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  padding: .8rem 1.3rem; border-radius: 12px; border: 1px solid transparent;
+  font: 600 .95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-primary {
+  color: #0a0b0f;
+  background: linear-gradient(180deg, #f8fafd 0%, #c9d1db 55%, #aab4c1 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85), 0 10px 34px rgba(170, 195, 235, .18);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 #fff, 0 14px 44px rgba(170, 195, 235, .3); }
+.btn-ghost { color: var(--text); background: rgba(255, 255, 255, .03); border-color: var(--line-2); }
+.btn-ghost:hover { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .24); transform: translateY(-1px); }
+.btn-sm { padding: .55rem 1rem; font-size: .88rem; border-radius: 10px; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; isolation: isolate; overflow: hidden; text-align: center; padding: clamp(52px, 9vw, 112px) 0 clamp(48px, 8vw, 92px); }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(70% 55% at 50% -5%, rgba(190, 205, 232, .17), transparent 70%),
+    radial-gradient(34% 34% at var(--hx, 50%) var(--hy, 34%), rgba(200, 215, 240, .075), transparent 70%);
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 18%, #000, transparent 76%);
+  mask-image: radial-gradient(ellipse 70% 62% at 50% 18%, #000, transparent 76%);
+}
+
+.crest {
+  position: relative; width: 116px; height: 116px; margin: 0 auto 1.8rem;
+  border-radius: 26%; overflow: hidden; isolation: isolate;
+  box-shadow: 0 0 0 1px var(--line-2), 0 24px 70px rgba(0, 0, 0, .7), 0 0 90px rgba(160, 182, 220, .14);
+  animation: float 7s ease-in-out infinite;
+}
+.crest svg { display: block; width: 100%; height: 100%; }
+.crest::after {
+  content: ""; position: absolute; inset: -55%;
+  background: conic-gradient(from 0deg, transparent 0 18%, rgba(255, 255, 255, .34) 27%, transparent 36% 66%, rgba(255, 255, 255, .22) 76%, transparent 86%);
+  mix-blend-mode: screen; pointer-events: none;
+  animation: spin 6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+.eyebrow { font: 500 .74rem/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); text-wrap: balance; }
+.wordmark {
+  margin: .9rem 0 0;
+  font: 850 clamp(2.2rem, 12vw, 9.4rem)/1 var(--font-display); font-stretch: 125%; letter-spacing: .05em;
+  background: var(--chrome); background-size: 240% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: sheen 8s ease-in-out infinite alternate;
+  filter: drop-shadow(0 6px 40px rgba(170, 195, 235, .12));
+}
+@keyframes sheen { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+.tagline { margin: 1.1rem 0 0; font-size: clamp(1.15rem, 2.4vw, 1.5rem); color: var(--text); font-weight: 500; letter-spacing: -.005em; }
+.lede { max-width: 640px; margin: .9rem auto 0; color: var(--text-2); font-size: 1.04rem; }
+.cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: 2rem; }
+.pills { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin: 1.7rem 0 0; padding: 0; list-style: none; }
+.pill {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .32rem .8rem; border-radius: 999px;
+  font: 500 .76rem/1.4 var(--font-mono); color: var(--text-2); border: 1px solid var(--line-2); background: rgba(255, 255, 255, .025);
+}
+.pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #c9d4e3; box-shadow: 0 0 10px rgba(201, 212, 227, .8); }
+
+/* ---------- stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
+.stat { padding: 1.7rem 1rem; text-align: center; border-left: 1px solid var(--line); }
+.stat:first-child { border-left: 0; }
+.stat b {
+  display: block; font: 800 clamp(1.7rem, 3.6vw, 2.5rem)/1.1 var(--font-display); font-stretch: 112%; letter-spacing: -.01em;
+  background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+.stat span { display: block; margin-top: .35rem; font-size: .84rem; color: var(--muted); }
+
+/* ---------- sections ---------- */
+section { padding: clamp(56px, 8vw, 104px) 0; scroll-margin-top: 40px; }
+h2, .tagline, .lede { text-wrap: balance; }
+.head p, .card p, .badge-card p { text-wrap: pretty; }
+.head { max-width: 640px; margin-bottom: clamp(28px, 4vw, 48px); }
+h2 {
+  margin: .5rem 0 .8rem; color: var(--text);
+  font: 800 clamp(1.9rem, 4.6vw, 3.1rem)/1.06 var(--font-display); font-stretch: 112%; letter-spacing: -.012em;
+}
+.head p { margin: 0; font-size: 1.04rem; }
+
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.card {
+  position: relative; grid-column: span 2; padding: 1.5rem; border-radius: 18px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012));
+  border: 1px solid var(--line); transition: border-color .3s ease, transform .3s ease;
+}
+.card.w { grid-column: span 3; }
+.card::before {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(205, 220, 245, .11), transparent 62%);
+}
+.card:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.card:hover::before { opacity: 1; }
+.ico {
+  display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 1.1rem; border-radius: 11px;
+  background: var(--tile); border: 1px solid var(--line-2); color: #d3dae3;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+.ico svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { margin: 0 0 .45rem; color: var(--text); font: 700 1.04rem/1.3 var(--font-body); }
+.card p { margin: 0; font-size: .93rem; line-height: 1.6; }
+.card .tag { display: inline-block; margin-top: .8rem; font: 500 .74rem/1.3 var(--font-mono); color: var(--muted); }
+
+/* bolt divider: slides into place when scrolled to */
+.rule { position: relative; height: 1px; background: linear-gradient(90deg, transparent, var(--line-2), transparent); }
+.rule span {
+  position: absolute; left: 50%; top: 50%; height: 6px; width: 0; transform: translate(-50%, -50%); border-radius: 6px;
+  background: var(--chrome); box-shadow: 0 0 22px rgba(190, 210, 240, .45);
+  transition: width 1s cubic-bezier(.2, .8, .2, 1);
+}
+.rule.in span { width: 96px; }
+
+/* ---------- badges ---------- */
+.badges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.badge-card {
+  display: flex; align-items: center; gap: 1.5rem; padding: 1.8rem; border-radius: 20px;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012));
+}
+.badge-card h3 { margin: 0 0 .35rem; color: var(--text); font: 700 1.1rem/1.3 var(--font-body); }
+.badge-card p { margin: 0; font-size: .93rem; }
+.badge {
+  position: relative; flex: none; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; isolation: isolate;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 10px 30px rgba(0, 0, 0, .55);
+  animation: b-pulse 3s ease-in-out infinite;
+}
+.badge img, .badge svg { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.badge::before {
+  content: ""; position: absolute; inset: -45%; z-index: 1; pointer-events: none; mix-blend-mode: screen;
+  background: conic-gradient(from 0deg, rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 60%) 35deg, rgb(190 214 255 / 12%) 85deg, rgb(255 255 255 / 0%) 140deg, rgb(255 255 255 / 55%) 205deg, rgb(200 220 255 / 12%) 260deg, rgb(255 255 255 / 0%) 320deg);
+  animation: spin 3.1s linear infinite;
+}
+.badge::after {
+  content: ""; position: absolute; inset: -30%; z-index: 2; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / 85%) 50%, transparent 58%);
+  transform: translateX(-160%); animation: b-sheen 1.9s linear infinite;
+}
+.badge.violet { box-shadow: 0 0 0 1px rgba(124, 111, 240, .28), 0 10px 34px rgba(124, 111, 240, .28); animation-name: b-pulse-v; }
+.badge.violet::before { background: conic-gradient(from 0deg, rgb(124 111 240 / 0%) 0deg, rgb(201 192 255 / 65%) 35deg, rgb(124 111 240 / 15%) 85deg, rgb(124 111 240 / 0%) 140deg, rgb(201 192 255 / 55%) 205deg, rgb(124 111 240 / 15%) 260deg, rgb(124 111 240 / 0%) 320deg); }
+.badge.violet::after { background: linear-gradient(115deg, transparent 42%, rgb(201 192 255 / 85%) 50%, transparent 58%); }
+.badge.violet svg { animation: spin 6s linear infinite; }
+@keyframes b-sheen { 0% { transform: translateX(-160%); } 100% { transform: translateX(160%); } }
+@keyframes b-pulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 10px 30px rgba(0,0,0,.55); } 50% { box-shadow: 0 0 0 1px rgba(255,255,255,.26), 0 0 22px rgba(200,220,255,.4), 0 10px 30px rgba(0,0,0,.55); } }
+@keyframes b-pulse-v { 0%, 100% { box-shadow: 0 0 0 1px rgba(124,111,240,.28), 0 10px 34px rgba(124,111,240,.22); } 50% { box-shadow: 0 0 0 1px rgba(124,111,240,.5), 0 0 26px rgba(124,111,240,.55), 0 10px 34px rgba(124,111,240,.3); } }
+.fine { margin: 1.1rem 0 0; font-size: .85rem; color: var(--muted); }
+
+/* ---------- install ---------- */
+.tabs { display: inline-flex; gap: 2px; padding: 4px; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); }
+.tab {
+  appearance: none; border: 0; cursor: pointer; padding: .6rem 1.2rem; border-radius: 10px;
+  background: transparent; color: var(--text-2); font: 600 .92rem/1 var(--font-body); transition: color .2s, background .2s;
+}
+.tab:hover { color: #fff; }
+.tab[aria-selected="true"] { color: #0a0b0f; background: linear-gradient(180deg, #f6f9fc, #bcc6d2); }
+.panel {
+  margin-top: 1.3rem; padding: clamp(1.3rem, 3vw, 2.1rem); border-radius: 22px;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012));
+}
+.panel[hidden] { display: none; }
+.panel-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
+/* grid items default to min-width:auto, so a long command line would stretch the whole column off-screen */
+.panel-grid > *, .panel { min-width: 0; }
+.panel h3 { margin: 0 0 .5rem; color: var(--text); font: 700 1.12rem/1.3 var(--font-body); }
+.panel p { margin: 0 0 1rem; font-size: .95rem; }
+.steps { margin: 0 0 1.4rem; padding: 0; list-style: none; counter-reset: s; }
+.steps li { position: relative; padding: .35rem 0 .35rem 2.4rem; counter-increment: s; font-size: .95rem; }
+.steps li::before {
+  content: counter(s); position: absolute; left: 0; top: .3rem; width: 1.65rem; height: 1.65rem; border-radius: 50%;
+  display: grid; place-items: center; font: 500 .76rem/1 var(--font-mono); color: var(--text); background: var(--tile); border: 1px solid var(--line-2);
+}
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.1rem; }
+.actions .meta { font-size: .85rem; color: var(--muted); }
+.note { padding: .8rem 1rem; border-radius: 12px; font-size: .88rem; color: var(--text-2); background: rgba(255, 255, 255, .03); border: 1px solid var(--line); }
+.note b { color: var(--text); font-weight: 600; }
+.cmd {
+  position: relative; display: flex; align-items: flex-start; gap: .8rem; margin: 0 0 1rem; padding: .95rem 1rem .95rem 1.1rem;
+  border-radius: 12px; background: #06070a; border: 1px solid var(--line-2);
+}
+.cmd pre { margin: 0; flex: 1; min-width: 0; overflow-x: auto; font: 500 .84rem/1.75 var(--font-mono); color: #dfe6ee; }
+.cmd .p { color: var(--muted); user-select: none; }
+.copy {
+  appearance: none; flex: none; cursor: pointer; padding: .32rem .7rem; border-radius: 8px;
+  color: var(--text-2); background: rgba(255, 255, 255, .05); border: 1px solid var(--line-2); font: 500 .76rem/1.4 var(--font-mono);
+  transition: color .2s, background .2s;
+}
+.copy:hover { color: #fff; background: rgba(255, 255, 255, .1); }
+.copy.done { color: #0a0b0f; background: #d6dde6; border-color: transparent; }
+.links { display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 0; font-size: .9rem; }
+.links a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
+.links a:hover { text-decoration-color: #cfd8e3; }
+.warn { margin: 1.1rem 0 0; font-size: .86rem; color: var(--muted); }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88rem; color: var(--muted); }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem 2rem; }
+.foot .brand { color: var(--text-2); }
+.foot nav { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.foot nav a { color: var(--text-2); text-decoration: none; }
+.foot nav a:hover { color: #fff; }
+.legal { max-width: 760px; margin: 1.8rem 0 0; line-height: 1.7; }
+.legal p { margin: 0 0 .7rem; }
+
+/* ---------- motion ---------- */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; transition-delay: var(--d, 0s); }
+.js .reveal.in { opacity: 1; transform: none; }
+.js .rule.reveal { opacity: 1; transform: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1020px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .card, .card.w { grid-column: span 1; }
+  .card.w:first-child { grid-column: span 2; }
+  .panel-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .nav-links a.hide-sm { display: none; }
+  .badges { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(3) { border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 620px) {
+  .grid { grid-template-columns: 1fr; }
+  .card.w:first-child { grid-column: span 1; }
+  .badge-card { flex-direction: column; align-items: flex-start; }
+  .tabs { display: flex; width: 100%; }
+  .tab { flex: 1; padding-inline: .5rem; }
+  .cta .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .rule span { width: 96px; }
+}
+</style>
+</head>
+<body>
+
+<!-- shared artwork: the same chrome gradient and mark as the splash screen and app icon -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="dbChrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f6f9fc"/>
+      <stop offset="15%" stop-color="#d4dbe3"/>
+      <stop offset="34%" stop-color="#a7b1bd"/>
+      <stop offset="49%" stop-color="#757f8b"/>
+      <stop offset="51%" stop-color="#6a7480"/>
+      <stop offset="66%" stop-color="#b6c0cb"/>
+      <stop offset="82%" stop-color="#e9eef4"/>
+      <stop offset="100%" stop-color="#c3ccd6"/>
+    </linearGradient>
+    <g id="dbMark">
+      <rect x="4" y="15" width="160" height="160" rx="36" fill="#171A21"/>
+      <g transform="translate(84,95) scale(1.45)">
+        <path d="M0 -4 L -32 -50" stroke="url(#dbChrome)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M0 -4 L 32 -50" stroke="url(#dbChrome)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <rect x="-9" y="-10" width="18" height="60" rx="9" fill="url(#dbChrome)"/>
+        <rect x="-26" y="26" width="52" height="16" rx="8" fill="url(#dbChrome)"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Deadbolt, back to top">
+      <svg viewBox="4 15 160 160" aria-hidden="true"><use href="#dbMark"/></svg>
+      Deadbolt
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a class="hide-sm" href="#features">Features</a>
+      <a class="hide-sm" href="#badges">Badges</a>
+      <a class="hide-sm" href="https://github.com/kelcum/Deadbolt" rel="noopener">GitHub</a>
+      <a class="btn btn-primary btn-sm" href="#install">Install</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero" id="hero">
+    <div class="wrap">
+      <div class="crest" aria-hidden="true"><svg viewBox="4 15 160 160"><use href="#dbMark"/></svg></div>
+      <div class="eyebrow">Discord client mod &middot; fork of Equicord</div>
+      <h1 class="wordmark">DEADBOLT</h1>
+      <p class="tagline">A cold, no-frills Discord client mod.</p>
+      <p class="lede">The whole Equicord plugin library, plus a boot splash, animated profile badges and installs that don&rsquo;t fight your operating system.</p>
+      <div class="cta">
+        <a class="btn btn-primary" id="cta-main" href="#install">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+          <span id="cta-label">Get Deadbolt</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/kelcum/Deadbolt" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.35 1.08 2.92.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.7.11 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <ul class="pills">
+        <li class="pill"><i class="dot"></i><span data-version>Latest release</span></li>
+        <li class="pill">Windows &middot; macOS &middot; Linux</li>
+        <li class="pill">GPL-3.0</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><b>300+</b><span>plugins from Equicord &amp; Vencord</span></div>
+      <div class="stat"><b>20</b><span>Deadbolt originals</span></div>
+      <div class="stat"><b>3</b><span>platforms, one codebase</span></div>
+      <div class="stat"><b>GPL-3.0</b><span>open source, all of it</span></div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">What you get</div>
+        <h2>Quiet by default. Sharp where it counts.</h2>
+        <p>Everything in Equicord, plus the parts that make this fork its own.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card w reveal">
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+          <h3>Its own boot splash</h3>
+          <p>Replaces Discord&rsquo;s connecting screen with an animated chrome crest and Deadbolt-branded quotes, instead of just re-texting the default one.</p>
+        </article>
+        <article class="card w reveal" style="--d:.06s">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5 7 22l5-3 5 3-1.5-7.5"/></svg></div>
+          <h3>Animated profile badges</h3>
+          <p>A constantly shining chrome Creator badge and a violet Contributor badge, each with a proper hover card. Click Contributor to see that person&rsquo;s plugins.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 5l-4 14"/></svg></div>
+          <h3>/addplugin</h3>
+          <p>Add a plugin without leaving Discord. Attach the file and Deadbolt saves it, rebuilds, and offers to reload. No editor, no terminal.</p>
+          <span class="tag">needs a from-source install</span>
+        </article>
+        <article class="card reveal" style="--d:.06s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>macOS done properly</h3>
+          <p>Injects through Discord&rsquo;s external <code>discord_desktop_core</code> module, so Discord.app is never modified and its Apple signature stays valid. No &ldquo;damaged app&rdquo; warnings.</p>
+        </article>
+        <article class="card reveal" style="--d:.12s">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></div>
+          <h3>A default look</h3>
+          <p>Fresh installs start on a black, grayscale QuickCSS theme that tidies away Nitro and gift buttons, stickers, Discover and more. It never overwrites a QuickCSS you already have.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
+          <h3>Small plugins that earn their spot</h3>
+          <p>ConfirmMassMention asks before an @everyone goes out. DoubleSendGuard catches an accidental double-send. Plus SilentFolder, BetterMicQuality, VSCodeActivity and more.</p>
+        </article>
+        <article class="card reveal" style="--d:.06s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4M20 20v-4h-4"/></svg></div>
+          <h3>Heals itself on Windows</h3>
+          <p>Discord&rsquo;s updater loves to reset mods. One script puts everything back, and an optional scheduled task keeps Deadbolt synced with upstream and tells you if it gets stuck.</p>
+        </article>
+        <article class="card reveal" style="--d:.12s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></div>
+          <h3>The whole Equicord library</h3>
+          <p>300+ plugins from Equicord and Vencord come along for the ride, so nothing you rely on goes missing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule reveal"><span></span></div>
+
+  <section id="badges">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">Profile badges</div>
+        <h2>Badges that actually move.</h2>
+        <p>Not just a static icon: these shimmer, carry a hover card, and the Contributor badge opens a list of everything that person has added.</p>
+      </div>
+
+      <div class="badges">
+        <div class="badge-card reveal">
+          <div class="badge" role="img" aria-label="Deadbolt Creator badge"><img src="assets/badge-creator.png" alt="" width="92" height="92"></div>
+          <div>
+            <h3>Deadbolt Creator</h3>
+            <p>A liquid-chrome crest with a highlight that never stops sweeping around it.</p>
+          </div>
+        </div>
+        <div class="badge-card reveal" style="--d:.08s">
+          <div class="badge violet" role="img" aria-label="Deadbolt Contributor badge">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <defs>
+                <radialGradient id="sbBg" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#2d2466"/><stop offset="100%" stop-color="#120e28"/></radialGradient>
+                <linearGradient id="sbBolt" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#c9c0ff"/><stop offset="45%" stop-color="#7C6FF0"/><stop offset="100%" stop-color="#4f3fc9"/></linearGradient>
+                <linearGradient id="sbInner" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="100%" stop-color="#7C6FF0" stop-opacity="0"/></linearGradient>
+              </defs>
+              <rect width="64" height="64" fill="url(#sbBg)"/>
+              <polygon points="32,5 55.4,18.5 55.4,45.5 32,59 8.6,45.5 8.6,18.5" fill="url(#sbBolt)"/>
+              <polygon points="32,11 50.2,21.5 50.2,42.5 32,53 13.8,42.5 13.8,21.5" fill="url(#sbInner)"/>
+              <circle cx="32" cy="32" r="9" fill="#120e28"/>
+              <circle cx="29" cy="29" r="3" fill="#ffffff" fill-opacity="0.35"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Deadbolt Contributor</h3>
+            <p>A violet bolt that slowly turns. Click it on a profile to see what that person has built.</p>
+          </div>
+        </div>
+      </div>
+      <p class="fine reveal">Badges show up for anyone running Deadbolt.</p>
+    </div>
+  </section>
+
+  <div class="rule reveal"><span></span></div>
+
+  <section id="install">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">Install</div>
+        <h2>Pick your platform.</h2>
+        <p>Windows has a one-click installer. macOS and Linux get a one-line script.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="tabs" role="tablist" aria-label="Operating system">
+          <button class="tab" role="tab" id="tab-win" aria-controls="panel-win" aria-selected="true" tabindex="0" data-os="win">Windows</button>
+          <button class="tab" role="tab" id="tab-mac" aria-controls="panel-mac" aria-selected="false" tabindex="-1" data-os="mac">macOS</button>
+          <button class="tab" role="tab" id="tab-linux" aria-controls="panel-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button>
+        </div>
+
+        <div class="panel" id="panel-win" role="tabpanel" aria-labelledby="tab-win">
+          <div class="panel-grid">
+            <div>
+              <h3>One-click installer</h3>
+              <p>Downloads the latest Deadbolt build and walks you through picking your Discord install: Stable, PTB or Canary.</p>
+              <ol class="steps">
+                <li>Download and run <code>DeadboltSetup.exe</code>.</li>
+                <li>Pick your Discord install when it asks.</li>
+                <li>Fully quit Discord (check the system tray), then reopen it.</li>
+              </ol>
+              <div class="actions">
+                <a class="btn btn-primary" href="https://github.com/kelcum/Deadbolt/releases/latest/download/DeadboltSetup.exe">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+                  Download DeadboltSetup.exe
+                </a>
+                <span class="meta">about 55 MB &middot; <span data-version>latest release</span></span>
+              </div>
+              <p class="note" style="margin-top:1.1rem">The installer isn&rsquo;t code-signed, so Windows SmartScreen may warn you. Choose <b>More info</b>, then <b>Run anyway</b>.</p>
+            </div>
+            <div>
+              <h3>Or build from source</h3>
+              <p>Needs Git and Node.js 22+. Building from source also unlocks <code>/addplugin</code> and the auto-update script.</p>
+              <div class="cmd">
+                <pre id="cmd-win">git clone https://github.com/kelcum/Deadbolt
+cd Deadbolt
+npm i -g pnpm
+pnpm install --frozen-lockfile
+pnpm build
+pnpm inject</pre>
+                <button class="copy" type="button" data-copy="cmd-win" aria-label="Copy the build commands">Copy</button>
+              </div>
+              <p class="links"><a href="https://github.com/kelcum/Deadbolt#windows-reapplying-branding-after-a-discord-update" rel="noopener">After a Discord update</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-mac" role="tabpanel" aria-labelledby="tab-mac" hidden>
+          <h3>One command</h3>
+          <p>Builds Deadbolt and injects it through Discord&rsquo;s external <code>discord_desktop_core</code> module. <code>/Applications/Discord.app</code> is never touched, so its Apple code signature stays valid: no &ldquo;Discord is damaged&rdquo;, no re-signing, no Gatekeeper fights.</p>
+          <div class="cmd">
+            <pre id="cmd-mac"><span class="p">$ </span>curl -fsSL https://xan.gripe/deadbolt/install-macos.sh | bash</pre>
+            <button class="copy" type="button" data-copy="cmd-mac" aria-label="Copy the macOS install command">Copy</button>
+          </div>
+          <p>Needs Git, Node.js 22+ and pnpm. The script checks and tells you what&rsquo;s missing.</p>
+          <p class="links"><a href="https://github.com/kelcum/Deadbolt/blob/main/MACOS.md" rel="noopener">Full macOS guide</a><a href="https://github.com/kelcum/Deadbolt/blob/main/scripts/install-macos.sh" rel="noopener">Read the script first</a></p>
+        </div>
+
+        <div class="panel" id="panel-linux" role="tabpanel" aria-labelledby="tab-linux" hidden>
+          <h3>One command, any distro</h3>
+          <p>The script checks that Git, Node.js 22+ and pnpm are installed and, if one is missing, prints the right command for your distro. It never runs a package manager for you.</p>
+          <div class="cmd">
+            <pre id="cmd-linux"><span class="p">$ </span>curl -fsSL https://xan.gripe/deadbolt/install-linux.sh | bash</pre>
+            <button class="copy" type="button" data-copy="cmd-linux" aria-label="Copy the Linux install command">Copy</button>
+          </div>
+          <p class="links"><a href="https://github.com/kelcum/Deadbolt/blob/main/LINUX.md" rel="noopener">Per-distro setup, update and uninstall</a><a href="https://github.com/kelcum/Deadbolt/blob/main/scripts/install-linux.sh" rel="noopener">Read the script first</a></p>
+        </div>
+
+        <p class="warn">Run these as your normal user, never from an admin or root terminal. It will mess up your Discord and you&rsquo;ll most likely have to reinstall.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="#top">
+        <svg viewBox="4 15 160 160" aria-hidden="true"><use href="#dbMark"/></svg>
+        Deadbolt
+      </a>
+      <nav aria-label="Project links">
+        <a href="https://github.com/kelcum/Deadbolt" rel="noopener">GitHub</a>
+        <a href="https://github.com/kelcum/Deadbolt/releases" rel="noopener">Releases</a>
+        <a href="https://github.com/kelcum/Deadbolt/issues" rel="noopener">Report an issue</a>
+        <a href="https://github.com/kelcum/Deadbolt/blob/main/LICENSE" rel="noopener">License</a>
+      </nav>
+    </div>
+    <div class="legal">
+      <p>Deadbolt is a personal fork of <a href="https://github.com/Equicord/Equicord" rel="noopener">Equicord</a>, itself a fork of <a href="https://github.com/Vendicated/Vencord" rel="noopener">Vencord</a>. Thank you to Equicord&rsquo;s contributors, to Vendicated, and to verticalsync&rsquo;s Suncord.</p>
+      <p>Client mods go against Discord&rsquo;s Terms of Service. Enforcement is rare, but if your account is essential to you, skip them. Deadbolt isn&rsquo;t affiliated with or endorsed by Discord, Vencord or Equicord. Discord is a trademark of Discord Inc.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add("js");
+
+  /* scroll reveal */
+  var items = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* cursor glow on the hero and on feature cards */
+  var hero = document.getElementById("hero");
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.getBoundingClientRect();
+    hero.style.setProperty("--hx", ((e.clientX - r.left) / r.width * 100) + "%");
+    hero.style.setProperty("--hy", ((e.clientY - r.top) / r.height * 100) + "%");
+  });
+  document.querySelectorAll(".card").forEach(function (c) {
+    c.addEventListener("pointermove", function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      c.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  /* install tabs, preselected for the visitor's OS */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function select(os, focus) {
+    tabs.forEach(function (t) {
+      var on = t.dataset.os === os;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      if (on && focus) t.focus();
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { select(t.dataset.os); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length].dataset.os, true);
+    });
+  });
+
+  var plat = ((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "") + " " + navigator.userAgent;
+  var os = /android|iphone|ipad/i.test(plat) ? "win" : /mac/i.test(plat) ? "mac" : /linux|x11|cros/i.test(plat) ? "linux" : "win";
+  select(os);
+
+  var cta = document.getElementById("cta-main"), label = document.getElementById("cta-label");
+  if (os === "win") {
+    cta.href = "https://github.com/kelcum/Deadbolt/releases/latest/download/DeadboltSetup.exe";
+    label.textContent = "Download for Windows";
+  } else {
+    label.textContent = os === "mac" ? "Install on macOS" : "Install on Linux";
+  }
+
+  /* copy buttons */
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pre = document.getElementById(btn.dataset.copy);
+      var text = pre.innerText.replace(/^\$ /gm, "").trim();
+      function done() {
+        btn.textContent = "Copied"; btn.classList.add("done");
+        setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(pre, done); });
+      } else { fallback(pre, done); }
+    });
+  });
+  function fallback(pre, done) {
+    var range = document.createRange(); range.selectNodeContents(pre);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    try { document.execCommand("copy"); done(); } catch (e) {}
+  }
+
+  /* latest version, if GitHub answers (the page works without it) */
+  fetch("https://api.github.com/repos/kelcum/Deadbolt/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (rel) {
+      if (!rel || !rel.tag_name) return;
+      document.querySelectorAll("[data-version]").forEach(function (el) { el.textContent = rel.tag_name; });
+    })
+    .catch(function () {});
+})();
+</script>
+</body>
+</html>
