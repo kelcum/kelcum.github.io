@@ -1,15 +1,15 @@
 {
-  "version": "0.1.1",
-  "notes": "- Vitra now updates itself: new versions show up in the top bar\n- Import from CurseForge, Modrinth App, ATLauncher, GDLauncher and the Minecraft Launcher, not just Prism and MultiMC\n- Find any player's skin by name, or paste a skin link\n- OptiFine capes: preview yours and open the editor already signed in\n- Picking Servers as the start page works now",
-  "pub_date": "2026-10-06T03:53:39Z",
+  "version": "0.1.2",
+  "notes": "Vitra cosmetics: free capes, animated ones too, and a Vitra badge next to the names of players using Vitra. Pick one of five capes or upload your own GIF on the Skins page. Shows in Fabric 26.3 instances (turn it off in Settings → Launcher).",
+  "pub_date": "2026-10-06T18:00:25Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFhMMU9qUXNUdGZVQTVQbTV6ZXFLWkYwRG9JWHRKZzVZYS9PZnNUckFUUlVFNlBLVFBjMGRIcFNtNC9KMS96YWk3dldtZWN1eVBQcnJBd1hFVS9PdUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMjU4MjMwCWZpbGU6Vml0cmFfMC4xLjFfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4xCmx5amRIVVV6cGtGV2xRakYvalhUZDZMRXBYMUd0TStGR3NzV2RtajNtZFNyOTV3WC9CWEw2UUJBa1NzZHlpOUNrcG5uVmFINWVISGwxaEFFUDd5MkNnPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.1_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFMvT0o4ZlU2MHdhQjlva1BSTUlhYVRvS093anZtWXBUbnZLUUZFL1R0Q3MvMVlrbzZsK3AvblVuMVRpM1BOVDh3ckljWnhHeitpSVQwallMUS9MV2djPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMzA5NTc5CWZpbGU6Vml0cmFfMC4xLjJfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4yCmRqNjAwVlgzQzNHNWk0ZVI0ZUdrekRBZjlTZmR4MzI1WkV4YzcyTjVZc2NCZGZZeEFqZUFRWHRFYTgxb0dOK3RWQ1cyMmliaWlNUS9zRlZ5WTgrWkJBPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.2_x64-setup.exe"
     },
     "windows-x86_64-nsis": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFhMMU9qUXNUdGZVQTVQbTV6ZXFLWkYwRG9JWHRKZzVZYS9PZnNUckFUUlVFNlBLVFBjMGRIcFNtNC9KMS96YWk3dldtZWN1eVBQcnJBd1hFVS9PdUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMjU4MjMwCWZpbGU6Vml0cmFfMC4xLjFfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4xCmx5amRIVVV6cGtGV2xRakYvalhUZDZMRXBYMUd0TStGR3NzV2RtajNtZFNyOTV3WC9CWEw2UUJBa1NzZHlpOUNrcG5uVmFINWVISGwxaEFFUDd5MkNnPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.1_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFMvT0o4ZlU2MHdhQjlva1BSTUlhYVRvS093anZtWXBUbnZLUUZFL1R0Q3MvMVlrbzZsK3AvblVuMVRpM1BOVDh3ckljWnhHeitpSVQwallMUS9MV2djPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMzA5NTc5CWZpbGU6Vml0cmFfMC4xLjJfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4yCmRqNjAwVlgzQzNHNWk0ZVI0ZUdrekRBZjlTZmR4MzI1WkV4YzcyTjVZc2NCZGZZeEFqZUFRWHRFYTgxb0dOK3RWQ1cyMmliaWlNUS9zRlZ5WTgrWkJBPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.2_x64-setup.exe"
     }
   }
 }
