@@ -1,0 +1,15 @@
+{
+  "version": "0.1.1",
+  "notes": "- Vitra now updates itself: new versions show up in the top bar\n- Import from CurseForge, Modrinth App, ATLauncher, GDLauncher and the Minecraft Launcher, not just Prism and MultiMC\n- Find any player's skin by name, or paste a skin link\n- OptiFine capes: preview yours and open the editor already signed in\n- Picking Servers as the start page works now",
+  "pub_date": "2026-10-06T03:53:39Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFhMMU9qUXNUdGZVQTVQbTV6ZXFLWkYwRG9JWHRKZzVZYS9PZnNUckFUUlVFNlBLVFBjMGRIcFNtNC9KMS96YWk3dldtZWN1eVBQcnJBd1hFVS9PdUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMjU4MjMwCWZpbGU6Vml0cmFfMC4xLjFfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4xCmx5amRIVVV6cGtGV2xRakYvalhUZDZMRXBYMUd0TStGR3NzV2RtajNtZFNyOTV3WC9CWEw2UUJBa1NzZHlpOUNrcG5uVmFINWVISGwxaEFFUDd5MkNnPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.1_x64-setup.exe"
+    },
+    "windows-x86_64-nsis": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFhMMU9qUXNUdGZVQTVQbTV6ZXFLWkYwRG9JWHRKZzVZYS9PZnNUckFUUlVFNlBLVFBjMGRIcFNtNC9KMS96YWk3dldtZWN1eVBQcnJBd1hFVS9PdUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxMjU4MjMwCWZpbGU6Vml0cmFfMC4xLjFfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS4xCmx5amRIVVV6cGtGV2xRakYvalhUZDZMRXBYMUd0TStGR3NzV2RtajNtZFNyOTV3WC9CWEw2UUJBa1NzZHlpOUNrcG5uVmFINWVISGwxaEFFUDd5MkNnPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.1_x64-setup.exe"
+    }
+  }
+}
