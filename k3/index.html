@@ -469,6 +469,7 @@
   .thumb img { display: block; width: 100%; aspect-ratio: 1320 / 820; object-fit: cover; }
   .thumb span { display: block; padding: 5px 0 6px; font: 500 9.5px var(--caps); letter-spacing: .18em; color: var(--ink-2); background: var(--coin-flat); }
   .thumb:hover { opacity: .85; transform: translateY(-2px); }
+  .vesper .frame img, .vesper .thumb img { aspect-ratio: 1180 / 760; }
   .thumb[aria-pressed="true"] { opacity: 1; border-color: var(--gold); }
 
   /* ── IV. correspondence ── */
@@ -733,7 +734,8 @@
     <a class="tab" href="#overture" data-view="overture"><i>I</i>Overture</a>
     <a class="tab" href="#works" data-view="works"><i>II</i>Works</a>
     <a class="tab" href="#vitra" data-view="vitra"><i>III</i>Vitra</a>
-    <a class="tab" href="#contact" data-view="contact"><i>IV</i>Contact</a>
+    <a class="tab" href="#vesper" data-view="vesper"><i>IV</i>Vesper</a>
+    <a class="tab" href="#contact" data-view="contact"><i>V</i>Contact</a>
   </nav>
   <div class="actions">
     <button class="icon-btn" id="theme" type="button" aria-label="Switch to day">
@@ -785,6 +787,7 @@
         <li><a href="#works/discord"><span class="n">II.</span><b>Deadbolt</b><span class="dots"></span><em>Discord</em></a></li>
         <li><a href="#works/tools"><span class="n">III.</span><b>VOID</b><span class="dots"></span><em>Tools</em></a></li>
         <li><a href="#vitra"><span class="n">IV.</span><b>Vitra</b><span class="dots"></span><em>Minecraft</em></a></li>
+        <li><a href="#vesper"><span class="n">V.</span><b>Vesper</b><span class="dots"></span><em>Roblox</em></a></li>
       </ol>
       <a class="more" href="#works">The full programme <span class="arr">→</span></a>
     </div>
@@ -799,11 +802,12 @@
       <p class="rise" style="--d:3">Everything I've made, free to use. Take in the whole programme, or choose a section.</p>
     </div>
     <div class="filters rise" style="--d:4" role="group" aria-label="Filter works">
-      <button class="chip" type="button" data-filter="all" aria-pressed="true">All<sup>5</sup></button>
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">All<sup>6</sup></button>
       <button class="chip" type="button" data-filter="sites" aria-pressed="false">Sites<sup>2</sup></button>
       <button class="chip" type="button" data-filter="discord" aria-pressed="false">Discord<sup>1</sup></button>
       <button class="chip" type="button" data-filter="tools" aria-pressed="false">Tools<sup>1</sup></button>
       <button class="chip" type="button" data-filter="minecraft" aria-pressed="false">Minecraft<sup>1</sup></button>
+      <button class="chip" type="button" data-filter="roblox" aria-pressed="false">Roblox<sup>1</sup></button>
     </div>
     <div class="works" id="works">
       <a class="work" data-cat="sites" href="/transmute/">
@@ -835,10 +839,17 @@
         <span class="work-go">View on GitHub <i>→</i></span>
       </a>
       <a class="work" data-cat="minecraft" href="#vitra">
-        <span class="work-no">No. V · Finale<em>Minecraft</em></span>
+        <span class="work-no">No. V<em>Minecraft</em></span>
         <span class="work-icon"><img src="/vitra/icon.png" alt="" loading="lazy"></span>
         <h3><span>Vitra</span></h3>
         <p>A liquid-glass Minecraft launcher: mods, servers, skins and free animated capes.</p>
+        <span class="work-go">Discover <i>→</i></span>
+      </a>
+      <a class="work" data-cat="roblox" href="#vesper">
+        <span class="work-no">No. VI · Finale<em>Roblox</em></span>
+        <span class="work-icon"><img src="/vesper/assets/brand/icon.svg" alt="" loading="lazy"></span>
+        <h3><span>Vesper</span></h3>
+        <p>A Roblox launcher with Fast Flags that still work, your picture as the emote wheel and custom cursors.</p>
         <span class="work-go">Discover <i>→</i></span>
       </a>
     </div>
@@ -846,7 +857,7 @@
 
   <!-- III. Vitra -->
   <section class="view" id="view-vitra" data-view="vitra" aria-label="Vitra">
-    <div class="feature">
+    <div class="feature" data-name="Vitra" data-shot="/vitra/shots/{s}-1x.webp" data-shot-hd="/vitra/shots/{s}.webp">
       <div>
         <p class="eyebrow rise" style="--d:0">Movement III · Minecraft</p>
         <h2 class="rise" style="--d:1">Vitra</h2>
@@ -880,10 +891,46 @@
     </div>
   </section>
 
-  <!-- IV. Contact -->
+  <!-- IV. Vesper -->
+  <section class="view" id="view-vesper" data-view="vesper" aria-label="Vesper">
+    <div class="feature vesper" data-name="Vesper" data-shot="/vesper/shots/{s}.webp">
+      <div>
+        <p class="eyebrow rise" style="--d:0">Movement IV · Roblox</p>
+        <h2 class="rise" style="--d:1">Vesper</h2>
+        <p class="lede rise" style="--d:2">A Roblox launcher, tuned and verified, for evenings in game.</p>
+        <ul class="ornate rise" style="--d:3">
+          <li><b>Fast Flags Roblox still accepts</b>, explained, and checked against Roblox's own log after every launch</li>
+          <li><b>Your picture as the emote wheel</b>, cut into a circle with Roblox's slots on top</li>
+          <li><b>Cursors in any colour and size</b>, plus your own font and death sound</li>
+          <li><b>Profiles</b> for competitive play, quality or older PCs, with a real frame-rate limit</li>
+          <li><b>Discord Rich Presence</b>, built in and off until you turn it on</li>
+          <li><b>Updates itself</b>, signed so only genuine versions install</li>
+        </ul>
+        <div class="ctas rise" style="--d:4">
+          <a class="btn btn-gold" href="/vesper/download/Vesper_0.1.0_x64-setup.exe" download>Download for Windows <span class="arr">↓</span></a>
+          <a class="btn btn-ghost" href="/vesper/">The full story</a>
+        </div>
+        <p class="meta rise" style="--d:5">Version 0.1.0 · 4.2 MB · Windows 10 &amp; 11</p>
+      </div>
+      <div class="rise" style="--d:2">
+        <figure class="frame">
+          <div class="frame-in"><img src="/vesper/shots/home.webp" alt="Vesper's home screen" width="1180" height="760" loading="lazy"></div>
+          <figcaption class="plaque">Vesper · Home</figcaption>
+        </figure>
+        <div class="thumbs" role="group" aria-label="Screenshots">
+          <button class="thumb" type="button" data-shot="home" data-label="Home" aria-pressed="true"><img src="/vesper/shots/home.webp" alt="" loading="lazy"><span>Home</span></button>
+          <button class="thumb" type="button" data-shot="fast-flags" data-label="Fast Flags" aria-pressed="false"><img src="/vesper/shots/fast-flags.webp" alt="" loading="lazy"><span>Flags</span></button>
+          <button class="thumb" type="button" data-shot="customize" data-label="Customize" aria-pressed="false"><img src="/vesper/shots/customize.webp" alt="" loading="lazy"><span>Customize</span></button>
+          <button class="thumb" type="button" data-shot="performance" data-label="Performance" aria-pressed="false"><img src="/vesper/shots/performance.webp" alt="" loading="lazy"><span>Performance</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- V. Contact -->
   <section class="view" id="view-contact" data-view="contact" aria-label="Contact">
     <div class="head">
-      <p class="eyebrow rise" style="--d:0">Movement IV</p>
+      <p class="eyebrow rise" style="--d:0">Movement V</p>
       <h2 class="rise" style="--d:1">Correspondence</h2>
       <div class="rule rise" style="--d:2"><i></i></div>
     </div>
@@ -1070,7 +1117,7 @@
   })();
 
   // ── views: one page per tab ──
-  const TITLES = { overture: 'k3', works: 'The Programme', vitra: 'Vitra', contact: 'Correspondence' };
+  const TITLES = { overture: 'k3', works: 'The Programme', vitra: 'Vitra', vesper: 'Vesper', contact: 'Correspondence' };
   const views = Object.fromEntries($$('.view').map(v => [v.dataset.view, v]));
   const tabs = $$('.tab'), ink = $('.ink');
   let current = null, switching = 0;
@@ -1174,19 +1221,22 @@
     $$('.stars[data-repo]').forEach(el => { const n = stars[el.dataset.repo.toLowerCase()]; if (n > 0) el.textContent = '★ ' + n; });
   }).catch(() => {});
 
-  // ── Vitra's gallery ──
-  (function gallery() {
-    const img = $('#shot'), plaque = $('#plaque'), frame = $('#frame'), thumbs = $$('.thumb');
+  // ── galleries (Vitra, Vesper): each .feature names its screenshots ──
+  $$('.feature').forEach(function gallery(root) {
+    const img = root.querySelector('.frame img'), plaque = root.querySelector('.plaque'), frame = root.querySelector('.frame');
+    const thumbs = [...root.querySelectorAll('.thumb')], name = root.dataset.name;
+    if (!img || !thumbs.length) return;
+    const url = (pattern, s) => pattern.replace('{s}', s);
     thumbs.forEach(t => t.addEventListener('click', () => {
       if (t.getAttribute('aria-pressed') === 'true') return;
       thumbs.forEach(x => x.setAttribute('aria-pressed', x === t));
       img.classList.add('swap');
       setTimeout(() => {
-        const s = t.dataset.shot;
-        img.srcset = `/vitra/shots/${s}-1x.webp 1x, /vitra/shots/${s}.webp 2x`;
-        img.src = `/vitra/shots/${s}-1x.webp`;
-        img.alt = `Vitra's ${t.dataset.label.toLowerCase()} screen`;
-        plaque.textContent = 'Vitra · ' + t.dataset.label;
+        const s = t.dataset.shot, one = url(root.dataset.shot, s);
+        if (root.dataset.shotHd) img.srcset = `${one} 1x, ${url(root.dataset.shotHd, s)} 2x`;
+        img.src = one;
+        img.alt = `${name}'s ${t.dataset.label.toLowerCase()} screen`;
+        plaque.textContent = name + ' · ' + t.dataset.label;
         (img.decode ? img.decode() : Promise.resolve()).catch(() => {}).finally(() => img.classList.remove('swap'));
       }, 300);
     }));
@@ -1197,7 +1247,7 @@
       frame.style.transform = `perspective(1400px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 5).toFixed(2)}deg)`;
     });
     frame.addEventListener('pointerleave', () => { frame.classList.remove('tilting'); frame.style.transform = ''; });
-  })();
+  });
 
   // a soft light follows the pointer across the programme cards
   if (fine && !reduced) cards.forEach(c => c.addEventListener('pointermove', e => {
