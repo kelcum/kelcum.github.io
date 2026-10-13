@@ -1,11 +1,19 @@
 {
-  "version": "0.1.2",
-  "notes": "### Fixed\n\n- Custom fonts: Roblox's font lists are now changed the way Bloxstrap and\n  Fishstrap change them, swapping only the font file and keeping the rest of\n  each list exactly as Roblox wrote it.\n- When Roblox updates itself while Vesper is open, customisations are applied\n  again once the update has finished unpacking, so new textures and fonts\n  aren't missed.\n- The section list in Settings follows the section you scroll to.\n\n### Changed\n\n- The Font card shows the font's own name and a line of text in it, and has\n  a \"Find free fonts\" button. Web fonts (.woff) get a clear explanation.\n- Fast Flags dropdowns match the rest of the app, and the emote wheel hint\n  matches what's chosen.",
-  "pub_date": "2026-10-11T06:22:20.439Z",
+  "version": "0.2.0",
+  "notes": "### Added\n\n- macOS support. Vesper runs on macOS 11 or later (Apple silicon and\n  Intel): it finds Roblox.app, launches Roblox and games, applies Fast Flags,\n  customisations and the frame-rate limit, checks Roblox's log, re-applies\n  everything after Roblox updates itself, shows live CPU and memory use, and\n  keeps Discord Rich Presence. It uses macOS's own window buttons and lives in\n  the menu bar when its window is closed. macOS doesn't let other apps count\n  Roblox's frames, read per-app GPU use or change Roblox's priority, so Vesper\n  says so instead of showing a number.\n\n### Fixed\n\n- Launching Roblox no longer takes Vesper off the taskbar when \"Minimize to\n  tray\" is on. \"Minimize to the taskbar\" now always means the taskbar; only\n  \"Hide in the tray\" leaves it.\n- The frame-rate limit card no longer cuts off its warning about a read-only\n  Roblox settings file; it explains the lock on its own line. \"Restore\n  original\" explains a locked file instead of failing with a generic error.\n- \"Remove flags\" (Settings → Backups & recovery) found nothing to remove on\n  case-sensitive drives.",
+  "pub_date": "2026-10-13T14:27:01.076Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2ZLMlF3OHR4YXJqSEtwcVU5WWxLZ2M2Q2JYd3F6ajhUSExRd251YU9vWU8xNGZrRnR0Z1VhQUNCcFgyNUFQUG56Y3dRM25jaEUzWk1ZM0RGZUpVNGdNPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxNjk5NzMxCWZpbGU6VmVzcGVyXzAuMS4yX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjEuMgpjb2hteE5uOGc3SjZMaTNLekZCMmVDdUdnaU0yUHpvY3g1U3RsOHFaRzBtRExtOGMxcDNEQ3JYR3dYUktVRVpMSm9OQVFZWjFreWd2b3d0WVZaYzJEUT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.1.2_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2NMNzN0ajlIQnJIUThxMDJzNkZybXIzSFpsem9BWlNudmRsSEI5cUw1VkhvK0RqaTBDc0R1WHJLbEhnWEFiWVpTUW5JLzFFSWwzbTBObW52UVE4ZXdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxOTAxMzUzCWZpbGU6VmVzcGVyXzAuMi4wX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjIuMApJb3dES1c5T0xmTWFvTVphZGZNVi93b2Z3bTJabWsveXJaYmovRlVyS2tGWWtVb1hzMUtQSWJxUlVjNHdMaWxBTVFKKzFLN3ZHd0h1MlJERExscjVCQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.2.0_x64-setup.exe"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1hxczRNUU5aWWJwdDY1eWd3Yk81V0lPVE82UzJBNnZWN3c3eVliR0IxWU9RQ0hwcFBUemdMWjRmUC9nWnFkaG80cDFpQm1DNGpCSG4zWDViVWFRYVFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxOTAxNTk2CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjIuMApvOEJoakdWREc0R0xnTzQyVWxoT3JQR2R3d2l5b3lhUkc2UlV5RlZYZ0ZiVkIwbW1WekVXN3IrR0JOb0NKRFZjYWp0WHJwM0YzUUFsbWRtbzF3aE5EQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.2.0_universal.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1hxczRNUU5aWWJwdDY1eWd3Yk81V0lPVE82UzJBNnZWN3c3eVliR0IxWU9RQ0hwcFBUemdMWjRmUC9nWnFkaG80cDFpQm1DNGpCSG4zWDViVWFRYVFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxOTAxNTk2CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjIuMApvOEJoakdWREc0R0xnTzQyVWxoT3JQR2R3d2l5b3lhUkc2UlV5RlZYZ0ZiVkIwbW1WekVXN3IrR0JOb0NKRFZjYWp0WHJwM0YzUUFsbWRtbzF3aE5EQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.2.0_universal.app.tar.gz"
     }
   }
 }
