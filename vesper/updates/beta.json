@@ -1,19 +1,19 @@
 {
-  "version": "0.3.1",
-  "notes": "### Added\n\n- “Hide completely” in Settings → After launching Roblox: Vesper leaves the\n  taskbar and the tray while Roblox runs. It comes back when Roblox closes,\n  or when you open Vesper again.\n\n### Changed\n\n- Shaders run only while you're in a game, not on Roblox's home screen and\n  menus, and stay on when you click another window. Windows you put in front\n  of Roblox stay in front of it.\n- Customize explains where a custom font and sky show: Roblox's menus and the\n  games that use Roblox's built-in fonts and default sky. Games that bring\n  their own fonts or sky keep them.\n- Discord: if you turned Rich Presence on before 0.3, it doesn't start\n  showing the game you're playing until you switch that on.\n\n### Fixed\n\n- Avatar: Roblox's page could stay on top of Vesper's avatar tools (and other\n  pages) after leaving Roblox's editor, and could show up blank.\n- Avatar: the Outfits tab kept reloading when you had no saved outfits, items\n  you own more than once appeared twice in Inventory, and signing in could\n  queue up repeated checks.\n- Recent games: servers from before Vesper opened were recorded as played\n  until Vesper started, and rejoining a server kept its old start time, which\n  could also mix up the days.\n- Restarting Roblox could miss that it had closed, so the old game stayed\n  shown during the relaunch.\n- Shaders: the status could read “off” after going straight to another game,\n  and the grade didn't show over a Roblox window set to always on top.\n- Server picking could mix up two cities with the same name in different\n  countries.\n- A sky that couldn't be encoded completely could leave one side of the\n  previous sky in place; now nothing changes and Vesper says so.\n- Ending a Roblox that didn't close only tried until the first failure, and\n  could also end a Roblox that started meanwhile.",
-  "pub_date": "2026-10-17T14:26:46.866Z",
+  "version": "0.3.2",
+  "notes": "### Removed\n\n- The Avatar page. It didn't work reliably, so it's gone rather than half\n  working. When 0.3.2 starts, it deletes the browser data that page kept on\n  your computer, including the Roblox sign-in made there. To end that session\n  on Roblox's side too, use “Log out of all other sessions” in Roblox's\n  security settings.",
+  "pub_date": "2026-10-17T15:10:31.212Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1VFSHRxOG9Ucmlhc0JTUFhtU3JWaG1GeWFMSWRZdVBoejdzTHNxSFQ2dkVURVZzSnM5YTRhL3JZWGRvQTJ2UmFSTFRSVGdONVEzY05EN2o1aENXdHdrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ3MDM1CWZpbGU6VmVzcGVyXzAuMy4xX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuMQorSTdWT2FJQmRSRWRIaDNSODNIaWlCUXRSZnp1bXhaMXV2SnFmMGxQN1pBM1JmazArYm1pNmwwUWU1TGt6WFZoUjBmZkNLR2FSbVBEaUp4SUpRdVpEUT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.1_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1ZUQkx0bmExSUdJRHF1a0MzQXQzVC9admVwa3R1VDg0YVdrQTE5NENiK2dZVTdQSkRVZDhFNS9SWHVOUUhGWUwzSzhNZHJ1cExGMmd1VUN2MDNHRmdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5NTk2CWZpbGU6VmVzcGVyXzAuMy4yX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuMgpKNW9mTGV5MEMrOS9MTml6QmR4a1k4SG03UU5YTzVxbG9LaGpydXgwMTVmQVhzT3RIQnVQRXdReGtKMXpYY0E3bnRvWkpiQjlmbVBWZVhqYlVTek1EQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_x64-setup.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1ZyYlEvOEpMZ2sxUW9yck4rTUlRa1VjVXBkWWc2NStRdWtjaWVtVFBRQTlpTHhSb0Q3cEV3dDk1TTJYcEpUbmhWZGdva3hoOVlIRmhjSHU1cmhJTndFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ3MTg5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMQp2WEdqYWwrVHhXWmM3VmJFN3lRT2R5WTMxVEh4UG5GY3RLT1AwTjhvYTc0ckE2SnNSbmwyV0VCOGFQeUpBaldvOXRsRVpMZUhscnZPc1c2elI3Z1RDQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.1_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2V0Rk1aaU9qMGkwNEVyVmVoZ3BWTHpTUHUzRlFDakgyNnhWV1FDUXVUY3VUTjZYVzk0SXJ0TVVUMVBzTWcwUkxPRnFUVU4xbThibzVMOUNDdlZtSGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5ODA5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMgpDMldqTTRYQkoyRzRDSEhKbmwyZHFNRW5CTTZkMlVlN0VHeU12cGtSVDJwKzFNSFI4V0ppSVQwZUN2SG9URHdod2p2dkNySXFxTm1uZlpxTVI1bCtDZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1ZyYlEvOEpMZ2sxUW9yck4rTUlRa1VjVXBkWWc2NStRdWtjaWVtVFBRQTlpTHhSb0Q3cEV3dDk1TTJYcEpUbmhWZGdva3hoOVlIRmhjSHU1cmhJTndFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ3MTg5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMQp2WEdqYWwrVHhXWmM3VmJFN3lRT2R5WTMxVEh4UG5GY3RLT1AwTjhvYTc0ckE2SnNSbmwyV0VCOGFQeUpBaldvOXRsRVpMZUhscnZPc1c2elI3Z1RDQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.1_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2V0Rk1aaU9qMGkwNEVyVmVoZ3BWTHpTUHUzRlFDakgyNnhWV1FDUXVUY3VUTjZYVzk0SXJ0TVVUMVBzTWcwUkxPRnFUVU4xbThibzVMOUNDdlZtSGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5ODA5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMgpDMldqTTRYQkoyRzRDSEhKbmwyZHFNRW5CTTZkMlVlN0VHeU12cGtSVDJwKzFNSFI4V0ppSVQwZUN2SG9URHdod2p2dkNySXFxTm1uZlpxTVI1bCtDZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_universal.app.tar.gz"
     }
   }
 }
