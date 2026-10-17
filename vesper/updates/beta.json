@@ -1,19 +1,19 @@
 {
-  "version": "0.3.2",
-  "notes": "### Removed\n\n- The Avatar page. It didn't work reliably, so it's gone rather than half\n  working. When 0.3.2 starts, it deletes the browser data that page kept on\n  your computer, including the Roblox sign-in made there. To end that session\n  on Roblox's side too, use “Log out of all other sessions” in Roblox's\n  security settings.",
-  "pub_date": "2026-10-17T15:10:31.212Z",
+  "version": "0.3.3",
+  "notes": "### Changed\n\n- Shaders come already compiled with Vesper, so it no longer loads\n  Microsoft's shader compiler while it runs.\n- Customize and the website explain what to do if Windows Security wrongly\n  removes Vesper when shaders run, with a link to report the mistake to\n  Microsoft.",
+  "pub_date": "2026-10-17T22:03:09.589Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1ZUQkx0bmExSUdJRHF1a0MzQXQzVC9admVwa3R1VDg0YVdrQTE5NENiK2dZVTdQSkRVZDhFNS9SWHVOUUhGWUwzSzhNZHJ1cExGMmd1VUN2MDNHRmdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5NTk2CWZpbGU6VmVzcGVyXzAuMy4yX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuMgpKNW9mTGV5MEMrOS9MTml6QmR4a1k4SG03UU5YTzVxbG9LaGpydXgwMTVmQVhzT3RIQnVQRXdReGtKMXpYY0E3bnRvWkpiQjlmbVBWZVhqYlVTek1EQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1FnbmpVVlg1VXhNdlJXWHdLSUVpNXJzWDZ4bTZzN0ViaDNqVm1HMDFCM3RRRXZ1ZGNTNWMvZWNtQlBicXZEVDF6WTYxNmdhY0VpRkkzUVNYd1hnRUFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjc0NTIxCWZpbGU6VmVzcGVyXzAuMy4zX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuMwpBak1sTFVDclJ1RTB2dnZIZkd5alprWWxlVFJBVnJUQnNQWElQdWZRRTdXSVVpM3JlRWhTdlVnSk45em4vRzJUZ0xEM2o2K1NtcVNrM044RDIxeEpDZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.3_x64-setup.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2V0Rk1aaU9qMGkwNEVyVmVoZ3BWTHpTUHUzRlFDakgyNnhWV1FDUXVUY3VUTjZYVzk0SXJ0TVVUMVBzTWcwUkxPRnFUVU4xbThibzVMOUNDdlZtSGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5ODA5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMgpDMldqTTRYQkoyRzRDSEhKbmwyZHFNRW5CTTZkMlVlN0VHeU12cGtSVDJwKzFNSFI4V0ppSVQwZUN2SG9URHdod2p2dkNySXFxTm1uZlpxTVI1bCtDZz09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1FSYnhsK3FFd1VhRmUwOTdQR2RTdStWOWI4YTNoRVRHamdONnhKbFhnYW9hbzJibWdWeSttV2JtQUVHWVIybVFONGxGZDRBVjlFVG9UUmxjUXNtZmdRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjc0NTA4CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMwppYkdTZzVxSVZvemlCQUJRUFVkdkJVK20rTDdXTitaekoreWowMTl5aG9rZDhjdXdXQk1GYTA5VndKaXRIR1NnZGdmRUdtVjZSR0ZCOHQvOXpaU3pEQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.3_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2V0Rk1aaU9qMGkwNEVyVmVoZ3BWTHpTUHUzRlFDakgyNnhWV1FDUXVUY3VUTjZYVzk0SXJ0TVVUMVBzTWcwUkxPRnFUVU4xbThibzVMOUNDdlZtSGdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQ5ODA5CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMgpDMldqTTRYQkoyRzRDSEhKbmwyZHFNRW5CTTZkMlVlN0VHeU12cGtSVDJwKzFNSFI4V0ppSVQwZUN2SG9URHdod2p2dkNySXFxTm1uZlpxTVI1bCtDZz09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.2_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1FSYnhsK3FFd1VhRmUwOTdQR2RTdStWOWI4YTNoRVRHamdONnhKbFhnYW9hbzJibWdWeSttV2JtQUVHWVIybVFONGxGZDRBVjlFVG9UUmxjUXNtZmdRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjc0NTA4CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuMwppYkdTZzVxSVZvemlCQUJRUFVkdkJVK20rTDdXTitaekoreWowMTl5aG9rZDhjdXdXQk1GYTA5VndKaXRIR1NnZGdmRUdtVjZSR0ZCOHQvOXpaU3pEQT09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.3_universal.app.tar.gz"
     }
   }
 }
