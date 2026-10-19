@@ -460,6 +460,8 @@
   .frame-in { padding: 8px; background: #0d0905; box-shadow: inset 0 0 0 1px rgba(214, 177, 106, .4), inset 0 0 24px rgba(0, 0, 0, .9); }
   .frame img { display: block; width: 100%; height: auto; aspect-ratio: 1320 / 820; transition: opacity .3s ease, filter .3s ease; }
   .frame img.swap { opacity: 0; filter: blur(6px); }
+  .frame [hidden] { display: none !important; }
+  .frame video { display: block; width: 100%; height: auto; aspect-ratio: 1180 / 760; object-fit: contain; background: #000; }
   .plaque {
     position: absolute; left: 50%; bottom: -17px; translate: -50% 0; white-space: nowrap;
     padding: 6px 20px; border-radius: 3px; font: 600 10.5px var(--caps); letter-spacing: .26em; color: #2b1c08;
@@ -476,6 +478,7 @@
   .thumb:hover { opacity: .85; transform: translateY(-2px); }
   .vesper .frame img, .vesper .thumb img { aspect-ratio: 1180 / 760; }
   .vesper .thumbs { flex-wrap: wrap; }
+  .vesper .thumb { width: 82px; }
   .thumb[aria-pressed="true"] { opacity: 1; border-color: var(--gold); }
 
   /* ── IV. correspondence ── */
@@ -925,11 +928,12 @@
       </div>
       <div class="rise" style="--d:2">
         <figure class="frame">
-          <div class="frame-in"><img src="/vesper/shots/home.webp" alt="Vesper's home screen" width="1180" height="760" loading="lazy"></div>
-          <figcaption class="plaque">Vesper · Home</figcaption>
+          <div class="frame-in"><video src="/k3/media/vesper.mp4" poster="/k3/media/vesper.jpg" controls playsinline preload="none" aria-label="Vesper launch film"></video><img src="/vesper/shots/home.webp" alt="Vesper's home screen" width="1180" height="760" loading="lazy" hidden></div>
+          <figcaption class="plaque">Vesper · Film</figcaption>
         </figure>
         <div class="thumbs" role="group" aria-label="Screenshots">
-          <button class="thumb" type="button" data-shot="home" data-label="Home" aria-pressed="true"><img src="/vesper/shots/home.webp" alt="" loading="lazy"><span>Home</span></button>
+          <button class="thumb" type="button" data-video data-label="Film" aria-pressed="true"><img src="/k3/media/vesper-thumb.jpg" alt="" loading="lazy"><span>Film</span></button>
+          <button class="thumb" type="button" data-shot="home" data-label="Home" aria-pressed="false"><img src="/vesper/shots/home.webp" alt="" loading="lazy"><span>Home</span></button>
           <button class="thumb" type="button" data-shot="recent" data-label="Recent games" aria-pressed="false"><img src="/vesper/shots/recent.webp" alt="" loading="lazy"><span>Recent</span></button>
           <button class="thumb" type="button" data-shot="fast-flags" data-label="Fast Flags" aria-pressed="false"><img src="/vesper/shots/fast-flags.webp" alt="" loading="lazy"><span>Flags</span></button>
           <button class="thumb" type="button" data-shot="customize" data-label="Customize" aria-pressed="false"><img src="/vesper/shots/customize.webp" alt="" loading="lazy"><span>Customize</span></button>
@@ -1236,12 +1240,21 @@
   // ── galleries (Vitra, Vesper): each .feature names its screenshots ──
   $$('.feature').forEach(function gallery(root) {
     const img = root.querySelector('.frame img'), plaque = root.querySelector('.plaque'), frame = root.querySelector('.frame');
-    const thumbs = [...root.querySelectorAll('.thumb')], name = root.dataset.name;
+    const thumbs = [...root.querySelectorAll('.thumb')], name = root.dataset.name, film = root.querySelector('.frame video');
     if (!img || !thumbs.length) return;
     const url = (pattern, s) => pattern.replace('{s}', s);
+    // The film plays with sound, so the evening's music steps aside for it.
+    if (film) film.addEventListener('play', () => document.getElementById('song').pause());
     thumbs.forEach(t => t.addEventListener('click', () => {
       if (t.getAttribute('aria-pressed') === 'true') return;
       thumbs.forEach(x => x.setAttribute('aria-pressed', x === t));
+      if (film) {
+        const on = 'video' in t.dataset;
+        if (!on) film.pause();
+        film.hidden = !on;
+        img.hidden = on;
+        if (on) { plaque.textContent = name + ' · ' + t.dataset.label; return; }
+      }
       img.classList.add('swap');
       setTimeout(() => {
         const s = t.dataset.shot, one = url(root.dataset.shot, s);
@@ -1254,6 +1267,7 @@
     }));
     if (!fine || reduced) return;
     frame.addEventListener('pointermove', e => {
+      if (film && !film.hidden) return;
       const r = frame.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
       frame.classList.add('tilting');
       frame.style.transform = `perspective(1400px) rotateY(${(x * 7).toFixed(2)}deg) rotateX(${(-y * 5).toFixed(2)}deg)`;
