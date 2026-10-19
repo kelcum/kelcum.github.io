@@ -461,7 +461,8 @@
   .frame img { display: block; width: 100%; height: auto; aspect-ratio: 1320 / 820; transition: opacity .3s ease, filter .3s ease; }
   .frame img.swap { opacity: 0; filter: blur(6px); }
   .frame [hidden] { display: none !important; }
-  .frame video { display: block; width: 100%; height: auto; aspect-ratio: 1180 / 760; object-fit: contain; background: #000; }
+  .frame video { display: block; width: 100%; height: auto; aspect-ratio: 1320 / 820; object-fit: contain; background: #000; }
+  .deadbolt .frame video { aspect-ratio: 16 / 9; }
   .plaque {
     position: absolute; left: 50%; bottom: -17px; translate: -50% 0; white-space: nowrap;
     padding: 6px 20px; border-radius: 3px; font: 600 10.5px var(--caps); letter-spacing: .26em; color: #2b1c08;
@@ -476,7 +477,7 @@
   .thumb img { display: block; width: 100%; aspect-ratio: 1320 / 820; object-fit: cover; }
   .thumb span { display: block; padding: 5px 0 6px; font: 500 9.5px var(--caps); letter-spacing: .18em; color: var(--ink-2); background: var(--coin-flat); }
   .thumb:hover { opacity: .85; transform: translateY(-2px); }
-  .vesper .frame img, .vesper .thumb img { aspect-ratio: 1180 / 760; }
+  .vesper .frame img, .vesper .frame video, .vesper .thumb img { aspect-ratio: 1180 / 760; }
   .vesper .thumbs { flex-wrap: wrap; }
   .vesper .thumb { width: 82px; }
   .thumb[aria-pressed="true"] { opacity: 1; border-color: var(--gold); }
@@ -655,14 +656,24 @@
   .hint b { margin-right: 10px; font: 600 11px var(--caps); letter-spacing: .22em; font-style: normal; color: var(--gold); }
 
   /* ── small screens ── */
+  /* six movements: the bar sheds its numerals, then the brand name, before it would spill */
+  @media (max-width: 1120px) {
+    .tab { padding: 9px 12px; }
+    .tab i { display: none; }
+  }
+  @media (max-width: 960px) {
+    .brand-name { display: none; }
+    .brand { padding-right: 2px; }
+    .tab { padding: 9px 10px; letter-spacing: .06em; }
+  }
   @media (max-width: 900px) {
     .feature { grid-template-columns: 1fr; gap: 40px; }
   }
   @media (max-width: 780px) {
     .bar { grid-template-columns: 1fr; padding: 6px; border-radius: 20px; }
     .brand, .actions { display: none; }
-    .tabs { justify-content: space-between; }
-    .tab { flex: 1; padding: 10px 4px; font-size: 12.5px; letter-spacing: .05em; }
+    .tabs { justify-content: space-between; min-width: 0; }
+    .tab { flex: 1 1 auto; padding: 10px 2px; font-size: clamp(10px, 2.8vw, 12.5px); letter-spacing: .03em; }
     .tab i { display: none; }
     main { padding-top: 96px; }
     .works { grid-template-columns: 1fr; }
@@ -742,9 +753,10 @@
     <span class="ink" aria-hidden="true"></span>
     <a class="tab" href="#overture" data-view="overture"><i>I</i>Overture</a>
     <a class="tab" href="#works" data-view="works"><i>II</i>Works</a>
-    <a class="tab" href="#vitra" data-view="vitra"><i>III</i>Vitra</a>
-    <a class="tab" href="#vesper" data-view="vesper"><i>IV</i>Vesper</a>
-    <a class="tab" href="#contact" data-view="contact"><i>V</i>Contact</a>
+    <a class="tab" href="#deadbolt" data-view="deadbolt"><i>III</i>Deadbolt</a>
+    <a class="tab" href="#vitra" data-view="vitra"><i>IV</i>Vitra</a>
+    <a class="tab" href="#vesper" data-view="vesper"><i>V</i>Vesper</a>
+    <a class="tab" href="#contact" data-view="contact"><i>VI</i>Contact</a>
   </nav>
   <div class="actions">
     <button class="icon-btn" id="theme" type="button" aria-label="Switch to day">
@@ -794,7 +806,7 @@
       <ol>
         <li><a href="#works/sites"><span class="n">I.</span><b>Transmute</b><span class="dots"></span><em>Sites</em></a></li>
         <li><a href="#works/sites"><span class="n">II.</span><b>Peel</b><span class="dots"></span><em>Sites</em></a></li>
-        <li><a href="#works/discord"><span class="n">III.</span><b>Deadbolt</b><span class="dots"></span><em>Discord</em></a></li>
+        <li><a href="#deadbolt"><span class="n">III.</span><b>Deadbolt</b><span class="dots"></span><em>Discord</em></a></li>
         <li><a href="#works/tools"><span class="n">IV.</span><b>VOID</b><span class="dots"></span><em>Tools</em></a></li>
         <li><a href="#vitra"><span class="n">V.</span><b>Vitra</b><span class="dots"></span><em>Minecraft</em></a></li>
         <li><a href="#vesper"><span class="n">VI.</span><b>Vesper</b><span class="dots"></span><em>Roblox</em></a></li>
@@ -834,7 +846,7 @@
         <p>Remove backgrounds from photos and GIFs. The AI runs on your own device.</p>
         <span class="work-go">Open <i>→</i></span>
       </a>
-      <a class="work" data-cat="discord" href="/deadbolt/">
+      <a class="work" data-cat="discord" href="#deadbolt">
         <span class="work-no">No. III<em>Discord</em></span>
         <span class="work-icon"><img src="/deadbolt/assets/crest.svg" alt="" loading="lazy" style="object-fit: contain; padding: 9px"></span>
         <h3><span>Deadbolt</span><span class="stars" data-repo="Deadbolt"></span></h3>
@@ -865,11 +877,42 @@
     </div>
   </section>
 
-  <!-- III. Vitra -->
+  <!-- III. Deadbolt -->
+  <section class="view" id="view-deadbolt" data-view="deadbolt" aria-label="Deadbolt">
+    <div class="feature deadbolt" data-name="Deadbolt">
+      <div>
+        <p class="eyebrow rise" style="--d:0">Movement III · Discord</p>
+        <h2 class="rise" style="--d:1">Deadbolt</h2>
+        <p class="lede rise" style="--d:2">A cold, no-frills Discord client mod.</p>
+        <ul class="ornate rise" style="--d:3">
+          <li><b>The whole Equicord library</b>, 300+ plugins from Equicord and Vencord</li>
+          <li><b>Its own boot splash</b>, an animated chrome crest and Deadbolt-branded quotes</li>
+          <li><b>Animated profile badges</b> that shimmer, each with a proper hover card</li>
+          <li><b>/addplugin</b>: attach a file and Deadbolt saves it, rebuilds and offers to reload</li>
+          <li><b>macOS done properly</b>, so Discord.app is never modified</li>
+          <li><b>Heals itself on Windows</b> when Discord's updater resets mods</li>
+          <li><b>Small plugins that earn their spot</b>, like ConfirmMassMention and DoubleSendGuard</li>
+        </ul>
+        <div class="ctas rise" style="--d:4">
+          <a class="btn btn-gold" href="https://github.com/kelcum/Deadbolt/releases/latest/download/DeadboltSetup.exe">Download for Windows <span class="arr">↓</span></a>
+          <a class="btn btn-ghost" href="/deadbolt/">The full story</a>
+        </div>
+        <p class="meta rise" style="--d:5">Windows · macOS · Linux · GPL-3.0 open source</p>
+      </div>
+      <div class="rise" style="--d:2">
+        <figure class="frame">
+          <div class="frame-in"><video src="/k3/media/deadbolt.mp4" poster="/k3/media/deadbolt.jpg" controls playsinline preload="none" aria-label="Deadbolt launch film"></video></div>
+          <figcaption class="plaque">Deadbolt · Film</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- IV. Vitra -->
   <section class="view" id="view-vitra" data-view="vitra" aria-label="Vitra">
     <div class="feature" data-name="Vitra" data-shot="/vitra/shots/{s}-1x.webp" data-shot-hd="/vitra/shots/{s}.webp">
       <div>
-        <p class="eyebrow rise" style="--d:0">Movement III · Minecraft</p>
+        <p class="eyebrow rise" style="--d:0">Movement IV · Minecraft</p>
         <h2 class="rise" style="--d:1">Vitra</h2>
         <p class="lede rise" style="--d:2">A Minecraft launcher made of glass, composed for friends.</p>
         <ul class="ornate rise" style="--d:3">
@@ -888,11 +931,12 @@
       </div>
       <div class="rise" style="--d:2">
         <figure class="frame" id="frame">
-          <div class="frame-in"><img id="shot" src="/vitra/shots/home-1x.webp" srcset="/vitra/shots/home-1x.webp 1x, /vitra/shots/home.webp 2x" alt="Vitra's home screen" width="1320" height="820" loading="lazy"></div>
-          <figcaption class="plaque" id="plaque">Vitra · Home</figcaption>
+          <div class="frame-in"><video src="/k3/media/vitra.mp4" poster="/k3/media/vitra.jpg" controls playsinline preload="none" aria-label="Vitra launch film"></video><img id="shot" src="/vitra/shots/home-1x.webp" srcset="/vitra/shots/home-1x.webp 1x, /vitra/shots/home.webp 2x" alt="Vitra's home screen" width="1320" height="820" loading="lazy" hidden></div>
+          <figcaption class="plaque" id="plaque">Vitra · Film</figcaption>
         </figure>
         <div class="thumbs" role="group" aria-label="Screenshots">
-          <button class="thumb" type="button" data-shot="home" data-label="Home" aria-pressed="true"><img src="/vitra/shots/home-1x.webp" alt="" loading="lazy"><span>Home</span></button>
+          <button class="thumb" type="button" data-video data-label="Film" aria-pressed="true"><img src="/k3/media/vitra-thumb.jpg" alt="" loading="lazy"><span>Film</span></button>
+          <button class="thumb" type="button" data-shot="home" data-label="Home" aria-pressed="false"><img src="/vitra/shots/home-1x.webp" alt="" loading="lazy"><span>Home</span></button>
           <button class="thumb" type="button" data-shot="servers" data-label="Servers" aria-pressed="false"><img src="/vitra/shots/servers-1x.webp" alt="" loading="lazy"><span>Servers</span></button>
           <button class="thumb" type="button" data-shot="skins" data-label="Skins" aria-pressed="false"><img src="/vitra/shots/skins-1x.webp" alt="" loading="lazy"><span>Skins</span></button>
           <button class="thumb" type="button" data-shot="instance" data-label="Instance" aria-pressed="false"><img src="/vitra/shots/instance-1x.webp" alt="" loading="lazy"><span>Instance</span></button>
@@ -901,11 +945,11 @@
     </div>
   </section>
 
-  <!-- IV. Vesper -->
+  <!-- V. Vesper -->
   <section class="view" id="view-vesper" data-view="vesper" aria-label="Vesper">
     <div class="feature vesper" data-name="Vesper" data-shot="/vesper/shots/{s}.webp">
       <div>
-        <p class="eyebrow rise" style="--d:0">Movement IV · Roblox</p>
+        <p class="eyebrow rise" style="--d:0">Movement V · Roblox</p>
         <h2 class="rise" style="--d:1">Vesper</h2>
         <p class="lede rise" style="--d:2">A Roblox launcher, tuned and verified, for evenings in game.</p>
         <ul class="ornate rise" style="--d:3">
@@ -943,10 +987,10 @@
     </div>
   </section>
 
-  <!-- V. Contact -->
+  <!-- VI. Contact -->
   <section class="view" id="view-contact" data-view="contact" aria-label="Contact">
     <div class="head">
-      <p class="eyebrow rise" style="--d:0">Movement V</p>
+      <p class="eyebrow rise" style="--d:0">Movement VI</p>
       <h2 class="rise" style="--d:1">Correspondence</h2>
       <div class="rule rise" style="--d:2"><i></i></div>
     </div>
@@ -1243,8 +1287,6 @@
     const thumbs = [...root.querySelectorAll('.thumb')], name = root.dataset.name, film = root.querySelector('.frame video');
     if (!img || !thumbs.length) return;
     const url = (pattern, s) => pattern.replace('{s}', s);
-    // The film plays with sound, so the evening's music steps aside for it.
-    if (film) film.addEventListener('play', () => document.getElementById('song').pause());
     thumbs.forEach(t => t.addEventListener('click', () => {
       if (t.getAttribute('aria-pressed') === 'true') return;
       thumbs.forEach(x => x.setAttribute('aria-pressed', x === t));
@@ -1274,6 +1316,8 @@
     });
     frame.addEventListener('pointerleave', () => { frame.classList.remove('tilting'); frame.style.transform = ''; });
   });
+  // The films play with sound, so the evening's music steps aside for them.
+  $$('.frame video').forEach(v => v.addEventListener('play', () => document.getElementById('song').pause()));
 
   // a soft light follows the pointer across the programme cards
   if (fine && !reduced) cards.forEach(c => c.addEventListener('pointermove', e => {
