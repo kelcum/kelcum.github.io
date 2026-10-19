@@ -1,15 +1,15 @@
 {
-  "version": "0.1.5",
-  "notes": "Fixes Forge modpacks for Minecraft 1.17 to 1.20 (like most 1.20.1 packs) crashing as soon as they start. Nothing to reinstall: just press Play again.",
-  "pub_date": "2026-10-19T04:19:52Z",
+  "version": "0.1.6",
+  "notes": "New: Memories. Vitra now keeps a picture of your big moments while you play, like your first diamonds, the first trip to the Nether or beating the Ender Dragon, and shows them on the new Memories page. It works in every version and modpack, in any game language, with nothing added to the game, and the pictures stay on your PC. You can turn it off in Settings → Launcher.",
+  "pub_date": "2026-10-19T06:39:37Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFRUNEJBRTRhWkswK2o1UnVKVkpKaXUvdjFacWlKaG1ZbHYrM0ZHSzZIYytVd3Uwb01xdllEU21SdG0vWTVhelMzekdOL0pBTk13K2Nsbndmd0lhc2d3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzgzNTQ4CWZpbGU6Vml0cmFfMC4xLjVfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS41Cis3UDVSSDV0c0lkSjZTT3NiaUtrdWNLb2MwUGJKOHZFeU5GeEZiSzliMVk5VzRCMEZqL2tsNm9tTjJscGNBeXNIaHpIeDJpMWlqdUE0aFoxdDhGV0FnPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.5_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TGJ3UlQ2UzJDdFdwcXUweGdQbS9lYUR3SzZraUhPcFBteUNrWXA5YXVmV1RhOU1VZVdCZ0s5MVZYNzh4bjdRaHI2MHN6MG1hOVpzSGhuOGdXVXpUcVFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzkxNjExCWZpbGU6Vml0cmFfMC4xLjZfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS42CkNYbkRMb3VHc2oxbW1TS0JQVHJCS2ZhUkVrSFhwY2hoWVMwVXBBZGFBZXorSjB5ZmFSbzJNTVdwVnI3TkhZTDJPZmRUbUkzNEJuMGovOGFqUDArMkJBPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.6_x64-setup.exe"
     },
     "windows-x86_64-nsis": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFRUNEJBRTRhWkswK2o1UnVKVkpKaXUvdjFacWlKaG1ZbHYrM0ZHSzZIYytVd3Uwb01xdllEU21SdG0vWTVhelMzekdOL0pBTk13K2Nsbndmd0lhc2d3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzgzNTQ4CWZpbGU6Vml0cmFfMC4xLjVfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS41Cis3UDVSSDV0c0lkSjZTT3NiaUtrdWNLb2MwUGJKOHZFeU5GeEZiSzliMVk5VzRCMEZqL2tsNm9tTjJscGNBeXNIaHpIeDJpMWlqdUE0aFoxdDhGV0FnPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.5_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TGJ3UlQ2UzJDdFdwcXUweGdQbS9lYUR3SzZraUhPcFBteUNrWXA5YXVmV1RhOU1VZVdCZ0s5MVZYNzh4bjdRaHI2MHN6MG1hOVpzSGhuOGdXVXpUcVFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzkxNjExCWZpbGU6Vml0cmFfMC4xLjZfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS42CkNYbkRMb3VHc2oxbW1TS0JQVHJCS2ZhUkVrSFhwY2hoWVMwVXBBZGFBZXorSjB5ZmFSbzJNTVdwVnI3TkhZTDJPZmRUbUkzNEJuMGovOGFqUDArMkJBPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.6_x64-setup.exe"
     }
   }
 }
