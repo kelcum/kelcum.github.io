@@ -186,6 +186,8 @@ h2 {
 .card h3 { margin: 0 0 .45rem; color: var(--text); font: 700 1.04rem/1.3 var(--font-body); }
 .card p { margin: 0; font-size: .93rem; line-height: 1.6; }
 .card .tag { display: inline-block; margin-top: .8rem; font: 500 .74rem/1.3 var(--font-mono); color: var(--muted); }
+.card a.tag { position: relative; text-decoration: none; transition: color .2s; }
+.card a.tag:hover { color: var(--text); }
 
 .rule { position: relative; height: 1px; background: linear-gradient(90deg, transparent, var(--line-2), transparent); }
 .rule span {
@@ -202,6 +204,13 @@ h2 {
 }
 .badge-card h3 { margin: 0 0 .35rem; color: var(--text); font: 700 1.1rem/1.3 var(--font-body); }
 .badge-card p { margin: 0; font-size: .93rem; }
+a.badge-card { text-decoration: none; color: inherit; transition: border-color .3s ease, transform .3s ease; }
+a.badge-card:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.badge-card .go { display: inline-block; margin-top: .35rem; color: var(--text); font-weight: 600; }
+.badge.ghost { display: grid; place-items: center; background: rgba(255, 255, 255, .02); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .16); animation: none; }
+.badge.ghost::before, .badge.ghost::after { display: none; }
+.badge.ghost svg { width: 40%; height: 40%; border-radius: 0; fill: none; stroke: var(--text-2); stroke-width: 2; stroke-linecap: round; }
+.yours:hover .badge.ghost { box-shadow: inset 0 0 0 2px rgba(201, 192, 255, .55); }
 .badge {
   position: relative; flex: none; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; isolation: isolate;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 10px 30px rgba(0, 0, 0, .55);
@@ -287,7 +296,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
 @media (max-width: 1020px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
   .card, .card.w { grid-column: span 1; }
-  .card.w:first-child { grid-column: span 2; }
+  .grid > .card:first-child { grid-column: span 2; }
   .panel-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
@@ -299,7 +308,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
 }
 @media (max-width: 620px) {
   .grid { grid-template-columns: 1fr; }
-  .card.w:first-child { grid-column: span 1; }
+  .grid > .card:first-child { grid-column: span 1; }
   .badge-card { flex-direction: column; align-items: flex-start; }
   .tabs { display: flex; width: 100%; }
   .tab { flex: 1; padding-inline: .5rem; }
@@ -398,15 +407,21 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
       </div>
 
       <div class="grid">
-        <article class="card w reveal">
+        <article class="card reveal">
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
           <h3>Its own boot splash</h3>
           <p>Replaces Discord&rsquo;s connecting screen with an animated chrome crest and Deadbolt-branded quotes, instead of just re-texting the default one.</p>
         </article>
-        <article class="card w reveal" style="--d:.06s">
+        <article class="card reveal" style="--d:.06s">
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5 7 22l5-3 5 3-1.5-7.5"/></svg></div>
           <h3>Animated profile badges</h3>
-          <p>A constantly shining chrome Creator badge and a violet Contributor badge, each with a proper hover card. Click Contributor to see that person&rsquo;s plugins.</p>
+          <p>A shining chrome Creator badge, a violet Contributor badge and a Plugin Creator badge, each with a proper hover card. Click Contributor or Plugin Creator to see that person&rsquo;s plugins.</p>
+        </article>
+        <article class="card reveal" style="--d:.12s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3.5 14.3 8l5 .7-3.6 3.5.9 5L12 14.8l-4.6 2.4.9-5L4.7 8.7l5-.7z"/><path d="M5 20.5h14"/></svg></div>
+          <h3>Design your own badge</h3>
+          <p>Deadbolt&rsquo;s settings have a badge designer with a live preview: upload an image, even an animated one, frame it, add effects and send it in.</p>
+          <a class="tag" href="badge/">or design one on the web &rarr;</a>
         </article>
 
         <article class="card reveal">
@@ -452,7 +467,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
       <div class="head reveal">
         <div class="eyebrow">Profile badges</div>
         <h2>Badges that actually move.</h2>
-        <p>Not just a static icon: these shimmer, carry a hover card, and the Contributor badge opens a list of everything that person has added.</p>
+        <p>Not just a static icon: these shimmer, carry a hover card, and the Contributor and Plugin Creator badges open a list of everything that person has made.</p>
       </div>
 
       <div class="badges">
@@ -483,8 +498,34 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
             <p>A violet bolt that slowly turns. Click it on a profile to see what that person has built.</p>
           </div>
         </div>
+        <div class="badge-card reveal" style="--d:.12s">
+          <div class="badge" role="img" aria-label="Plugin Creator badge">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <defs>
+                <radialGradient id="pcBg" cx="35%" cy="30%" r="80%"><stop offset="0%" stop-color="#2c3038"/><stop offset="100%" stop-color="#101115"/></radialGradient>
+                <linearGradient id="pcPiece" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eef1f5"/><stop offset="50%" stop-color="#b3bbc6"/><stop offset="100%" stop-color="#6f7783"/></linearGradient>
+              </defs>
+              <rect width="64" height="64" fill="url(#pcBg)"/>
+              <path transform="translate(32 32) scale(1.3) translate(-35 -35)" d="M18 24h8a6 6 0 1 1 12 0h8v8a6 6 0 1 1 0 12v8H18z" fill="url(#pcPiece)"/>
+              <path transform="translate(32 32) scale(1.3) translate(-35 -35)" d="M21 27h4.5M21 27v7" stroke="#fff" stroke-opacity="0.55" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Plugin Creator</h3>
+            <p>For anyone with a plugin in Deadbolt. Click it to see every plugin they made.</p>
+          </div>
+        </div>
+        <a class="badge-card yours reveal" style="--d:.18s" href="badge/">
+          <div class="badge ghost" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <div>
+            <h3>Yours</h3>
+            <p>Design one with a live preview, animated images welcome, and send it in. If it gets made, it&rsquo;s on your profile for everyone. <span class="go">Design a badge &rarr;</span></p>
+          </div>
+        </a>
       </div>
-      <p class="fine reveal">Badges show up for anyone running Deadbolt. Want your own? <a href="badge/">Request a badge</a>.</p>
+      <p class="fine reveal">Badges show up for anyone running Deadbolt.</p>
     </div>
   </section>
 
@@ -509,7 +550,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
           <div class="panel-grid">
             <div>
               <h3>One-click installer</h3>
-              <p>Downloads the latest Deadbolt build and walks you through picking your Discord install: Stable, PTB or Canary.</p>
+              <p>Downloads the latest Deadbolt build and walks you through picking your Discord install: Stable, PTB or Canary. Already running another client mod there? It swaps it out for you.</p>
               <ol class="steps">
                 <li>Download and run <code>DeadboltSetup.exe</code>.</li>
                 <li>Pick your Discord install when it asks.</li>
