@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <script>(()=>{const s=e=>{e.preventDefault();e.stopImmediatePropagation()};addEventListener("contextmenu",s,true);addEventListener("keydown",e=>{const c=e.code,m=e.ctrlKey||e.metaKey;if(e.key==="F12"||c==="F12"||(m&&e.shiftKey&&["KeyI","KeyJ","KeyC","KeyK"].includes(c))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(c))||(m&&c==="KeyU"))s(e)},true);setInterval(()=>{const t=performance.now();debugger;if(performance.now()-t>200){document.documentElement.innerHTML="";location.replace("about:blank")}},1000)})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Request a badge - Deadbolt</title>
-<meta name="description" content="Got an idea for a Deadbolt profile badge? Send it in. If it gets made, everyone on Deadbolt sees it next to your name.">
+<title>Design a badge - Deadbolt</title>
+<meta name="description" content="Design a Deadbolt profile badge and send it in. If it gets made, everyone on Deadbolt sees it next to your name.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#08090c">
 <link rel="canonical" href="https://xan.gripe/deadbolt/badge/">
@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Request a Deadbolt badge">
-<meta property="og:description" content="Send in an idea for a profile badge. If it gets made, everyone on Deadbolt sees it next to your name.">
+<meta property="og:title" content="Design a Deadbolt badge">
+<meta property="og:description" content="Design a profile badge and send it in. If it gets made, everyone on Deadbolt sees it next to your name.">
 <meta property="og:url" content="https://xan.gripe/deadbolt/badge/">
 <meta property="og:image" content="https://xan.gripe/deadbolt/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -41,8 +41,9 @@
   --font-display: "Archivo", "Segoe UI Black", system-ui, sans-serif;
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
-  --g: conic-gradient(from 210deg, #7c6ff0, #7c6ff0);
 }
+
+@property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -60,7 +61,7 @@ body {
 a { color: inherit; }
 code { font-family: var(--font-mono); font-size: .86em; color: var(--text); }
 :focus-visible { outline: 2px solid #cfd8e3; outline-offset: 3px; border-radius: 6px; }
-.wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
+.wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 .nav {
@@ -80,7 +81,7 @@ code { font-family: var(--font-mono); font-size: .86em; color: var(--text); }
 .nav-links a { color: var(--text-2); text-decoration: none; transition: color .2s; }
 .nav-links a:hover { color: #fff; }
 
-main { flex: 1; position: relative; isolation: isolate; overflow: hidden; padding: clamp(40px, 7vw, 84px) 0 clamp(56px, 8vw, 96px); }
+main { flex: 1; position: relative; isolation: isolate; padding: clamp(40px, 7vw, 84px) 0 clamp(56px, 8vw, 96px); }
 main::before {
   content: ""; position: absolute; inset: 0; z-index: -2;
   background: radial-gradient(70% 45% at 50% -5%, rgba(190, 205, 232, .15), transparent 70%);
@@ -93,16 +94,16 @@ main::after {
   mask-image: radial-gradient(ellipse 70% 40% at 50% 0%, #000, transparent 76%);
 }
 
-.head { max-width: 640px; margin-bottom: clamp(28px, 4vw, 44px); }
+.head { max-width: 660px; margin-bottom: clamp(28px, 4vw, 44px); }
 .eyebrow { font: 500 .74rem/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
 h1 {
   margin: .5rem 0 .8rem;
   font: 850 clamp(2.2rem, 6vw, 3.6rem)/1.04 var(--font-display); font-stretch: 116%; letter-spacing: -.01em;
   background: var(--chrome); background-size: 240% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-  animation: sheen 8s ease-in-out infinite alternate;
+  animation: title-sheen 8s ease-in-out infinite alternate;
 }
-@keyframes sheen { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+@keyframes title-sheen { from { background-position: 0% 0; } to { background-position: 100% 0; } }
 .head p { margin: 0; font-size: 1.04rem; text-wrap: pretty; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
@@ -111,12 +112,13 @@ h1 {
   border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012));
 }
 
-form { display: grid; gap: 1.25rem; }
+form { display: grid; gap: 1.4rem; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.field { display: grid; gap: .45rem; min-width: 0; align-content: start; }
-.field > span, .label { color: var(--text); font-weight: 600; font-size: .92rem; }
-.field small, .hint { font-size: .8rem; color: var(--muted); }
-.opt { color: var(--muted); font-weight: 400; }
+.field { display: grid; gap: .5rem; min-width: 0; align-content: start; }
+.label { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .5rem; color: var(--text); font-weight: 600; font-size: .92rem; }
+.opt, .hint, .field small { font-size: .8rem; font-weight: 400; color: var(--muted); }
+.label .act { margin-left: auto; }
+.field.off { opacity: .45; pointer-events: none; }
 input[type="text"], textarea {
   width: 100%; padding: .75rem .9rem; border-radius: 12px;
   border: 1px solid var(--line-2); background: var(--bg-2); color: var(--text);
@@ -126,22 +128,45 @@ input[type="text"], textarea {
 input[type="text"]::placeholder, textarea::placeholder { color: #5d6570; }
 input[type="text"]:focus, textarea:focus { outline: none; border-color: rgba(201, 192, 255, .55); box-shadow: 0 0 0 3px rgba(124, 111, 240, .2); }
 input[aria-invalid="true"] { border-color: rgba(248, 113, 113, .6); }
-textarea { min-height: 112px; resize: vertical; }
+textarea { min-height: 100px; resize: vertical; }
 .count { justify-self: end; font: 500 .72rem/1 var(--font-mono); color: var(--muted); }
 
+.seg { display: inline-flex; justify-self: start; gap: 2px; padding: 3px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+.seg button {
+  appearance: none; border: 0; cursor: pointer; padding: .5rem .9rem; border-radius: 9px;
+  background: transparent; color: var(--text-2); font: 600 .85rem/1 var(--font-body); transition: color .2s, background .2s;
+}
+.seg button:hover { color: #fff; }
+.seg button[aria-checked="true"] { color: #0a0b0f; background: linear-gradient(180deg, #f6f9fc, #bcc6d2); }
+
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips button {
+  appearance: none; cursor: pointer; padding: .45rem .95rem; border-radius: 999px;
+  border: 1px solid var(--line-2); background: transparent; color: var(--text-2);
+  font: 600 .85rem/1.2 var(--font-body); transition: color .2s, background .2s, border-color .2s;
+}
+.chips button:hover { color: #fff; border-color: rgba(255, 255, 255, .24); }
+.chips button[aria-pressed="true"] { color: #fff; border-color: rgba(201, 192, 255, .7); background: rgba(124, 111, 240, .22); }
+
+.sliders { display: grid; gap: .2rem; }
+.slider { display: grid; grid-template-columns: 96px minmax(0, 1fr) 52px; align-items: center; gap: .8rem; }
+.slider span:first-child { font-size: .85rem; color: var(--text-2); }
+.slider output { font: 500 .78rem/1 var(--font-mono); color: var(--text); text-align: right; }
+.slider input { width: 100%; margin: .5rem 0; accent-color: var(--violet); cursor: pointer; }
+
 .colors { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
-.chip {
+.swatch {
   display: inline-flex; align-items: center; gap: .5rem; padding: .3rem .45rem .3rem .3rem;
   border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2);
 }
-.chip input[type="color"] {
+.swatch input[type="color"] {
   appearance: none; -webkit-appearance: none; width: 30px; height: 30px; padding: 0; border: 0;
   border-radius: 8px; background: none; cursor: pointer;
 }
-.chip input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-.chip input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
-.chip input[type="color"]::-moz-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
-.chip code { font-size: .8rem; }
+.swatch input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.swatch input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
+.swatch input[type="color"]::-moz-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
+.swatch code { font-size: .8rem; }
 .x {
   display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%;
   background: transparent; color: var(--muted); font-size: 1.05rem; line-height: 1; cursor: pointer;
@@ -165,6 +190,8 @@ textarea { min-height: 112px; resize: vertical; }
 .btn-ghost:hover { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .24); }
 .btn-sm { padding: .5rem .9rem; font-size: .85rem; border-radius: 10px; }
 .btn:disabled { opacity: .55; cursor: default; }
+.link { padding: 0; border: 0; background: none; color: #c9c0ff; font: 500 .82rem/1.2 var(--font-body); cursor: pointer; }
+.link:hover { text-decoration: underline; }
 
 .file { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
 .file-name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: .9rem; }
@@ -174,39 +201,89 @@ textarea { min-height: 112px; resize: vertical; }
 .err { margin: 0; font-size: .9rem; color: var(--error); }
 .err:empty { display: none; }
 
-.preview { position: sticky; top: 88px; text-align: center; }
-.preview .label { display: block; margin-bottom: 1.4rem; font: 500 .74rem/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
-.medal {
-  position: relative; width: 120px; height: 120px; margin: 0 auto; border-radius: 50%; overflow: hidden; isolation: isolate;
-  background: var(--g);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .12), 0 14px 40px rgba(0, 0, 0, .55);
-  animation: pulse 3.2s ease-in-out infinite;
+.preview { position: sticky; top: 88px; display: grid; gap: .8rem; }
+.preview > .eyebrow { text-align: center; }
+.stage {
+  display: grid; place-items: center; height: 220px; border-radius: 16px; border: 1px solid var(--line);
+  background-image: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, .07), transparent 65%);
+  transition: background-color .2s;
 }
-.medal img { position: absolute; inset: 12%; width: 76%; height: 76%; object-fit: contain; border-radius: 50%; }
-.medal::before {
-  content: ""; position: absolute; inset: -45%; z-index: 1; pointer-events: none; mix-blend-mode: soft-light;
-  background: conic-gradient(from 0deg, rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 55%) 35deg, rgb(255 255 255 / 8%) 85deg, rgb(255 255 255 / 0%) 140deg, rgb(255 255 255 / 45%) 205deg, rgb(255 255 255 / 8%) 260deg, rgb(255 255 255 / 0%) 320deg);
-  animation: spin 4s linear infinite;
-}
-.medal::after {
-  content: ""; position: absolute; inset: -30%; z-index: 2; pointer-events: none; mix-blend-mode: screen;
-  background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / 70%) 50%, transparent 58%);
-  transform: translateX(-160%); animation: glint 2.6s ease-in-out infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes glint { 0% { transform: translateX(-160%); } 55%, 100% { transform: translateX(160%); } }
-@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 14px 40px rgba(0,0,0,.55); } 50% { box-shadow: 0 0 0 1px rgba(255,255,255,.3), 0 0 26px rgba(220,225,255,.28), 0 14px 40px rgba(0,0,0,.55); } }
+.stage.dark, .profile.dark { background-color: #111214; }
+.stage.light, .profile.light { background-color: #f2f3f5; }
+.preview .seg { justify-self: center; }
+.profile { padding: .9rem; border-radius: 16px; border: 1px solid var(--line); }
+.profile .eyebrow { margin-bottom: .7rem; font-size: .66rem; }
+.profile-row { display: flex; align-items: center; gap: .7rem; }
+.avatar { width: 40px; height: 40px; flex: none; border-radius: 50%; background: linear-gradient(135deg, #5865f2, #7c6ff0); display: grid; place-items: center; color: #fff; font-weight: 700; }
+.profile-name { font-weight: 700; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile.dark .profile-name { color: #f2f3f5; }
+.profile.light .profile-name { color: #060607; }
+.profile-badges { display: flex; width: fit-content; margin-top: 4px; padding: 3px 5px; border-radius: 6px; }
+.profile.dark .profile-badges { background: rgba(255, 255, 255, .06); }
+.profile.light .profile-badges { background: rgba(0, 0, 0, .06); }
 .tip {
-  display: inline-block; margin-top: 1.3rem; max-width: 100%; padding: .45rem .8rem; border-radius: 8px;
-  background: #111214; border: 1px solid var(--line-2); color: var(--text);
-  font-weight: 700; font-size: .9rem; overflow-wrap: anywhere;
+  width: fit-content; max-width: 100%; margin-top: .7rem; padding: .4rem .7rem; border-radius: 6px;
+  background: #18191c; color: #f2f3f5; font-weight: 600; font-size: .82rem; overflow-wrap: anywhere;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
 }
-.preview p { margin: 1rem 0 0; font-size: .82rem; color: var(--muted); }
+.preview p { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
+
+.float { width: var(--size); height: var(--size); flex: none; }
+.float.fx-float { animation: bob calc(3s / var(--speed)) ease-in-out infinite; }
+.medal { position: relative; width: 100%; height: 100%; isolation: isolate; touch-action: none; user-select: none; }
+.medal.shape-circle, .medal.shape-rounded {
+  overflow: hidden; background: var(--bg-fill);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 calc(var(--size) * .06) calc(var(--size) * .2) rgba(0, 0, 0, .45);
+}
+.medal.shape-circle { border-radius: 50%; }
+.medal.shape-rounded { border-radius: 28%; }
+.medal.empty { border-radius: 50%; outline: 1px dashed rgba(128, 128, 128, .55); outline-offset: -1px; }
+.medal.movable { cursor: grab; }
+.medal.movable:active { cursor: grabbing; }
+.art { position: absolute; inset: 0; transform-origin: center; }
+.art img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.medal.fx-spin .art img { animation: spin calc(6s / var(--speed)) linear infinite; }
+.glint, .shine, .art-glint, .art-shine { display: none; position: absolute; pointer-events: none; }
+.medal.framed.fx-glint .glint, .medal.framed.fx-shine .shine,
+.medal.shape-none.fx-glint .art-glint, .medal.shape-none.fx-shine .art-shine { display: block; }
+.glint {
+  inset: -45%; z-index: 1; mix-blend-mode: soft-light;
+  background: conic-gradient(from 0deg, rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 60%) 35deg, rgb(255 255 255 / 10%) 85deg, rgb(255 255 255 / 0%) 140deg, rgb(255 255 255 / 50%) 205deg, rgb(255 255 255 / 10%) 260deg, rgb(255 255 255 / 0%) 320deg);
+  animation: spin calc(4s / var(--speed)) linear infinite;
+}
+.shine {
+  inset: -30%; z-index: 2; mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / 70%) 50%, transparent 58%);
+  transform: translateX(-160%); animation: sheen calc(2.6s / var(--speed)) ease-in-out infinite;
+}
+.art-glint, .art-shine { inset: 0; -webkit-mask: var(--mask) center / contain no-repeat; mask: var(--mask) center / contain no-repeat; }
+.art-shine {
+  mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 80%) 50%, transparent 60%);
+  background-size: 300% 100%; animation: mask-sheen calc(2.6s / var(--speed)) ease-in-out infinite;
+}
+.art-glint {
+  mix-blend-mode: soft-light;
+  background: conic-gradient(from var(--angle), rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 70%) 40deg, rgb(255 255 255 / 0%) 120deg, rgb(255 255 255 / 60%) 220deg, rgb(255 255 255 / 0%) 300deg);
+  animation: turn calc(4s / var(--speed)) linear infinite;
+}
+.medal.framed.fx-pulse { animation: pulse calc(3.2s / var(--speed)) ease-in-out infinite; }
+.medal.shape-none.fx-pulse .art { animation: glow calc(3.2s / var(--speed)) ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes turn { to { --angle: 360deg; } }
+@keyframes sheen { 0% { transform: translateX(-160%); } 55%, 100% { transform: translateX(160%); } }
+@keyframes mask-sheen { 0% { background-position: 100% 0; } 55%, 100% { background-position: 0% 0; } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(var(--size) * -.08)); } }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow) 35%, transparent), 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow) 80%, white), 0 0 calc(var(--size) * .35) color-mix(in srgb, var(--glow) 70%, transparent); }
+}
+@keyframes glow { 0%, 100% { filter: drop-shadow(0 0 0 transparent); } 50% { filter: drop-shadow(0 0 calc(var(--size) * .12) var(--glow)); } }
 
 .done { display: none; text-align: center; padding: clamp(2rem, 5vw, 3rem) 1rem; }
 .done.show { display: block; }
-.done svg { width: 54px; height: 54px; color: var(--ok); }
-.done h2 { margin: .8rem 0 .4rem; color: var(--text); font: 800 1.6rem/1.2 var(--font-display); font-stretch: 112%; }
+.done .stage { width: 160px; height: 160px; margin: 0 auto 1.2rem; }
+.done h2 { margin: 0 0 .4rem; color: var(--text); font: 800 1.6rem/1.2 var(--font-display); font-stretch: 112%; }
 .done p { margin: 0 auto 1.4rem; max-width: 420px; }
 
 footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86rem; color: var(--muted); }
@@ -216,17 +293,18 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
 .foot nav a { color: var(--text-2); text-decoration: none; }
 .foot nav a:hover { color: #fff; }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
-  .preview { position: static; order: -1; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1.2rem; text-align: left; }
-  .preview .label { display: none; }
-  .medal { width: 84px; height: 84px; margin: 0; }
-  .tip { margin-top: 0; justify-self: start; }
-  .preview p { display: none; }
+  .preview { position: static; order: -1; grid-template-columns: 1fr 1fr; }
+  .preview > .eyebrow, .preview p { display: none; }
+  .stage { height: 180px; }
+  .preview .seg { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
   .row { grid-template-columns: 1fr; }
+  .preview { grid-template-columns: 1fr; }
   .nav-links .hide-sm { display: none; }
+  .slider { grid-template-columns: 80px minmax(0, 1fr) 44px; gap: .6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -276,8 +354,8 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
   <div class="wrap">
     <div class="head">
       <div class="eyebrow">Profile badges</div>
-      <h1>Request a badge</h1>
-      <p>Got an idea for a badge? Fill this in and it goes straight to Deadbolt's owner. If it gets made, it shows up next to your name for everyone on Deadbolt.</p>
+      <h1>Design a badge</h1>
+      <p>Put together how you want your badge to look and send it in. It goes straight to Deadbolt's owner, who makes the real thing. If it gets made, it shows up next to your name for everyone on Deadbolt.</p>
     </div>
 
     <div class="layout">
@@ -285,42 +363,85 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
         <form id="form" novalidate>
           <div class="row">
             <label class="field">
-              <span>Discord ID</span>
+              <span class="label">Discord ID</span>
               <input type="text" id="discordId" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="195516525631897600" required>
               <small>Turn on Developer Mode in Discord's Advanced settings, then right-click your name and pick Copy User ID.</small>
             </label>
             <label class="field">
-              <span>Username</span>
+              <span class="label">Username</span>
               <input type="text" id="name" autocomplete="off" maxlength="32" placeholder="your.name" required>
             </label>
           </div>
 
           <label class="field">
-            <span>Badge name</span>
+            <span class="label">Badge name</span>
             <input type="text" id="badge" autocomplete="off" maxlength="40" placeholder="What it says when someone hovers it" required>
           </label>
+
+          <div class="field">
+            <span class="label">Image <span class="opt">optional, animated works too</span></span>
+            <div class="file">
+              <button type="button" class="btn btn-ghost btn-sm" id="pick">Upload image</button>
+              <span class="hint" id="file-hint">PNG, JPG, GIF or WebP, up to 1.5 MB</span>
+              <span class="file-name" id="file-name" hidden></span>
+              <button type="button" class="x" id="file-clear" aria-label="Remove image" hidden>&times;</button>
+            </div>
+            <input type="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+          </div>
+
+          <div class="field" id="fit" hidden>
+            <span class="label">Position <span class="opt">or drag the preview and scroll to zoom</span><span class="act"><button type="button" class="link" id="fit-reset" hidden>Reset</button></span></span>
+            <div class="sliders">
+              <label class="slider"><span>Zoom</span><input type="range" id="zoom" min="0.1" max="5" step="0.01"><output id="zoom-out"></output></label>
+              <label class="slider"><span>Left / right</span><input type="range" id="x" min="-1" max="1" step="0.005"><output id="x-out"></output></label>
+              <label class="slider"><span>Up / down</span><input type="range" id="y" min="-1" max="1" step="0.005"><output id="y-out"></output></label>
+              <label class="slider"><span>Rotate</span><input type="range" id="rotate" min="-180" max="180" step="1"><output id="rotate-out"></output></label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <span class="label" id="shape-label">Frame</span>
+              <div class="seg" role="radiogroup" aria-labelledby="shape-label" data-key="shape">
+                <button type="button" role="radio" data-value="circle">Circle</button>
+                <button type="button" role="radio" data-value="rounded">Rounded</button>
+                <button type="button" role="radio" data-value="none">No frame</button>
+              </div>
+            </div>
+            <div class="field" id="bg-field">
+              <span class="label" id="bg-label">Background <span class="opt" id="bg-hint" hidden>needs a frame</span></span>
+              <div class="seg" role="radiogroup" aria-labelledby="bg-label" data-key="background">
+                <button type="button" role="radio" data-value="gradient">Gradient</button>
+                <button type="button" role="radio" data-value="solid">Solid</button>
+                <button type="button" role="radio" data-value="none">None</button>
+              </div>
+            </div>
+          </div>
 
           <div class="field">
             <span class="label" id="colors-label">Colors</span>
             <div class="colors" id="colors" role="group" aria-labelledby="colors-label"></div>
           </div>
 
+          <div class="field">
+            <span class="label" id="fx-label">Effects</span>
+            <div class="chips" id="effects" role="group" aria-labelledby="fx-label">
+              <button type="button" data-fx="shine">Shine</button>
+              <button type="button" data-fx="glint">Glint</button>
+              <button type="button" data-fx="pulse">Pulse</button>
+              <button type="button" data-fx="float">Float</button>
+              <button type="button" data-fx="spin">Spin</button>
+            </div>
+            <div class="sliders" id="speed-row">
+              <label class="slider"><span>Speed</span><input type="range" id="speed" min="0.25" max="3" step="0.05"><output id="speed-out"></output></label>
+            </div>
+          </div>
+
           <label class="field">
-            <span>Anything else? <span class="opt">(optional)</span></span>
-            <textarea id="details" maxlength="1000" placeholder="Animated or still, the style you want, what it should show..."></textarea>
+            <span class="label">Anything else? <span class="opt">optional</span></span>
+            <textarea id="details" maxlength="1000" placeholder="How it should move, what it should show, where the idea came from..."></textarea>
             <span class="count" id="count">0 / 1000</span>
           </label>
-
-          <div class="field">
-            <span class="label">Reference image <span class="opt">(optional)</span></span>
-            <div class="file">
-              <button type="button" class="btn btn-ghost btn-sm" id="pick">Choose image</button>
-              <span class="hint" id="file-hint">A logo or picture to base it on. PNG, JPG, GIF or WebP, up to 1 MB.</span>
-              <span class="file-name" id="file-name" hidden></span>
-              <button type="button" class="x" id="file-clear" aria-label="Remove image" hidden>&times;</button>
-            </div>
-            <input type="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
-          </div>
 
           <div class="hp" aria-hidden="true">
             <label>Website <input type="text" id="website" tabindex="-1" autocomplete="off"></label>
@@ -336,18 +457,32 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
         </form>
 
         <div class="done" id="done" role="status">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.8 2.8L16.5 9"/></svg>
+          <div class="stage dark" id="done-stage"></div>
           <h2>Request sent</h2>
-          <p>Thanks! Your idea for <b id="done-name"></b> is in. If it gets made, it shows up on your profile after the next Deadbolt update.</p>
+          <p>Thanks! Your design for <b id="done-name"></b> is in. If it gets made, it shows up on your profile after the next Deadbolt update.</p>
           <a class="btn btn-ghost btn-sm" href="../">Back to Deadbolt</a>
         </div>
       </div>
 
       <aside class="panel preview" aria-label="Preview">
-        <span class="label">Preview</span>
-        <div class="medal" id="medal"><img id="medal-img" alt="" hidden></div>
-        <div class="tip" id="tip">Your badge</div>
-        <p>Just a rough idea of your colors. The real badge gets made by hand.</p>
+        <div class="eyebrow">Preview</div>
+        <div class="stage dark" id="stage"></div>
+        <div class="seg" role="radiogroup" aria-label="Preview background" data-key="stage">
+          <button type="button" role="radio" data-value="dark">Dark</button>
+          <button type="button" role="radio" data-value="light">Light</button>
+        </div>
+        <div class="profile dark" id="profile">
+          <div class="eyebrow">On a profile</div>
+          <div class="profile-row">
+            <div class="avatar" id="avatar" aria-hidden="true">?</div>
+            <div style="min-width: 0">
+              <div class="profile-name" id="profile-name">you</div>
+              <div class="profile-badges" id="mini"></div>
+            </div>
+          </div>
+          <div class="tip" id="tip">Badge name</div>
+        </div>
+        <p>A rough idea of the look. The real badge gets made by hand.</p>
       </aside>
     </div>
   </div>
@@ -371,97 +506,247 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
 (() => {
   const API = "https://api.xan.gripe/v1/badge-requests";
   const MAX_COLORS = 4;
-  const MAX_IMAGE = 1000000;
+  const MAX_IMAGE = 1500000;
+  const PREVIEW_PX = 160;
   const TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
+  const FIT = { zoom: 1, x: 0, y: 0, rotate: 0 };
   const $ = id => document.getElementById(id);
-  const form = $("form"), err = $("err"), send = $("send"), sendLabel = $("send-label");
-  const fileInput = $("file"), fileName = $("file-name"), fileHint = $("file-hint"), fileClear = $("file-clear");
-  const medal = $("medal"), medalImg = $("medal-img"), tip = $("tip");
-  let colors = ["#7c6ff0"];
-  let image = null;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const round = (v, p) => Math.round(v * p) / p;
 
-  const paint = () => {
-    const stops = colors.length === 1 ? [colors[0], colors[0]] : [...colors, colors[0]];
-    medal.style.setProperty("--g", `conic-gradient(from 210deg, ${stops.join(", ")})`);
+  const design = { shape: "circle", background: "gradient", colors: ["#7c6ff0", "#1e1a4d"], effects: ["shine", "glint"], speed: 1, ...FIT };
+  let image = null;
+  let stage = "dark";
+
+  const bgFill = () => {
+    if (design.background === "none") return "transparent";
+    if (design.background === "solid" || design.colors.length === 1) return design.colors[0];
+    return `linear-gradient(135deg, ${design.colors.join(", ")})`;
+  };
+
+  const medals = [];
+  const makeMedal = (host, size, movable) => {
+    const float = document.createElement("div");
+    float.className = "float";
+    float.innerHTML = '<div class="medal"><div class="art"><img alt="" draggable="false"><span class="art-glint"></span><span class="art-shine"></span></div><span class="glint"></span><span class="shine"></span></div>';
+    float.style.setProperty("--size", size + "px");
+    host.append(float);
+    const m = { float, medal: float.firstChild, art: float.querySelector(".art"), img: float.querySelector("img"), movable, size };
+    medals.push(m);
+    if (movable) {
+      let drag = null;
+      m.medal.addEventListener("pointerdown", e => {
+        if (!image) return;
+        m.medal.setPointerCapture(e.pointerId);
+        drag = { px: e.clientX, py: e.clientY, x: design.x, y: design.y };
+      });
+      m.medal.addEventListener("pointermove", e => {
+        if (!drag) return;
+        design.x = round(clamp(drag.x + (e.clientX - drag.px) / size, -1, 1), 1000);
+        design.y = round(clamp(drag.y + (e.clientY - drag.py) / size, -1, 1), 1000);
+        render();
+      });
+      const stop = () => { drag = null; };
+      m.medal.addEventListener("pointerup", stop);
+      m.medal.addEventListener("pointercancel", stop);
+      m.medal.addEventListener("wheel", e => {
+        if (!image) return;
+        e.preventDefault();
+        design.zoom = round(clamp(design.zoom * Math.pow(1.1, -e.deltaY / 100), 0.1, 5), 100);
+        render();
+      }, { passive: false });
+    }
+    return m;
+  };
+
+  const paintMedal = m => {
+    const framed = design.shape !== "none";
+    m.float.classList.toggle("fx-float", design.effects.includes("float"));
+    m.float.style.setProperty("--speed", design.speed);
+    m.medal.className = ["medal", "shape-" + design.shape, framed && "framed", ...design.effects.map(f => "fx-" + f),
+      m.movable && image && "movable", !image && (!framed || design.background === "none") && "empty"].filter(Boolean).join(" ");
+    m.medal.style.setProperty("--bg-fill", bgFill());
+    m.medal.style.setProperty("--glow", design.colors[0] || "#ffffff");
+    m.art.hidden = !image;
+    m.art.style.transform = `translate(${(design.x * 100).toFixed(2)}%, ${(design.y * 100).toFixed(2)}%) rotate(${design.rotate}deg) scale(${design.zoom})`;
+    if (image) {
+      if (m.img.getAttribute("src") !== image) m.img.src = image;
+      m.art.style.setProperty("--mask", `url("${image}")`);
+    }
+  };
+
+  const syncSeg = () => {
+    document.querySelectorAll(".seg[data-key]").forEach(seg => {
+      const value = seg.dataset.key === "stage" ? stage : design[seg.dataset.key];
+      seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-checked", String(b.dataset.value === value)));
+    });
+  };
+
+  const fmt = {
+    zoom: v => Math.round(v * 100) + "%",
+    x: v => String(Math.round(v * 100)),
+    y: v => String(Math.round(v * 100)),
+    rotate: v => v + "°",
+    speed: v => v.toFixed(2).replace(/\.?0+$/, "") + "x"
+  };
+
+  const render = () => {
+    medals.forEach(paintMedal);
+    syncSeg();
+    for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
+      $(k).value = design[k];
+      $(k + "-out").textContent = fmt[k](design[k]);
+    }
+    $("fit").hidden = !image;
+    $("fit-reset").hidden = !(design.zoom !== 1 || design.x || design.y || design.rotate);
+    $("bg-field").classList.toggle("off", design.shape === "none");
+    $("bg-hint").hidden = design.shape !== "none";
+    $("speed-row").hidden = !design.effects.length;
+    document.querySelectorAll("#effects button").forEach(b => b.setAttribute("aria-pressed", String(design.effects.includes(b.dataset.fx))));
+    $("stage").className = "stage " + stage;
+    $("profile").className = "profile " + stage;
   };
 
   const renderColors = () => {
     const box = $("colors");
     box.textContent = "";
-    colors.forEach((c, i) => {
+    design.colors.forEach((c, i) => {
       const chip = document.createElement("span");
-      chip.className = "chip";
+      chip.className = "swatch";
       const input = document.createElement("input");
       input.type = "color";
       input.value = c;
       input.setAttribute("aria-label", `Color ${i + 1}`);
       const code = document.createElement("code");
       code.textContent = c;
-      input.addEventListener("input", () => { colors[i] = input.value.toLowerCase(); code.textContent = colors[i]; paint(); });
+      input.addEventListener("input", () => { design.colors[i] = input.value.toLowerCase(); code.textContent = design.colors[i]; render(); });
       chip.append(input, code);
-      if (colors.length > 1) {
+      if (design.colors.length > 1) {
         const x = document.createElement("button");
         x.type = "button";
         x.className = "x";
         x.innerHTML = "&times;";
         x.setAttribute("aria-label", `Remove color ${i + 1}`);
-        x.addEventListener("click", () => { colors.splice(i, 1); renderColors(); });
+        x.addEventListener("click", () => { design.colors.splice(i, 1); renderColors(); });
         chip.append(x);
       }
       box.append(chip);
     });
-    if (colors.length < MAX_COLORS) {
+    if (design.colors.length < MAX_COLORS) {
       const add = document.createElement("button");
       add.type = "button";
       add.className = "btn btn-ghost btn-sm";
       add.textContent = "Add color";
-      add.addEventListener("click", () => { colors.push("#ffffff"); renderColors(); });
+      add.addEventListener("click", () => { design.colors.push("#ffffff"); renderColors(); });
       box.append(add);
     }
-    paint();
+    render();
   };
 
-  const setError = msg => { err.textContent = msg || ""; };
+  const loadImage = url => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+
+  const renderPng = async () => {
+    const S = PREVIEW_PX;
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = S;
+    const ctx = canvas.getContext("2d");
+    if (design.shape !== "none") {
+      ctx.beginPath();
+      if (design.shape === "circle") ctx.arc(S / 2, S / 2, S / 2, 0, Math.PI * 2);
+      else ctx.roundRect(0, 0, S, S, S * .28);
+      ctx.clip();
+      if (design.background !== "none") {
+        if (design.background === "solid" || design.colors.length === 1) {
+          ctx.fillStyle = design.colors[0];
+        } else {
+          const g = ctx.createLinearGradient(0, 0, S, S);
+          design.colors.forEach((c, i) => g.addColorStop(i / (design.colors.length - 1), c));
+          ctx.fillStyle = g;
+        }
+        ctx.fillRect(0, 0, S, S);
+      }
+    }
+    if (image) {
+      const img = await loadImage(image);
+      const fit = Math.min(S / img.naturalWidth, S / img.naturalHeight);
+      const w = img.naturalWidth * fit, h = img.naturalHeight * fit;
+      ctx.translate(S / 2 + design.x * S, S / 2 + design.y * S);
+      ctx.rotate(design.rotate * Math.PI / 180);
+      ctx.scale(design.zoom, design.zoom);
+      ctx.drawImage(img, -w / 2, -h / 2, w, h);
+    }
+    return canvas.toDataURL("image/png").replace(/^data:[^,]*,/, "");
+  };
+
+  const setError = msg => { $("err").textContent = msg || ""; };
+
+  document.querySelectorAll(".seg[data-key]").forEach(seg => seg.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (seg.dataset.key === "stage") stage = b.dataset.value;
+    else design[seg.dataset.key] = b.dataset.value;
+    render();
+  }));
+  $("effects").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const fx = b.dataset.fx;
+    design.effects = design.effects.includes(fx) ? design.effects.filter(f => f !== fx) : [...design.effects, fx];
+    render();
+  });
+  for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
+    $(k).addEventListener("input", e => { design[k] = Number(e.target.value); render(); });
+  }
+  $("fit-reset").addEventListener("click", () => { Object.assign(design, FIT); render(); });
 
   $("discordId").addEventListener("input", e => {
     e.target.value = e.target.value.replace(/\D/g, "");
     e.target.removeAttribute("aria-invalid");
   });
-  $("badge").addEventListener("input", e => { tip.textContent = e.target.value.trim() || "Your badge"; });
+  $("name").addEventListener("input", e => {
+    const v = e.target.value.trim();
+    $("profile-name").textContent = v || "you";
+    $("avatar").textContent = (v[0] || "?").toUpperCase();
+  });
+  $("badge").addEventListener("input", e => { $("tip").textContent = e.target.value.trim() || "Badge name"; });
   $("details").addEventListener("input", e => { $("count").textContent = `${e.target.value.length} / 1000`; });
 
+  const fileInput = $("file");
   $("pick").addEventListener("click", () => fileInput.click());
-  fileClear.addEventListener("click", () => {
+  $("file-clear").addEventListener("click", () => {
     image = null;
-    fileName.hidden = fileClear.hidden = true;
-    fileHint.hidden = false;
-    medalImg.hidden = true;
-    medalImg.removeAttribute("src");
-    $("pick").textContent = "Choose image";
+    $("file-name").hidden = $("file-clear").hidden = true;
+    $("file-hint").hidden = false;
+    $("pick").textContent = "Upload image";
+    render();
   });
   fileInput.addEventListener("change", () => {
     const file = fileInput.files[0];
     fileInput.value = "";
     if (!file) return;
     if (!TYPES.includes(file.type)) return setError("The image has to be a PNG, JPG, GIF or WebP.");
-    if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 1 MB.");
+    if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 1.5 MB.");
     const reader = new FileReader();
     reader.onload = () => {
-      const url = String(reader.result);
-      image = url.replace(/^data:[^,]*,/, "");
-      fileName.textContent = file.name;
-      fileName.hidden = fileClear.hidden = false;
-      fileHint.hidden = true;
-      medalImg.src = url;
-      medalImg.hidden = false;
+      image = String(reader.result);
+      Object.assign(design, FIT);
+      $("file-name").textContent = file.name;
+      $("file-name").hidden = $("file-clear").hidden = false;
+      $("file-hint").hidden = true;
       $("pick").textContent = "Change image";
       setError("");
+      render();
     };
     reader.onerror = () => setError("Couldn't read that image. Try another one.");
     reader.readAsDataURL(file);
   });
 
-  form.addEventListener("submit", async e => {
+  $("form").addEventListener("submit", async e => {
     e.preventDefault();
     setError("");
     const discordId = $("discordId").value.trim();
@@ -475,27 +760,41 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     if (!name) { $("name").focus(); return setError("Add your Discord username."); }
     if (!badge) { $("badge").focus(); return setError("Give the badge a name."); }
 
-    send.disabled = true;
-    sendLabel.textContent = "Sending...";
+    $("send").disabled = true;
+    $("send-label").textContent = "Sending...";
     try {
+      const preview = await renderPng().catch(() => undefined);
+      const { colors, ...rest } = design;
       const res = await fetch(API, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ discordId, name, badge, colors, details: $("details").value.trim(), image, website: $("website").value, source: "web" })
+        body: JSON.stringify({
+          discordId, name, badge, colors,
+          details: $("details").value.trim(),
+          image: image ? image.replace(/^data:[^,]*,/, "") : undefined,
+          design: rest,
+          preview,
+          website: $("website").value,
+          source: "web"
+        })
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error || `Something went wrong (${res.status}). Try again in a bit.`);
       $("done-name").textContent = badge;
-      form.hidden = true;
+      makeMedal($("done-stage"), 104, false);
+      render();
+      $("form").hidden = true;
       $("done").classList.add("show");
     } catch (ex) {
       setError(ex instanceof TypeError ? "Couldn't reach the server. Check your connection and try again." : ex.message);
     } finally {
-      send.disabled = false;
-      sendLabel.textContent = "Send request";
+      $("send").disabled = false;
+      $("send-label").textContent = "Send request";
     }
   });
 
+  makeMedal($("stage"), 140, true);
+  makeMedal($("mini"), 22, false);
   renderColors();
 })();
 </script>
