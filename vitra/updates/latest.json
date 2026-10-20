@@ -1,15 +1,15 @@
 {
-  "version": "0.1.7",
-  "notes": "Memories now remember more in Fabric 26.3: where each moment happened (biome and coordinates), your first visits to rare biomes like a cherry grove or the Deep Dark, rare mobs you spot like the Warden or a blue axolotl, and achievements on servers that don't announce them. They work even with Vitra badges and capes turned off.",
-  "pub_date": "2026-10-19T07:12:29Z",
+  "version": "0.1.8",
+  "notes": "Players can now have their own animated badge next to their name in game, in the tab list and above their head, the same way the Vitra badge works. Update to see them.",
+  "pub_date": "2026-10-20T00:41:46Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFV0TnR1Znl6T0VlR29zVEVXbi93RHBVMFJ6ZTRjN2lYZ3FtaTM0S09Bek1tWGZHaVFFUnNtaTI4ZFhmdHd4dzl0OE5lMjE5YlpuN0ZaNENVYVBzdWdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzkzOTI3CWZpbGU6Vml0cmFfMC4xLjdfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS43CkNKYW1VbllQYTJnMUJkYXZHT3ZHZ3ExV3VWNlhaQlp4N3NPYS8xZ0hWcUNnK0FJU0lsMFZqalpXVHJYZGYwV2g2SnJvMUtPOEM3eE9OSDVycEdzcEJRPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.7_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFNzdkpJcW8ydVFxUy9uSG5pcGlKZzhZdGpnY29ZMVVVa0JDS0xyN2d2TzVscnBRbmxRSHBNb1NUMk5LbCs4cVVPSHdscjRCa0IrdUoybWZhNXV5bUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDU2ODgzCWZpbGU6Vml0cmFfMC4xLjhfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS44CjhDZmZkUitFWlFEalkzalRsdHFRTHlrZjVlNlhQUVRKTHcxYlZQbDBZZExQZFJWK2tvNFAwa1RCRmFhbWoyeXE1YnJaakg3ZVJ1T0JwQ0NOSXNPT0FRPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.8_x64-setup.exe"
     },
     "windows-x86_64-nsis": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFV0TnR1Znl6T0VlR29zVEVXbi93RHBVMFJ6ZTRjN2lYZ3FtaTM0S09Bek1tWGZHaVFFUnNtaTI4ZFhmdHd4dzl0OE5lMjE5YlpuN0ZaNENVYVBzdWdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzkzOTI3CWZpbGU6Vml0cmFfMC4xLjdfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS43CkNKYW1VbllQYTJnMUJkYXZHT3ZHZ3ExV3VWNlhaQlp4N3NPYS8xZ0hWcUNnK0FJU0lsMFZqalpXVHJYZGYwV2g2SnJvMUtPOEM3eE9OSDVycEdzcEJRPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.7_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFNzdkpJcW8ydVFxUy9uSG5pcGlKZzhZdGpnY29ZMVVVa0JDS0xyN2d2TzVscnBRbmxRSHBNb1NUMk5LbCs4cVVPSHdscjRCa0IrdUoybWZhNXV5bUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDU2ODgzCWZpbGU6Vml0cmFfMC4xLjhfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS44CjhDZmZkUitFWlFEalkzalRsdHFRTHlrZjVlNlhQUVRKTHcxYlZQbDBZZExQZFJWK2tvNFAwa1RCRmFhbWoyeXE1YnJaakg3ZVJ1T0JwQ0NOSXNPT0FRPT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.8_x64-setup.exe"
     }
   }
 }
