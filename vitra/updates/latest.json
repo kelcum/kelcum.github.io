@@ -1,15 +1,15 @@
 {
-  "version": "0.1.8",
-  "notes": "Players can now have their own animated badge next to their name in game, in the tab list and above their head, the same way the Vitra badge works. Update to see them.",
-  "pub_date": "2026-10-20T00:41:46Z",
+  "version": "0.1.9",
+  "notes": "Memories can now keep a short video of each moment. Turn on Clips in Settings, Launcher: Vitra records the game window in the background while you play and keeps 10, 20 or 30 seconds around each moment, in 720p or 1080p. Clips play in the Memories page next to the picture, and the oldest are removed when they take more space than you allow. Favorites are always kept. No sound yet.",
+  "pub_date": "2026-10-26T20:29:36Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFNzdkpJcW8ydVFxUy9uSG5pcGlKZzhZdGpnY29ZMVVVa0JDS0xyN2d2TzVscnBRbmxRSHBNb1NUMk5LbCs4cVVPSHdscjRCa0IrdUoybWZhNXV5bUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDU2ODgzCWZpbGU6Vml0cmFfMC4xLjhfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS44CjhDZmZkUitFWlFEalkzalRsdHFRTHlrZjVlNlhQUVRKTHcxYlZQbDBZZExQZFJWK2tvNFAwa1RCRmFhbWoyeXE1YnJaakg3ZVJ1T0JwQ0NOSXNPT0FRPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.8_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFprSHg2MjRGeFppWHdmWmNneURDdWdHRmJxSnp1cU1CZlJDZVdnblRRRGJPVUFxY0Rjd0hWeTl1TGxLdUZaMTN5STJyNnJ6bUttS3R5RDhoL3o5ZVFZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMDQ2NTYzCWZpbGU6Vml0cmFfMC4xLjlfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS45CmZ2bmxwRUZjWUhPbHVBM3RlVGJ5aXRERXg2TGFuQnBLRzlSNWlnc2UxOEdUaEgyZ1lvSHNuRkNDZ2NDZ2MwS21yR0ROZWd3QTdYMFN2cVVqMXcyWUN3PT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.9_x64-setup.exe"
     },
     "windows-x86_64-nsis": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFNzdkpJcW8ydVFxUy9uSG5pcGlKZzhZdGpnY29ZMVVVa0JDS0xyN2d2TzVscnBRbmxRSHBNb1NUMk5LbCs4cVVPSHdscjRCa0IrdUoybWZhNXV5bUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDU2ODgzCWZpbGU6Vml0cmFfMC4xLjhfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS44CjhDZmZkUitFWlFEalkzalRsdHFRTHlrZjVlNlhQUVRKTHcxYlZQbDBZZExQZFJWK2tvNFAwa1RCRmFhbWoyeXE1YnJaakg3ZVJ1T0JwQ0NOSXNPT0FRPT0K",
-      "url": "https://xan.gripe/vitra/download/Vitra_0.1.8_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRMWFxU0JCQlF5TFprSHg2MjRGeFppWHdmWmNneURDdWdHRmJxSnp1cU1CZlJDZVdnblRRRGJPVUFxY0Rjd0hWeTl1TGxLdUZaMTN5STJyNnJ6bUttS3R5RDhoL3o5ZVFZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMDQ2NTYzCWZpbGU6Vml0cmFfMC4xLjlfeDY0LXNldHVwLmV4ZQl2ZXJzaW9uOjAuMS45CmZ2bmxwRUZjWUhPbHVBM3RlVGJ5aXRERXg2TGFuQnBLRzlSNWlnc2UxOEdUaEgyZ1lvSHNuRkNDZ2NDZ2MwS21yR0ROZWd3QTdYMFN2cVVqMXcyWUN3PT0K",
+      "url": "https://xan.gripe/vitra/download/Vitra_0.1.9_x64-setup.exe"
     }
   }
 }
