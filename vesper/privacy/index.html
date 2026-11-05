@@ -2,7 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <script>(()=>{const s=e=>{e.preventDefault();e.stopImmediatePropagation()};addEventListener("contextmenu",s,true);addEventListener("keydown",e=>{const c=e.code,m=e.ctrlKey||e.metaKey;if(e.key==="F12"||c==="F12"||(m&&e.shiftKey&&["KeyI","KeyJ","KeyC","KeyK"].includes(c))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(c))||(m&&c==="KeyU"))s(e)},true);setInterval(()=>{const t=performance.now();debugger;if(performance.now()-t>200){document.documentElement.innerHTML="";location.replace("about:blank")}},1000)})()</script>
+    <script>
+      (() => {
+        const s = (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        };
+        addEventListener('contextmenu', s, true);
+        addEventListener(
+          'keydown',
+          (e) => {
+            const c = e.code,
+              m = e.ctrlKey || e.metaKey;
+            if (
+              e.key === 'F12' ||
+              c === 'F12' ||
+              (m && e.shiftKey && ['KeyI', 'KeyJ', 'KeyC', 'KeyK'].includes(c)) ||
+              (e.metaKey && e.altKey && ['KeyI', 'KeyJ', 'KeyC', 'KeyU'].includes(c)) ||
+              (m && c === 'KeyU')
+            )
+              s(e);
+          },
+          true,
+        );
+        setInterval(() => {
+          const t = performance.now();
+          debugger;
+          if (performance.now() - t > 200) {
+            document.documentElement.innerHTML = '';
+            location.replace('about:blank');
+          }
+        }, 1000);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Privacy · Vesper</title>
     <meta name="description" content="What Vesper does and doesn't do with your data." />
@@ -50,6 +82,12 @@
             <code>thumbnails.roblox.com</code>, <code>users.roblox.com</code>, <code>apis.roblox.com</code>): while you
             play, to show the game's name and icon and, for the profile button, your user name. Only the game's or
             user's public ID is sent.
+          </li>
+          <li>
+            <strong>The version picker</strong>, only when you open it on Home: Vesper reads the list of past Roblox
+            versions from a public GitHub project (<code>api.github.com</code> and
+            <code>raw.githubusercontent.com</code>) and checks them on <code>setup.rbxcdn.com</code>. A version you pick
+            is downloaded from <code>setup.rbxcdn.com</code>. No account, cookie or identifier is sent.
           </li>
           <li>
             <strong>Roblox's public download</strong> (<code>setup.rbxcdn.com</code>), on a Mac only, when you use

@@ -1,19 +1,19 @@
 {
-  "version": "0.3.4",
-  "notes": "### Added\n\n- A folder button on each Customize card shows that customisation's files in\n  Roblox's folder, in Finder or File Explorer.\n\n### Changed\n\n- Restart and rejoin force-quits Roblox instead of asking it to close, so\n  Roblox can't hang or ask “Leave game?” on the way out.\n- While a customisation is on, its files are Vesper's: if another program\n  changes one, Vesper writes it again instead of leaving it alone.\n- macOS: before applying customisations, Vesper puts back Roblox's own copy\n  of anything another tool or an older customisation left in Roblox's cursor,\n  emote wheel, font, death sound and sky files. It checks each file against\n  Roblox.app's code signature and, when one isn't Roblox's, reads just that\n  file from Roblox's own download.\n\n### Fixed\n\n- macOS: Now playing and Discord show the game's name and icon. Roblox's Mac\n  log doesn't always say which game a place belongs to, so Vesper looks it up.\n- Changing the cursor changes the Shift Lock cursor too. Turn off “Use it for\n  Shift Lock too” to keep Roblox's crosshair.\n- Home: the Now playing card no longer touches the server picker, and its\n  buttons stay on one line, or move under the game when there isn't room. Its\n  Rejoin button is gone from Home, where Restart and rejoin does the same.",
-  "pub_date": "2026-10-18T18:42:41.072Z",
+  "version": "0.3.5",
+  "notes": "### Added\n\n- Older Roblox versions on Windows: a button on Home's Roblox card lists versions\n  from one to several releases back. The one you pick is downloaded from Roblox,\n  checked against Roblox's own checksums, kept in Vesper's folder and launched\n  from Vesper, without changing your normal Roblox install. Going back to latest\n  takes one click and removes the older copy. Roblox only lets recent versions\n  join games. When it refuses one (error 280) or one opens to a blank window,\n  Home says so, and the picker marks refused versions and older ones as too old.",
+  "pub_date": "2026-11-05T02:52:15.699Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1p0TXNkOStwcXE5OTdVdDVZQVNzMWN4WEgrM2pqNSt6WHBBZnE5YWJjRkhOZ0hiQ1EyZ0dDMWJGQmh1STZ0U05ubHJRclZZd2w3Q3BteWpNUUVCQ0EwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQ4Njk2CWZpbGU6VmVzcGVyXzAuMy40X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuNApDSHltUU5YSnZtRjFGMWpjbHVlTHJUNXhLMG5ualNCNWFwd0czR0txaTlOSERWSW5yMTg0aXAzUTFZSFlHSUFnMUhVZzlzQUlFRWpGd2pzRnh3L1lBUT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.4_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1NuZFVuZXJINXBTQ1BqT3Q2bmt3Ry9MTGszUXYxSVBPTEJnajVNWVpXZlZTR3NzNEtFVnJOVlc2SThEMmhweW1XcitpSjBPOGlmK1lubUNNN3pPUFFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzODQ3MDgxCWZpbGU6VmVzcGVyXzAuMy41X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuNQpNU3c0VVZVZnpTVktLZzN0NFhoT2NuQ3NLdi84ZUlwZFNXcXMvQklRaGZsZmRISVROckw1YkJWNUVLQjZZUUZRdEl3Z240bjR1KytYRzlLcG8wQ2pBdz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.5_x64-setup.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1pEZ3pvWVZMUk96MnZwblpxbTdEZFZ0UUIxY0ZDYW0yMXBJRW94S1dzL1RjWkJNcEQ5cGVxTTR5RnBVT21ybklaZWlST3NubWZucHpjdlhLUDBZcGd3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQ4OTE0CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNAp1dEZ3SXk5QTZ3eVE5eCtaMGJHSmhSazU4cUFVcVB0NjUwSmc1SU5KRHZJWUxNa285MGVJZ1JKTVpvcEQ2WlhRTkNiczluZTZubGV4SVZQdnFQZm9DQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.4_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1phQW1rZVRralBHMUtjM0Z3enJwQ3NiMnBKTXMybG10QU15ZEcrQ3EvWFF1NWg1WlN4cXlrSjZCeFlFRjdjZE1DRDc1TmhsRE53eXltOGlkN3hQclFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzODQ3MDYzCWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNQora1pjdElDNmFBcE45UkpJTnBGSFVxVWtad0ppdVAyaS9VOHVkVkRSejlHNFJEUTdTOWhnakozZytzZ0lEM0JMRXBBdHlZYUF6eWtrZkZzLzRjTjVDZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.5_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1pEZ3pvWVZMUk96MnZwblpxbTdEZFZ0UUIxY0ZDYW0yMXBJRW94S1dzL1RjWkJNcEQ5cGVxTTR5RnBVT21ybklaZWlST3NubWZucHpjdlhLUDBZcGd3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQ4OTE0CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNAp1dEZ3SXk5QTZ3eVE5eCtaMGJHSmhSazU4cUFVcVB0NjUwSmc1SU5KRHZJWUxNa285MGVJZ1JKTVpvcEQ2WlhRTkNiczluZTZubGV4SVZQdnFQZm9DQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.4_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1phQW1rZVRralBHMUtjM0Z3enJwQ3NiMnBKTXMybG10QU15ZEcrQ3EvWFF1NWg1WlN4cXlrSjZCeFlFRjdjZE1DRDc1TmhsRE53eXltOGlkN3hQclFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzODQ3MDYzCWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNQora1pjdElDNmFBcE45UkpJTnBGSFVxVWtad0ppdVAyaS9VOHVkVkRSejlHNFJEUTdTOWhnakozZytzZ0lEM0JMRXBBdHlZYUF6eWtrZkZzLzRjTjVDZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.5_universal.app.tar.gz"
     }
   }
 }
