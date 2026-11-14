@@ -1,19 +1,19 @@
 {
-  "version": "0.3.7",
-  "notes": "### Fixed\n\n- macOS: a Roblox left open in the Dock with no window no longer blocks\n  launching with \"Roblox is already open\". Vesper now checks for a window the\n  same way it does on Windows, and quits an idle Roblox before launching so\n  your flags apply. The message, when it does appear, explains Command-Q.",
-  "pub_date": "2026-11-14T02:43:22.390Z",
+  "version": "0.3.8",
+  "notes": "### Fixed\n\n- When Roblox updated itself during a launch and then kept running in the same\n  process, as newer Roblox versions do, Vesper kept showing \"Roblox is\n  updating\" and reported after five minutes that Roblox didn't open, even\n  though you were already in a game. It now notices Roblox has finished.",
+  "pub_date": "2026-11-14T03:21:57.411Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2IzdnVucUl1YWZjMitjNUdHNnJnUCtFNHNwdU9XYW0wYVo2SnR3QUZXeDJoQkdPSHB1OW1uZS9BRlRNVjR6dFJzRkY2eStqWm1ScHJsekphek0zQndRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjIzNTczCWZpbGU6VmVzcGVyXzAuMy43X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuNwoxbCtTakhpaHpQOHlWaWZtckVySUlwbmVDVXM4UFg3NFNyYTVydSt4TFJ0OXBEM0ZsSDRqUGdiMDUvbzg3OEZTZGlrNytnOXdqV2NEZzdJcHpoWDJBUT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.7_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2VlVVNNdStjSHVzWGtRWTRaVHpuQzhiZzRIUWl0M1UxWmxWMm5tY2N0V3FYMzZjQ1RCSm82K2ZaMkgvWkYySHZRY291b1U3OUFaTUpkbEcwTHY2MXdZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjI2NDQ1CWZpbGU6VmVzcGVyXzAuMy44X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjMuOApqRm1vbVVIMHI2V1N1aE5KZVo3RDQzQ25LMU50ZU54TGJzTlhQL3lLY2IyTmd6NlJBMjZYRmRmVUZ4SDN6a2JqRjlOdzc1QW9SN2Nmd2QxUzFGK0xBdz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.8_x64-setup.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2JndXVJQno5Y1FtVjlFZXRrbTcxZy9vMERyYkVDRmJEQ3I0RmU4WW4yNzAxQ0FoL2haNytwczlwSkFMaVpFYTc1WEhZemJJU29NNXhVY1F6VGNLcGdnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjI0MTUxCWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNwp1S3ZZSDVtTnJYcXpoY2xpOFlEVjhzNHhMb1VEc3Y3L1NyZkR1YjBNaFNzSkRsK0t5WW1jazdBbTBqY1RYRE9Oem43VjROZVBJeEZsMW8zV2NUUnhCQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.7_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1o1VENzS3VtbkN2TmpLeCtpQ2sxczM3MXZndFZ0TlZvWk45QWcyV3ZXYmlrNW1DYldYa3JWY01GV0xjd3EwOVZ6T2pLdVkwUno2RWxwUG5JQzB5U3dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjI2MzU0CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuOApMUWo4Q2VHVXh5WExmSEpBbnNNWndwdlFzeEprQVZtbzgrNFNya05LN3loempSeDUxM2ZvcHBwMTZsMC95ME5LNTRDOVgzRjV5L0pLNTkxZi8wZTVEZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.8_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b2JndXVJQno5Y1FtVjlFZXRrbTcxZy9vMERyYkVDRmJEQ3I0RmU4WW4yNzAxQ0FoL2haNytwczlwSkFMaVpFYTc1WEhZemJJU29NNXhVY1F6VGNLcGdnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjI0MTUxCWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuNwp1S3ZZSDVtTnJYcXpoY2xpOFlEVjhzNHhMb1VEc3Y3L1NyZkR1YjBNaFNzSkRsK0t5WW1jazdBbTBqY1RYRE9Oem43VjROZVBJeEZsMW8zV2NUUnhCQT09Cg==",
-      "url": "https://xan.gripe/vesper/download/Vesper_0.3.7_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTelcrY2FmVkt3b1o1VENzS3VtbkN2TmpLeCtpQ2sxczM3MXZndFZ0TlZvWk45QWcyV3ZXYmlrNW1DYldYa3JWY01GV0xjd3EwOVZ6T2pLdVkwUno2RWxwUG5JQzB5U3dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NjI2MzU0CWZpbGU6VmVzcGVyLmFwcC50YXIuZ3oJdmVyc2lvbjowLjMuOApMUWo4Q2VHVXh5WExmSEpBbnNNWndwdlFzeEprQVZtbzgrNFNya05LN3loempSeDUxM2ZvcHBwMTZsMC95ME5LNTRDOVgzRjV5L0pLNTkxZi8wZTVEZz09Cg==",
+      "url": "https://xan.gripe/vesper/download/Vesper_0.3.8_universal.app.tar.gz"
     }
   }
 }
