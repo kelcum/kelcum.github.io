@@ -393,7 +393,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
             <span class="label">Image <span class="opt">optional, animated works too</span></span>
             <div class="file">
               <button type="button" class="btn btn-ghost btn-sm" id="pick">Upload image</button>
-              <span class="hint" id="file-hint">PNG, JPG, GIF or WebP, up to 1.5 MB</span>
+              <span class="hint" id="file-hint">PNG, JPG, GIF or WebP, up to 5 MB</span>
               <span class="file-name" id="file-name" hidden></span>
               <button type="button" class="link danger" id="file-clear" hidden>Remove</button>
             </div>
@@ -521,7 +521,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
 (() => {
   const API = "https://api.xan.gripe/v1/badge-requests";
   const MAX_COLORS = 4;
-  const MAX_IMAGE = 1500000;
+  const MAX_IMAGE = 5000000;
   const PREVIEW_PX = 160;
   const TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
   const FIT = { zoom: 1, x: 0, y: 0, rotate: 0 };
@@ -752,7 +752,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     fileInput.value = "";
     if (!file) return;
     if (!TYPES.includes(file.type)) return setError("The image has to be a PNG, JPG, GIF or WebP.");
-    if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 1.5 MB.");
+    if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 5 MB.");
     const reader = new FileReader();
     reader.onload = () => {
       image = String(reader.result);
