@@ -222,7 +222,7 @@ textarea { min-height: 100px; resize: vertical; }
 .profile-name { font-weight: 700; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .profile.dark .profile-name { color: #f2f3f5; }
 .profile.light .profile-name { color: #060607; }
-.profile-badges { display: flex; width: fit-content; margin-top: 4px; padding: 3px 5px; border-radius: 6px; }
+.profile-badges { display: flex; gap: 4px; width: fit-content; margin-top: 4px; padding: 3px 5px; border-radius: 6px; }
 .profile.dark .profile-badges { background: rgba(255, 255, 255, .06); }
 .profile.light .profile-badges { background: rgba(0, 0, 0, .06); }
 .pill {
@@ -235,7 +235,12 @@ textarea { min-height: 100px; resize: vertical; }
 .pill-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f2f3f5; font-weight: 600; font-size: .875rem; line-height: 18px; }
 .profile.light .pill-name { color: #060607; }
 .pill-name.empty { opacity: .55; }
-#pill-badge { display: flex; }
+.pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pill-badge { display: flex; }
+.stage.pair { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.stage-medals { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.pick-medal { padding: 8px; border: 1px dashed transparent; border-radius: 14px; cursor: pointer; }
+.pick-medal.on { border-color: rgba(128, 128, 128, .55); cursor: default; }
 .preview p { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
 
 .float { width: var(--size); height: var(--size); flex: none; }
@@ -293,7 +298,7 @@ textarea { min-height: 100px; resize: vertical; }
 
 .done { display: none; text-align: center; padding: clamp(2rem, 5vw, 3rem) 1rem; }
 .done.show { display: block; }
-.done .stage { width: 160px; height: 160px; margin: 0 auto 1.2rem; }
+.done .stage { min-width: 160px; width: fit-content; height: 160px; margin: 0 auto 1.2rem; padding: 0 16px; }
 .done h2 { margin: 0 0 .4rem; color: var(--text); font: 800 1.6rem/1.2 var(--font-display); font-stretch: 112%; }
 .done p { margin: 0 auto 1.4rem; max-width: 420px; }
 
@@ -384,8 +389,22 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
             </label>
           </div>
 
+          <div class="row">
+            <div class="field">
+              <span class="label" id="kind-label">Badges</span>
+              <div class="seg" role="radiogroup" aria-labelledby="kind-label" data-key="kind">
+                <button type="button" role="radio" data-value="single">One badge</button>
+                <button type="button" role="radio" data-value="pair">Matching pair</button>
+              </div>
+            </div>
+            <div class="field" id="editing-field" hidden>
+              <span class="label" id="editing-label">Editing</span>
+              <div class="seg" role="radiogroup" aria-labelledby="editing-label" id="editing"></div>
+            </div>
+          </div>
+
           <label class="field">
-            <span class="label">Badge name</span>
+            <span class="label" id="badge-label">Badge name</span>
             <input type="text" id="badge" autocomplete="off" maxlength="40" placeholder="What it says when someone hovers it" required>
           </label>
 
@@ -470,7 +489,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
         <div class="done" id="done" role="status">
           <div class="stage dark" id="done-stage"></div>
           <h2>Request sent</h2>
-          <p>Thanks! Your design for <b id="done-name"></b> is in. If it gets made, it shows up on your profile after the next Deadbolt update.</p>
+          <p>Thanks! Your design for <b id="done-name"></b> is in. If <span id="done-made">it gets made, it shows</span> up on your profile after the next Deadbolt update.</p>
           <a class="btn btn-ghost btn-sm" href="../">Back to Deadbolt</a>
         </div>
       </div>
@@ -478,6 +497,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
       <aside class="panel preview" aria-label="Preview">
         <div class="eyebrow">Preview</div>
         <div class="stage dark" id="stage">
+          <div class="stage-medals" id="stage-medals"></div>
           <div class="stage-toggle">
             <div class="seg" role="radiogroup" aria-label="Preview background" data-key="stage">
               <button type="button" role="radio" data-value="dark">Dark</button>
@@ -494,7 +514,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
               <div class="profile-badges" id="mini"></div>
             </div>
           </div>
-          <div class="pill" id="pill"><span id="pill-badge"></span><span class="pill-name empty" id="tip">Badge name</span></div>
+          <div class="pills" id="pills"></div>
         </div>
         <p>A rough idea of the look. The real badge gets made by hand.</p>
       </aside>
@@ -529,45 +549,48 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const round = (v, p) => Math.round(v * p) / p;
 
-  const design = { shape: "circle", background: "gradient", colors: ["#7c6ff0", "#1e1a4d"], effects: ["shine", "glint"], speed: 1, ...FIT };
-  let image = null;
+  const parts = [{ badge: "", image: null, file: "", design: { shape: "circle", background: "gradient", colors: ["#7c6ff0", "#1e1a4d"], effects: ["shine", "glint"], speed: 1, ...FIT } }];
+  let editing = 0;
   let stage = "dark";
+  const cur = () => parts[editing];
+  const partName = (i, fallback) => parts[i].badge.trim() || (parts.length > 1 ? (i ? "Second badge" : "First badge") : fallback);
 
-  const bgFill = () => {
-    if (design.background === "none") return "transparent";
-    if (design.background === "solid" || design.colors.length === 1) return design.colors[0];
-    return `linear-gradient(135deg, ${design.colors.join(", ")})`;
+  const bgFill = d => {
+    if (d.background === "none") return "transparent";
+    if (d.background === "solid" || d.colors.length === 1) return d.colors[0];
+    return `linear-gradient(135deg, ${d.colors.join(", ")})`;
   };
 
-  const medals = [];
-  const makeMedal = (host, size, movable) => {
+  let medals = [];
+  const makeMedal = (host, size, movable, idx) => {
     const float = document.createElement("div");
     float.className = "float";
     float.innerHTML = '<div class="medal"><div class="art"><img alt="" draggable="false"><span class="art-glint"></span><span class="art-shine"></span></div><span class="glint"></span><span class="shine"></span></div>';
     float.style.setProperty("--size", size + "px");
     host.append(float);
-    const m = { float, medal: float.firstChild, art: float.querySelector(".art"), img: float.querySelector("img"), movable, size };
+    const m = { float, medal: float.firstChild, art: float.querySelector(".art"), img: float.querySelector("img"), movable, size, idx };
     medals.push(m);
     if (movable) {
       let drag = null;
+      const mine = () => m.idx === editing && cur().image;
       m.medal.addEventListener("pointerdown", e => {
-        if (!image) return;
+        if (!mine()) return;
         m.medal.setPointerCapture(e.pointerId);
-        drag = { px: e.clientX, py: e.clientY, x: design.x, y: design.y };
+        drag = { px: e.clientX, py: e.clientY, x: cur().design.x, y: cur().design.y };
       });
       m.medal.addEventListener("pointermove", e => {
         if (!drag) return;
-        design.x = round(clamp(drag.x + (e.clientX - drag.px) / size, -1, 1), 1000);
-        design.y = round(clamp(drag.y + (e.clientY - drag.py) / size, -1, 1), 1000);
+        cur().design.x = round(clamp(drag.x + (e.clientX - drag.px) / size, -1, 1), 1000);
+        cur().design.y = round(clamp(drag.y + (e.clientY - drag.py) / size, -1, 1), 1000);
         render();
       });
       const stop = () => { drag = null; };
       m.medal.addEventListener("pointerup", stop);
       m.medal.addEventListener("pointercancel", stop);
       m.medal.addEventListener("wheel", e => {
-        if (!image) return;
+        if (!mine()) return;
         e.preventDefault();
-        design.zoom = round(clamp(design.zoom * Math.pow(1.1, -e.deltaY / 100), 0.1, 5), 100);
+        cur().design.zoom = round(clamp(cur().design.zoom * Math.pow(1.1, -e.deltaY / 100), 0.1, 5), 100);
         render();
       }, { passive: false });
     }
@@ -575,12 +598,13 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
   };
 
   const paintMedal = m => {
+    const { design, image } = parts[m.idx];
     const filled = design.shape !== "none" && design.background !== "none";
     m.float.classList.toggle("fx-float", design.effects.includes("float"));
     m.float.style.setProperty("--speed", design.speed);
     m.medal.className = ["medal", "shape-" + design.shape, filled && "filled", ...design.effects.map(f => "fx-" + f),
-      m.movable && image && "movable", !image && !filled && "empty"].filter(Boolean).join(" ");
-    m.medal.style.setProperty("--bg-fill", bgFill());
+      m.movable && image && m.idx === editing && "movable", !image && !filled && "empty"].filter(Boolean).join(" ");
+    m.medal.style.setProperty("--bg-fill", bgFill(design));
     m.medal.style.setProperty("--glow", design.colors[0] || "#ffffff");
     m.art.hidden = !image;
     m.art.style.transform = `translate(${(design.x * 100).toFixed(2)}%, ${(design.y * 100).toFixed(2)}%) rotate(${design.rotate}deg) scale(${design.zoom})`;
@@ -588,12 +612,46 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
       if (m.img.getAttribute("src") !== image) m.img.src = image;
       m.art.style.setProperty("--mask", `url("${image}")`);
     }
+    if (m.movable) m.float.parentElement.classList.toggle("on", m.idx === editing);
+  };
+
+  let pillNames = [];
+  const buildMedals = () => {
+    medals = [];
+    pillNames = [];
+    for (const id of ["stage-medals", "mini", "pills"]) $(id).textContent = "";
+    parts.forEach((_, i) => {
+      let host = $("stage-medals");
+      if (parts.length > 1) {
+        host = document.createElement("div");
+        host.className = "pick-medal";
+        host.addEventListener("pointerdown", () => { if (editing !== i) select(i); });
+        $("stage-medals").append(host);
+      }
+      makeMedal(host, parts.length > 1 ? 96 : 168, true, i);
+      makeMedal($("mini"), 22, false, i);
+      const pill = document.createElement("div");
+      pill.className = "pill";
+      const badge = document.createElement("span");
+      badge.className = "pill-badge";
+      const name = document.createElement("span");
+      name.className = "pill-name";
+      pill.append(badge, name);
+      $("pills").append(pill);
+      makeMedal(badge, 18, false, i);
+      pillNames.push(name);
+    });
   };
 
   const syncSeg = () => {
     document.querySelectorAll(".seg[data-key]").forEach(seg => {
-      const value = seg.dataset.key === "stage" ? stage : design[seg.dataset.key];
+      const k = seg.dataset.key;
+      const value = k === "stage" ? stage : k === "kind" ? (parts.length > 1 ? "pair" : "single") : cur().design[k];
       seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-checked", String(b.dataset.value === value)));
+    });
+    $("editing").querySelectorAll("button").forEach((b, i) => {
+      b.textContent = parts[i].badge.trim() || (i ? "Second" : "First");
+      b.setAttribute("aria-checked", String(i === editing));
     });
   };
 
@@ -605,7 +663,13 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     speed: v => v.toFixed(2).replace(/\.?0+$/, "") + "x"
   };
 
+  const nameGradient = c => {
+    const stops = c.length === 1 ? [c[0], `color-mix(in srgb, ${c[0]} 45%, white)`, c[0]] : [...c, c[0]];
+    return `linear-gradient(100deg, ${stops.join(", ")})`;
+  };
+
   const render = () => {
+    const { design, image } = cur();
     medals.forEach(paintMedal);
     syncSeg();
     for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
@@ -618,14 +682,18 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     $("bg-hint").hidden = design.shape !== "none";
     $("speed-row").hidden = !design.effects.length;
     document.querySelectorAll("#effects button").forEach(b => b.setAttribute("aria-pressed", String(design.effects.includes(b.dataset.fx))));
-    const c = design.colors;
-    const stops = c.length === 1 ? [c[0], `color-mix(in srgb, ${c[0]} 45%, white)`, c[0]] : [...c, c[0]];
-    $("pill").style.setProperty("--name-gradient", `linear-gradient(100deg, ${stops.join(", ")})`);
-    $("stage").className = "stage " + stage;
+    pillNames.forEach((name, i) => {
+      name.textContent = partName(i, "Badge name");
+      name.classList.toggle("empty", !parts[i].badge.trim());
+      name.parentElement.style.setProperty("--name-gradient", nameGradient(parts[i].design.colors));
+    });
+    $("stage").classList.toggle("dark", stage === "dark");
+    $("stage").classList.toggle("light", stage === "light");
     $("profile").className = "profile " + stage;
   };
 
   const renderColors = () => {
+    const { design } = cur();
     const box = $("colors");
     box.textContent = "";
     design.colors.forEach((c, i) => {
@@ -661,6 +729,39 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     render();
   };
 
+  const syncFile = () => {
+    const { image, file } = cur();
+    $("file-name").textContent = file;
+    $("file-name").hidden = $("file-clear").hidden = !image;
+    $("file-hint").hidden = !!image;
+    $("pick").textContent = image ? "Change image" : "Upload image";
+  };
+
+  const select = i => {
+    editing = i;
+    $("badge").value = cur().badge;
+    $("badge-label").textContent = parts.length > 1 ? (i ? "Second badge name" : "First badge name") : "Badge name";
+    syncFile();
+    renderColors();
+  };
+
+  const setPaired = paired => {
+    if (paired === parts.length > 1) return;
+    if (paired) parts.push({ badge: "", image: null, file: "", design: structuredClone(parts[0].design) });
+    else parts.length = 1;
+    $("editing-field").hidden = !paired;
+    $("editing").textContent = "";
+    parts.forEach((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role", "radio");
+      b.addEventListener("click", () => select(i));
+      $("editing").append(b);
+    });
+    buildMedals();
+    select(paired ? 1 : 0);
+  };
+
   const loadImage = url => new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -668,7 +769,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     img.src = url;
   });
 
-  const renderPng = async () => {
+  const renderPng = async ({ design, image }) => {
     const S = PREVIEW_PX;
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = S;
@@ -701,26 +802,38 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     return canvas.toDataURL("image/png").replace(/^data:[^,]*,/, "");
   };
 
+  const partBody = async p => {
+    const { colors, ...rest } = p.design;
+    return {
+      badge: p.badge.trim(), colors,
+      image: p.image ? p.image.replace(/^data:[^,]*,/, "") : undefined,
+      design: rest,
+      preview: await renderPng(p).catch(() => undefined)
+    };
+  };
+
   const setError = msg => { $("err").textContent = msg || ""; };
 
   document.querySelectorAll(".seg[data-key]").forEach(seg => seg.addEventListener("click", e => {
     const b = e.target.closest("button");
     if (!b) return;
     if (seg.dataset.key === "stage") stage = b.dataset.value;
-    else design[seg.dataset.key] = b.dataset.value;
+    else if (seg.dataset.key === "kind") return setPaired(b.dataset.value === "pair");
+    else cur().design[seg.dataset.key] = b.dataset.value;
     render();
   }));
   $("effects").addEventListener("click", e => {
     const b = e.target.closest("button");
     if (!b) return;
     const fx = b.dataset.fx;
+    const { design } = cur();
     design.effects = design.effects.includes(fx) ? design.effects.filter(f => f !== fx) : [...design.effects, fx];
     render();
   });
   for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
-    $(k).addEventListener("input", e => { design[k] = Number(e.target.value); render(); });
+    $(k).addEventListener("input", e => { cur().design[k] = Number(e.target.value); render(); });
   }
-  $("fit-reset").addEventListener("click", () => { Object.assign(design, FIT); render(); });
+  $("fit-reset").addEventListener("click", () => { Object.assign(cur().design, FIT); render(); });
 
   $("discordId").addEventListener("input", e => {
     e.target.value = e.target.value.replace(/\D/g, "");
@@ -731,37 +844,30 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     $("profile-name").textContent = v || "you";
     $("avatar").textContent = (v[0] || "?").toUpperCase();
   });
-  $("badge").addEventListener("input", e => {
-    const v = e.target.value.trim();
-    $("tip").textContent = v || "Badge name";
-    $("tip").classList.toggle("empty", !v);
-  });
+  $("badge").addEventListener("input", e => { cur().badge = e.target.value; render(); });
   $("details").addEventListener("input", e => { $("count").textContent = `${e.target.value.length} / 1000`; });
 
   const fileInput = $("file");
   $("pick").addEventListener("click", () => fileInput.click());
   $("file-clear").addEventListener("click", () => {
-    image = null;
-    $("file-name").hidden = $("file-clear").hidden = true;
-    $("file-hint").hidden = false;
-    $("pick").textContent = "Upload image";
+    cur().image = null;
+    syncFile();
     render();
   });
   fileInput.addEventListener("change", () => {
     const file = fileInput.files[0];
+    const p = cur();
     fileInput.value = "";
     if (!file) return;
     if (!TYPES.includes(file.type)) return setError("The image has to be a PNG, JPG, GIF or WebP.");
     if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 5 MB.");
     const reader = new FileReader();
     reader.onload = () => {
-      image = String(reader.result);
-      Object.assign(design, FIT);
-      $("file-name").textContent = file.name;
-      $("file-name").hidden = $("file-clear").hidden = false;
-      $("file-hint").hidden = true;
-      $("pick").textContent = "Change image";
+      p.image = String(reader.result);
+      p.file = file.name;
+      Object.assign(p.design, FIT);
       setError("");
+      syncFile();
       render();
     };
     reader.onerror = () => setError("Couldn't read that image. Try another one.");
@@ -773,37 +879,42 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     setError("");
     const discordId = $("discordId").value.trim();
     const name = $("name").value.trim();
-    const badge = $("badge").value.trim();
     if (!/^\d{17,20}$/.test(discordId)) {
       $("discordId").setAttribute("aria-invalid", "true");
       $("discordId").focus();
       return setError("That Discord ID doesn't look right. It's a number 17 to 20 digits long.");
     }
     if (!name) { $("name").focus(); return setError("Add your Discord username."); }
-    if (!badge) { $("badge").focus(); return setError("Give the badge a name."); }
+    const unnamed = parts.findIndex(p => !p.badge.trim());
+    if (unnamed >= 0) {
+      select(unnamed);
+      $("badge").focus();
+      return setError(parts.length > 1 ? `Give the ${unnamed ? "second" : "first"} badge a name.` : "Give the badge a name.");
+    }
 
     $("send").disabled = true;
     $("send-label").textContent = "Sending...";
     try {
-      const preview = await renderPng().catch(() => undefined);
-      const { colors, ...rest } = design;
+      const [first, pair] = await Promise.all(parts.map(partBody));
       const res = await fetch(API, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          discordId, name, badge, colors,
+          discordId, name,
           details: $("details").value.trim(),
-          image: image ? image.replace(/^data:[^,]*,/, "") : undefined,
-          design: rest,
-          preview,
+          ...first,
+          pair,
           website: $("website").value,
           source: "web"
         })
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error || `Something went wrong (${res.status}). Try again in a bit.`);
-      $("done-name").textContent = badge;
-      makeMedal($("done-stage"), 104, false);
+      const names = parts.map(p => p.badge.trim());
+      $("done-name").textContent = names.join(" and ");
+      $("done-made").textContent = names.length > 1 ? "they get made, they show" : "it gets made, it shows";
+      $("done-stage").classList.toggle("pair", parts.length > 1);
+      parts.forEach((_, i) => makeMedal($("done-stage"), parts.length > 1 ? 80 : 104, false, i));
       render();
       $("form").hidden = true;
       $("done").classList.add("show");
@@ -815,9 +926,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     }
   });
 
-  makeMedal($("stage"), 168, true);
-  makeMedal($("mini"), 22, false);
-  makeMedal($("pill-badge"), 18, false);
+  buildMedals();
   renderColors();
 })();
 </script>
