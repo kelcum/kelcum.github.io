@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <script>(()=>{const s=e=>{e.preventDefault();e.stopImmediatePropagation()};addEventListener("contextmenu",s,true);addEventListener("keydown",e=>{const c=e.code,m=e.ctrlKey||e.metaKey;if(e.key==="F12"||c==="F12"||(m&&e.shiftKey&&["KeyI","KeyJ","KeyC","KeyK"].includes(c))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(c))||(m&&c==="KeyU"))s(e)},true);setInterval(()=>{const t=performance.now();debugger;if(performance.now()-t>200){document.documentElement.innerHTML="";location.replace("about:blank")}},1000)})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deadbolt - a cold, no-frills Discord client mod</title>
-<meta name="description" content="Deadbolt is a personal Equicord fork: 300+ plugins, a custom boot splash, animated profile badges, and installs for Windows, macOS and Linux.">
+<title>Deadbolt - the Discord mod that survives Discord updates</title>
+<meta name="description" content="Deadbolt is the Discord mod that survives Discord updates: an Equicord fork with 300+ plugins, crash safe mode, backup and restore, badges you design yourself, and installs for Windows, macOS and Linux.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#08090c">
 <link rel="canonical" href="https://xan.gripe/deadbolt/">
@@ -15,7 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Deadbolt">
-<meta property="og:description" content="A cold, no-frills Discord client mod. 300+ plugins, a custom boot splash, animated badges. Windows, macOS and Linux.">
+<meta property="og:description" content="The Discord mod that survives Discord updates. 300+ plugins, crash safe mode, badges you design yourself. Windows, macOS and Linux.">
 <meta property="og:url" content="https://xan.gripe/deadbolt/">
 <meta property="og:image" content="https://xan.gripe/deadbolt/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -370,8 +370,8 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
       <div class="crest" aria-hidden="true"><svg viewBox="4 15 160 160"><use href="#dbMark"/></svg></div>
       <div class="eyebrow">Discord client mod &middot; fork of Equicord</div>
       <h1 class="wordmark">DEADBOLT</h1>
-      <p class="tagline">A cold, no-frills Discord client mod.</p>
-      <p class="lede">The whole Equicord plugin library, plus a boot splash, animated profile badges and installs that don&rsquo;t fight your operating system.</p>
+      <p class="tagline">The Discord mod that survives Discord updates.</p>
+      <p class="lede">Discord&rsquo;s updater quietly wipes client mods. Deadbolt notices and puts itself back. Plus the whole Equicord plugin library, a crash safe mode and badges you design yourself.</p>
       <div class="cta">
         <a class="btn btn-primary" id="cta-main" href="#install">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
@@ -393,7 +393,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
   <div class="wrap">
     <div class="stats reveal">
       <div class="stat"><b>300+</b><span>plugins from Equicord &amp; Vencord</span></div>
-      <div class="stat"><b>20</b><span>Deadbolt originals</span></div>
+      <div class="stat"><b>25+</b><span>Deadbolt originals</span></div>
       <div class="stat"><b>3</b><span>platforms, one codebase</span></div>
       <div class="stat"><b>GPL-3.0</b><span>open source, all of it</span></div>
     </div>
@@ -408,51 +408,70 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
       </div>
 
       <div class="grid">
+        <article class="card w reveal">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4M20 20v-4h-4"/></svg></div>
+          <h3>Survives Discord updates</h3>
+          <p>Discord&rsquo;s updater loves to reset mods. On Windows, Deadbolt checks every time you sign in and puts itself, its icon and its splash back, restarting Discord only if it was running without Deadbolt. <code>/deadbolt</code> shows every Discord version&rsquo;s status and fixes it in one click.</p>
+        </article>
+        <article class="card w reveal" style="--d:.06s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="M12 8v4M12 15.5h.01"/></svg></div>
+          <h3>Crash safe mode</h3>
+          <p>If Discord fails to start twice in a row, Deadbolt starts with only its core plugins, tells you which plugin it suspects, and turns everything back on with one click.</p>
+        </article>
         <article class="card reveal">
-          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
-          <h3>Its own boot splash</h3>
-          <p>Replaces Discord&rsquo;s connecting screen with an animated chrome crest and Deadbolt-branded quotes, instead of just re-texting the default one.</p>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z"/><path d="M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+          <h3>Backup and restore</h3>
+          <p>Save your settings, QuickCSS and your own plugins to one file. Restoring shows exactly what will change first, and if the plugins don&rsquo;t build, nothing is touched.</p>
         </article>
         <article class="card reveal" style="--d:.06s">
-          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5 7 22l5-3 5 3-1.5-7.5"/></svg></div>
-          <h3>Animated profile badges</h3>
-          <p>A shining chrome Creator badge, a violet Contributor badge and a Plugin Creator badge, each with a proper hover card. Click Contributor or Plugin Creator to see that person&rsquo;s plugins.</p>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg></div>
+          <h3>Breakage alerts</h3>
+          <p>Opt in and, when a Discord update breaks plugins, Deadbolt reports which ones so a fix starts right away. Only plugin names and Discord&rsquo;s build number are sent.</p>
+          <span class="tag">off by default</span>
         </article>
         <article class="card reveal" style="--d:.12s">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></div>
+          <h3>What&rsquo;s new, once</h3>
+          <p>After an update, Deadbolt shows a short list of what changed, one time. Reopen it any time with <code>/whatsnew</code>.</p>
+        </article>
+        <article class="card reveal">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3.5 14.3 8l5 .7-3.6 3.5.9 5L12 14.8l-4.6 2.4.9-5L4.7 8.7l5-.7z"/><path d="M5 20.5h14"/></svg></div>
           <h3>Design your own badge</h3>
-          <p>Deadbolt&rsquo;s settings have a badge designer with a live preview: upload an image, even an animated one, frame it, add effects and send it in.</p>
+          <p>A badge designer with a live preview, right in Deadbolt&rsquo;s settings. Images and GIFs up to 5 MB, and you can design a matching pair in one go. Approved badges show up within minutes.</p>
           <a class="tag" href="badge/">or design one on the web &rarr;</a>
         </article>
-
-        <article class="card reveal">
+        <article class="card reveal" style="--d:.06s">
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+          <h3>Its own boot splash</h3>
+          <p>Replaces Discord&rsquo;s connecting screen with an animated chrome crest, Deadbolt-branded quotes and a real progress bar.</p>
+        </article>
+        <article class="card reveal" style="--d:.12s">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 5l-4 14"/></svg></div>
-          <h3>/addplugin</h3>
-          <p>Add a plugin without leaving Discord. Attach the file and Deadbolt saves it, rebuilds, and offers to reload. No editor, no terminal.</p>
+          <h3>/addplugin and /myplugins</h3>
+          <p>Add, edit, switch, share and remove your own plugins without leaving Discord. Deadbolt saves the code, rebuilds, and offers to reload.</p>
           <span class="tag">needs a from-source install</span>
         </article>
-        <article class="card reveal" style="--d:.06s">
+        <article class="card reveal">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
           <h3>macOS done properly</h3>
           <p>Injects through Discord&rsquo;s external <code>discord_desktop_core</code> module, so Discord.app is never modified and its Apple signature stays valid. No &ldquo;damaged app&rdquo; warnings.</p>
         </article>
-        <article class="card reveal" style="--d:.12s">
+        <article class="card reveal" style="--d:.06s">
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></div>
           <h3>A default look</h3>
           <p>Fresh installs start on a black, grayscale QuickCSS theme that tidies away Nitro and gift buttons, stickers, Discover and more. It never overwrites a QuickCSS you already have.</p>
         </article>
-
-        <article class="card reveal">
+        <article class="card reveal" style="--d:.12s">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5 7 22l5-3 5 3-1.5-7.5"/></svg></div>
+          <h3>Animated profile badges</h3>
+          <p>A shining chrome Creator badge, a violet Contributor badge and a Plugin Creator badge, each with a proper hover card. Badges also show next to names in chat.</p>
+        </article>
+        <article class="card w reveal">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h8M16 6h4M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
           <h3>Small plugins that earn their spot</h3>
-          <p>ConfirmMassMention asks before an @everyone goes out. DoubleSendGuard catches an accidental double-send. Plus SilentFolder, BetterMicQuality, VSCodeActivity and more.</p>
+          <p>QuickFind searches any chat instantly with Ctrl+Shift+F. ConfirmMassMention asks before an @everyone goes out. DoubleSendGuard catches an accidental double-send. Plus SilentFolder, VSCodeActivity and more.</p>
         </article>
-        <article class="card reveal" style="--d:.06s">
-          <div class="ico"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4M20 20v-4h-4"/></svg></div>
-          <h3>Heals itself on Windows</h3>
-          <p>Discord&rsquo;s updater loves to reset mods. One script puts everything back, and an optional scheduled task keeps Deadbolt synced with upstream and tells you if it gets stuck.</p>
-        </article>
-        <article class="card reveal" style="--d:.12s">
+        <article class="card w reveal" style="--d:.06s">
           <div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></div>
           <h3>The whole Equicord library</h3>
           <p>300+ plugins from Equicord and Vencord come along for the ride, so nothing you rely on goes missing.</p>
@@ -522,7 +541,7 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
           </div>
           <div>
             <h3>Yours</h3>
-            <p>Design one with a live preview, animated images welcome, and send it in. If it gets made, it&rsquo;s on your profile for everyone. <span class="go">Design a badge &rarr;</span></p>
+            <p>Design one, or a matching pair, with a live preview. Animated images up to 5 MB are welcome. If it gets made, it&rsquo;s on your profile for everyone within minutes. <span class="go">Design a badge &rarr;</span></p>
           </div>
         </a>
       </div>
@@ -551,7 +570,8 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
           <div class="panel-grid">
             <div>
               <h3>One-click installer</h3>
-              <p>Downloads the latest Deadbolt build and walks you through picking your Discord install: Stable, PTB or Canary. Already running another client mod there? It swaps it out for you.</p>
+              <p>Finds Discord, PTB and Canary, downloads the latest Deadbolt build and puts it on. No Git, Node.js or pnpm. Already running another client mod there? It swaps it out for you.</p>
+              <p>After that it checks quietly every time you sign in to Windows and puts Deadbolt back if a Discord update removed it. Repair Deadbolt and Uninstall Deadbolt are in the Start menu.</p>
               <ol class="steps">
                 <li>Download and run <code>DeadboltSetup.exe</code>.</li>
                 <li>Pick your Discord install when it asks.</li>
@@ -567,7 +587,13 @@ footer { border-top: 1px solid var(--line); padding: 44px 0 60px; font-size: .88
               <p class="note" style="margin-top:1.1rem">The installer isn&rsquo;t code-signed, so Windows SmartScreen may warn you. Choose <b>More info</b>, then <b>Run anyway</b>.</p>
             </div>
             <div>
-              <h3>Or build from source</h3>
+              <h3>Or one command</h3>
+              <p>Paste this into PowerShell, as your normal user. It does the same as the installer without the SmartScreen warning.</p>
+              <div class="cmd">
+                <pre id="cmd-win-ps"><span class="p">&gt; </span>irm https://github.com/kelcum/Deadbolt/releases/latest/download/install.ps1 | iex</pre>
+                <button class="copy" type="button" data-copy="cmd-win-ps" aria-label="Copy the PowerShell install command">Copy</button>
+              </div>
+              <h3 style="margin-top:1.6rem">Or build from source</h3>
               <p>Needs Git and Node.js 22+. Building from source also unlocks <code>/addplugin</code> and the auto-update script.</p>
               <div class="cmd">
                 <pre id="cmd-win">git clone https://github.com/kelcum/Deadbolt
@@ -698,7 +724,7 @@ pnpm inject</pre>
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var pre = document.getElementById(btn.dataset.copy);
-      var text = pre.innerText.replace(/^\$ /gm, "").trim();
+      var text = pre.innerText.replace(/^[$>] /gm, "").trim();
       function done() {
         btn.textContent = "Copied"; btn.classList.add("done");
         setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
