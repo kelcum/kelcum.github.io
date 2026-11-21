@@ -1,0 +1,1607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Badge studio - Deadbolt</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090c">
+
+<link rel="icon" type="image/svg+xml" href="../assets/crest.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.xan.gripe" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #08090c;
+  --bg-2: #0e1015;
+  --tile: #171a21;
+  --line: rgba(255, 255, 255, .07);
+  --line-2: rgba(255, 255, 255, .13);
+  --text: #e9eef4;
+  --text-2: #aab3be;
+  --muted: #7f8895;
+  --violet: #7c6ff0;
+  --violet-2: #c9c0ff;
+  --error: #f87171;
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --chrome: linear-gradient(100deg, #f4f7fb 0%, #a7b1bd 22%, #ffffff 40%, #8c96a3 58%, #cfd6df 78%, #9ca6b2 100%);
+  --font-display: "Archivo", "Segoe UI Black", system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+@property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scrollbar-color: #2a2f38 transparent; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text-2);
+  font: 16px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+a { color: inherit; }
+code { font-family: var(--font-mono); font-size: .86em; color: var(--text); }
+:focus-visible { outline: 2px solid #cfd8e3; outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8, 9, 12, .7);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 64px; }
+.brand {
+  display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--text);
+  font: 800 .9rem/1 var(--font-display); font-stretch: 118%; letter-spacing: .16em; text-transform: uppercase;
+}
+.brand svg { width: 30px; height: 30px; flex: none; }
+.brand small { font: 500 .66rem/1 var(--font-mono); letter-spacing: .18em; color: var(--muted); padding: .28rem .45rem; border: 1px solid var(--line-2); border-radius: 6px; }
+.who { display: flex; align-items: center; gap: .7rem; min-width: 0; }
+.who-av { width: 32px; height: 32px; border-radius: 50%; flex: none; object-fit: cover; background: linear-gradient(135deg, #5865f2, #7c6ff0); box-shadow: 0 0 0 1px var(--line-2); }
+.who-name { color: var(--text); font-weight: 600; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+
+main { flex: 1; position: relative; isolation: isolate; padding: clamp(28px, 5vw, 64px) 0 clamp(56px, 8vw, 96px); }
+main::before {
+  content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: radial-gradient(70% 45% at 50% -5%, rgba(190, 205, 232, .15), transparent 70%), radial-gradient(40% 30% at 85% 10%, rgba(124, 111, 240, .1), transparent 70%);
+}
+main::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 40% at 50% 0%, #000, transparent 76%);
+  mask-image: radial-gradient(ellipse 70% 40% at 50% 0%, #000, transparent 76%);
+}
+
+.eyebrow { font: 500 .74rem/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+h1 {
+  margin: .45rem 0 .6rem;
+  font: 850 clamp(2.1rem, 5.6vw, 3.4rem)/1.04 var(--font-display); font-stretch: 116%; letter-spacing: -.01em;
+  background: var(--chrome); background-size: 240% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  animation: title-sheen 8s ease-in-out infinite alternate;
+}
+@keyframes title-sheen { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+h2 { margin: 0; color: var(--text); font: 800 1.25rem/1.2 var(--font-display); font-stretch: 112%; }
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: clamp(20px, 3vw, 32px); }
+.head p { margin: 0; max-width: 560px; text-wrap: pretty; }
+
+.panel {
+  padding: clamp(1.1rem, 3vw, 1.8rem); border-radius: 22px;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .012));
+}
+
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .8rem 1.3rem; border-radius: 12px; border: 1px solid transparent;
+  font: 600 .95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: transform .2s var(--ease), box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s, opacity .2s;
+}
+.btn:active:not(:disabled) { transform: translateY(1px) scale(.985); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-primary {
+  color: #0a0b0f;
+  background: linear-gradient(180deg, #f8fafd 0%, #c9d1db 55%, #aab4c1 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85), 0 10px 34px rgba(170, 195, 235, .18);
+}
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: inset 0 1px 0 #fff, 0 14px 44px rgba(170, 195, 235, .3); }
+.btn-ghost { color: var(--text); background: rgba(255, 255, 255, .03); border-color: var(--line-2); }
+.btn-ghost:hover:not(:disabled) { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .24); }
+.btn-ok { color: #d8ffe6; background: rgba(74, 222, 128, .1); border-color: rgba(74, 222, 128, .28); }
+.btn-ok:hover:not(:disabled) { background: rgba(74, 222, 128, .18); }
+.btn-danger { color: #ffd9d9; background: rgba(248, 113, 113, .08); border-color: rgba(248, 113, 113, .26); }
+.btn-danger:hover:not(:disabled) { background: rgba(248, 113, 113, .16); }
+.btn-danger.armed { color: #fff; background: #b4232c; border-color: #e0464f; animation: armed 1s ease-in-out infinite; }
+@keyframes armed { 50% { box-shadow: 0 0 0 4px rgba(248, 113, 113, .2); } }
+.btn-sm { padding: .5rem .85rem; font-size: .84rem; border-radius: 10px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn .spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; }
+.btn-discord { padding: .95rem 1.5rem; font-size: 1rem; }
+.link { padding: 0; border: 0; background: none; color: var(--violet-2); font: 500 .82rem/1.2 var(--font-body); cursor: pointer; }
+.link:hover { text-decoration: underline; }
+.link.danger { color: var(--error); }
+.icon-btn {
+  display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border-radius: 10px; flex: none;
+  border: 1px solid var(--line-2); background: rgba(255, 255, 255, .03); color: var(--text-2); cursor: pointer; transition: background .2s, color .2s;
+}
+.icon-btn:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.icon-btn svg { width: 17px; height: 17px; }
+
+.gate { display: grid; place-items: center; min-height: calc(100dvh - 64px - 220px); }
+.gate-card {
+  position: relative; width: min(460px, 100%); padding: clamp(2rem, 6vw, 3rem) clamp(1.4rem, 5vw, 2.6rem); text-align: center;
+  border-radius: 28px; border: 1px solid var(--line); overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .012));
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .55);
+  animation: rise .7s var(--ease) both;
+}
+.gate-card::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from var(--angle), transparent 0deg, rgba(201, 192, 255, .5) 60deg, transparent 120deg, transparent 240deg, rgba(230, 236, 245, .35) 300deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: turn 6s linear infinite;
+}
+.gate-crest { width: 92px; height: 92px; margin: 0 auto 1.4rem; filter: drop-shadow(0 18px 40px rgba(124, 111, 240, .35)); animation: bob 5s ease-in-out infinite; --size: 92px; }
+.gate h1 { font-size: clamp(2rem, 7vw, 2.6rem); }
+.gate p { margin: 0 auto 1.8rem; max-width: 330px; }
+.gate .note { margin: 1.4rem 0 0; font-size: .8rem; color: var(--muted); }
+.gate-err { margin: 0 0 1.2rem !important; padding: .7rem .9rem; border-radius: 12px; color: #ffd2d2; background: rgba(248, 113, 113, .1); border: 1px solid rgba(248, 113, 113, .25); font-size: .88rem; }
+
+.boot { display: grid; place-items: center; min-height: calc(100dvh - 64px - 220px); }
+.boot-ring { width: 46px; height: 46px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, .07); border-top-color: var(--violet-2); animation: spin .8s linear infinite; }
+
+.tabs-bar { position: sticky; top: 64px; z-index: 40; margin: 0 0 clamp(18px, 3vw, 28px); padding: 10px 0; pointer-events: none; }
+.tabs-bar > * { pointer-events: auto; }
+.tabs { position: relative; display: inline-flex; gap: 4px; padding: 5px; border-radius: 15px; background: rgba(14, 16, 21, .86); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); border: 1px solid var(--line); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs .ind {
+  position: absolute; top: 5px; bottom: 5px; left: 0; width: 0; border-radius: 11px; pointer-events: none;
+  background: linear-gradient(180deg, #f6f9fc, #bcc6d2); box-shadow: 0 6px 20px rgba(170, 195, 235, .18);
+  transform: translateX(var(--x, 0)); width: var(--w, 0);
+  transition: transform .45s var(--ease), width .45s var(--ease);
+}
+.tabs button {
+  position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .5rem; flex: none;
+  appearance: none; border: 0; cursor: pointer; padding: .6rem 1.1rem; border-radius: 11px;
+  background: transparent; color: var(--text-2); font: 600 .9rem/1 var(--font-body); transition: color .3s;
+}
+.tabs button:hover { color: #fff; }
+.tabs button[aria-selected="true"] { color: #0a0b0f; }
+.tabs .count { min-width: 20px; padding: 2px 6px; border-radius: 999px; font: 600 .7rem/1.2 var(--font-mono); text-align: center; background: rgba(124, 111, 240, .3); color: #fff; transition: background .3s, color .3s; }
+.tabs button[aria-selected="true"] .count { background: #0a0b0f; color: #fff; }
+.tabs .count:empty { display: none; }
+
+.view { animation: view-in .5s var(--ease) both; }
+@keyframes view-in { from { opacity: 0; transform: translateY(10px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px) scale(.98); } }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1rem; margin-bottom: 18px; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips button {
+  appearance: none; cursor: pointer; padding: .45rem .95rem; border-radius: 999px;
+  border: 1px solid var(--line-2); background: transparent; color: var(--text-2);
+  font: 600 .84rem/1.2 var(--font-body); transition: color .2s, background .2s, border-color .2s, transform .2s var(--ease);
+}
+.chips button:hover { color: #fff; border-color: rgba(255, 255, 255, .24); }
+.chips button:active { transform: scale(.96); }
+.chips button[aria-pressed="true"] { color: #fff; border-color: rgba(201, 192, 255, .7); background: rgba(124, 111, 240, .22); }
+.chips button small { margin-left: .35rem; font: 500 .72rem/1 var(--font-mono); color: var(--muted); }
+.chips button[aria-pressed="true"] small { color: var(--violet-2); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.card {
+  display: flex; flex-direction: column; min-width: 0; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .012));
+  animation: rise .55s var(--ease) both; animation-delay: calc(var(--i, 0) * 45ms);
+  transition: border-color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.card:hover { border-color: var(--line-2); transform: translateY(-2px); box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
+.card.leaving { animation: leave .4s var(--ease) forwards; }
+@keyframes leave { to { opacity: 0; transform: scale(.96); } }
+.card-stage {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 18px; height: 170px;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .07), transparent 62%), #111214;
+  border-bottom: 1px solid var(--line);
+}
+.card-stage.light { background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, .05), transparent 62%), #f2f3f5; }
+.card-stage .flip { position: absolute; top: 10px; right: 10px; }
+.card-stage.light .flip { background: rgba(255, 255, 255, .7); border-color: rgba(0, 0, 0, .1); color: #4e5058; }
+.card-body { display: grid; gap: .75rem; padding: 1rem 1.1rem 1.1rem; flex: 1; align-content: start; }
+.card-top { display: flex; align-items: start; justify-content: space-between; gap: .8rem; }
+.card h3 { margin: 0; color: var(--text); font: 750 1.08rem/1.25 var(--font-display); font-stretch: 108%; overflow-wrap: anywhere; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; font-size: .82rem; color: var(--muted); }
+.meta b { color: var(--text-2); font-weight: 600; }
+.meta code { font-size: .76rem; color: var(--text-2); cursor: copy; }
+.meta .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .6; }
+.details { margin: 0; padding: .65rem .8rem; border-radius: 12px; background: rgba(0, 0, 0, .22); border: 1px solid var(--line); font-size: .86rem; color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 7.5em; overflow: auto; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; padding-top: .2rem; }
+.actions .grow { flex: 1 1 100%; }
+.actions .btn:not(.grow) { flex: 1 1 0; }
+.status { flex: none; display: inline-flex; align-items: center; gap: .4rem; padding: .25rem .6rem; border-radius: 999px; font: 600 .7rem/1.2 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; border: 1px solid; }
+.status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.status.new { color: var(--violet-2); border-color: rgba(201, 192, 255, .35); background: rgba(124, 111, 240, .12); }
+.status.new::before { animation: blink 1.6s ease-in-out infinite; }
+.status.approved { color: #86efac; border-color: rgba(74, 222, 128, .3); background: rgba(74, 222, 128, .08); }
+.status.denied { color: #fca5a5; border-color: rgba(248, 113, 113, .3); background: rgba(248, 113, 113, .08); }
+.status.done { color: #e9eef4; border-color: rgba(255, 255, 255, .2); background: rgba(255, 255, 255, .06); }
+.status.live { color: #86efac; border-color: rgba(74, 222, 128, .3); background: rgba(74, 222, 128, .08); }
+@keyframes blink { 50% { opacity: .3; } }
+
+.blank { display: grid; justify-items: center; gap: .9rem; padding: clamp(3rem, 8vw, 5rem) 1rem; text-align: center; border-radius: 22px; border: 1px dashed var(--line-2); animation: rise .5s var(--ease) both; }
+.blank .ghost { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .12), rgba(255, 255, 255, .02)); box-shadow: inset 0 0 0 1px var(--line-2); animation: bob 4s ease-in-out infinite; --size: 84px; }
+.blank .ghost svg { width: 36px; height: 36px; opacity: .55; }
+.blank h3 { margin: 0; color: var(--text); font: 750 1.15rem/1.3 var(--font-display); }
+.blank p { margin: 0; max-width: 360px; font-size: .92rem; }
+
+.skel { pointer-events: none; }
+.skel .card-stage, .skel .bar { position: relative; overflow: hidden; }
+.skel .card-stage::after, .skel .bar::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .06) 50%, transparent 70%); background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.skel .bar { height: 12px; border-radius: 6px; background: rgba(255, 255, 255, .05); }
+.skel .bar.w1 { width: 55%; height: 16px; } .skel .bar.w2 { width: 80%; } .skel .bar.w3 { width: 40%; }
+.skel .orb { width: 88px; height: 88px; border-radius: 50%; background: rgba(255, 255, 255, .05); }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+.pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pill {
+  display: flex; align-items: center; gap: .5rem; width: fit-content; max-width: 100%;
+  padding: 5px 12px 5px 6px; border-radius: 999px; border: 1.5px solid transparent;
+  background: linear-gradient(#1e1f22, #1e1f22) padding-box, var(--name-gradient, #4e5058) border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+}
+.light .pill { background: linear-gradient(#fff, #fff) padding-box, var(--name-gradient, #c4c9ce) border-box; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
+.pill-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f2f3f5; font-weight: 600; font-size: .875rem; line-height: 18px; }
+.light .pill-name { color: #060607; }
+.pill-name.empty { opacity: .55; }
+.pill-badge { display: flex; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
+form { display: grid; gap: 1.4rem; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field { display: grid; gap: .5rem; min-width: 0; align-content: start; }
+.label { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .5rem; color: var(--text); font-weight: 600; font-size: .92rem; }
+.opt, .hint, .field small { font-size: .8rem; font-weight: 400; color: var(--muted); }
+.label .act { margin-left: auto; }
+.field.off { opacity: .45; pointer-events: none; }
+input[type="text"], textarea {
+  width: 100%; padding: .75rem .9rem; border-radius: 12px;
+  border: 1px solid var(--line-2); background: var(--bg-2); color: var(--text);
+  font: 400 .95rem/1.4 var(--font-body);
+  transition: border-color .2s, box-shadow .2s;
+}
+input[type="text"]::placeholder, textarea::placeholder { color: #5d6570; }
+input[type="text"]:focus, textarea:focus { outline: none; border-color: rgba(201, 192, 255, .55); box-shadow: 0 0 0 3px rgba(124, 111, 240, .2); }
+input[aria-invalid="true"] { border-color: rgba(248, 113, 113, .6); }
+
+.seg { display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+.seg button {
+  flex: 1 1 0; white-space: nowrap; appearance: none; border: 0; cursor: pointer; padding: .55rem .9rem; border-radius: 9px;
+  background: transparent; color: var(--text-2); font: 600 .85rem/1 var(--font-body); transition: color .2s, background .2s;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.seg button:hover { color: #fff; }
+.seg button[aria-checked="true"] { color: #0a0b0f; background: linear-gradient(180deg, #f6f9fc, #bcc6d2); }
+
+.sliders { display: grid; gap: .1rem; padding: .5rem .9rem; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2); }
+.slider { display: grid; grid-template-columns: 96px minmax(0, 1fr) 52px; align-items: center; gap: .8rem; }
+.slider span:first-child { font-size: .85rem; color: var(--text-2); }
+.slider output { font: 500 .78rem/1 var(--font-mono); color: var(--text); text-align: right; }
+.slider input { width: 100%; margin: .5rem 0; accent-color: var(--violet); cursor: pointer; }
+
+.colors { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.swatch { display: inline-flex; align-items: center; gap: .5rem; padding: .3rem .45rem .3rem .3rem; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2); animation: rise .3s var(--ease) both; }
+.swatch input[type="color"] { appearance: none; -webkit-appearance: none; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 8px; background: none; cursor: pointer; }
+.swatch input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.swatch input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
+.swatch input[type="color"]::-moz-color-swatch { border: 1px solid rgba(255, 255, 255, .18); border-radius: 8px; }
+.swatch code { font-size: .8rem; }
+.x { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font-size: 1.05rem; line-height: 1; cursor: pointer; }
+.x:hover { color: var(--text); background: rgba(255, 255, 255, .08); }
+.fx { display: flex; flex-wrap: wrap; gap: .5rem; }
+.fx button { appearance: none; cursor: pointer; padding: .45rem .95rem; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font: 600 .85rem/1.2 var(--font-body); transition: color .2s, background .2s, border-color .2s; }
+.fx button:hover { color: #fff; border-color: rgba(255, 255, 255, .24); }
+.fx button[aria-pressed="true"] { color: #fff; border-color: rgba(201, 192, 255, .7); background: rgba(124, 111, 240, .22); }
+
+.file { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
+.file-name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: .9rem; }
+.drop { position: relative; }
+.drop.over::after { content: "Drop the image"; position: absolute; inset: -8px; display: grid; place-items: center; border-radius: 14px; border: 2px dashed rgba(201, 192, 255, .7); background: rgba(124, 111, 240, .14); color: #fff; font-weight: 600; }
+
+.source { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .7rem .9rem; border-radius: 14px; border: 1px solid rgba(201, 192, 255, .3); background: rgba(124, 111, 240, .1); font-size: .88rem; animation: rise .4s var(--ease) both; }
+.source b { color: #fff; }
+.submit { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1rem; padding-top: .3rem; }
+.err { margin: 0; font-size: .9rem; color: var(--error); }
+.err:empty { display: none; }
+
+.preview { position: sticky; top: 140px; display: grid; gap: .8rem; }
+.preview > .eyebrow { text-align: center; }
+.stage {
+  position: relative; display: grid; place-items: center; height: 300px; border-radius: 16px; border: 1px solid var(--line);
+  background-image: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, .07), transparent 65%);
+  transition: background-color .3s;
+}
+.stage.dark, .profile.dark { background-color: #111214; }
+.stage.light, .profile.light { background-color: #f2f3f5; }
+.stage-toggle { position: absolute; left: 10px; right: 10px; bottom: 10px; }
+.stage.light .seg { background: rgba(255, 255, 255, .85); border-color: rgba(0, 0, 0, .1); }
+.stage.light .seg button { color: #4e5058; }
+.stage-medals { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 40px; }
+.pick-medal { padding: 8px; border: 1px dashed transparent; border-radius: 14px; cursor: pointer; transition: border-color .2s; }
+.pick-medal.on { border-color: rgba(128, 128, 128, .55); cursor: default; }
+.profile { display: grid; gap: .75rem; padding: .9rem; border-radius: 16px; border: 1px solid var(--line); transition: background-color .3s; }
+.profile .eyebrow { font-size: .66rem; }
+.profile.light .eyebrow { color: #5c5e66; }
+.profile-row { display: flex; align-items: center; gap: .7rem; }
+.avatar { width: 48px; height: 48px; flex: none; border-radius: 50%; background: linear-gradient(135deg, #5865f2, #7c6ff0); display: grid; place-items: center; color: #fff; font-weight: 700; }
+.profile-name { font-weight: 700; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile.dark .profile-name { color: #f2f3f5; }
+.profile.light .profile-name { color: #060607; }
+.profile-badges { display: flex; gap: 4px; width: fit-content; margin-top: 4px; padding: 3px 5px; border-radius: 6px; }
+.profile.dark .profile-badges { background: rgba(255, 255, 255, .06); }
+.profile.light .profile-badges { background: rgba(0, 0, 0, .06); }
+
+.float { width: var(--size); height: var(--size); flex: none; }
+.float.fx-float { animation: bob calc(3s / var(--speed)) ease-in-out infinite; }
+.medal { position: relative; width: 100%; height: 100%; isolation: isolate; touch-action: none; user-select: none; }
+.medal.shape-circle, .medal.shape-rounded { overflow: hidden; }
+.medal.filled { background: var(--bg-fill); box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 calc(var(--size) * .06) calc(var(--size) * .2) rgba(0, 0, 0, .45); }
+.medal.shape-circle { border-radius: 50%; }
+.medal.shape-rounded { border-radius: 28%; }
+.medal.empty { border-radius: 50%; outline: 1px dashed rgba(128, 128, 128, .55); outline-offset: -1px; }
+.medal.movable { cursor: grab; }
+.medal.movable:active { cursor: grabbing; }
+.art { position: absolute; inset: 0; transform-origin: center; }
+.art img { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.medal.fx-spin .art img { animation: spin calc(6s / var(--speed)) linear infinite; }
+.glint, .shine, .art-glint, .art-shine { display: none; position: absolute; pointer-events: none; }
+.medal.filled.fx-glint .glint, .medal.filled.fx-shine .shine,
+.medal:not(.filled).fx-glint .art-glint, .medal:not(.filled).fx-shine .art-shine { display: block; }
+.glint {
+  inset: -45%; z-index: 1; mix-blend-mode: soft-light;
+  background: conic-gradient(from 0deg, rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 60%) 35deg, rgb(255 255 255 / 10%) 85deg, rgb(255 255 255 / 0%) 140deg, rgb(255 255 255 / 50%) 205deg, rgb(255 255 255 / 10%) 260deg, rgb(255 255 255 / 0%) 320deg);
+  animation: spin calc(4s / var(--speed)) linear infinite;
+}
+.shine {
+  inset: -30%; z-index: 2; mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 42%, rgb(255 255 255 / 70%) 50%, transparent 58%);
+  transform: translateX(-160%); animation: sheen calc(2.6s / var(--speed)) ease-in-out infinite;
+}
+.art-glint, .art-shine { inset: 0; -webkit-mask: var(--mask) center / contain no-repeat; mask: var(--mask) center / contain no-repeat; }
+.art-shine { mix-blend-mode: screen; background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 80%) 50%, transparent 60%); background-size: 300% 100%; animation: mask-sheen calc(2.6s / var(--speed)) ease-in-out infinite; }
+.art-glint { mix-blend-mode: soft-light; background: conic-gradient(from var(--angle), rgb(255 255 255 / 0%) 0deg, rgb(255 255 255 / 70%) 40deg, rgb(255 255 255 / 0%) 120deg, rgb(255 255 255 / 60%) 220deg, rgb(255 255 255 / 0%) 300deg); animation: turn calc(4s / var(--speed)) linear infinite; }
+.medal.filled.fx-pulse { animation: pulse calc(3.2s / var(--speed)) ease-in-out infinite; }
+.medal:not(.filled).fx-pulse .art { animation: glow calc(3.2s / var(--speed)) ease-in-out infinite; }
+.medal.loading::after { content: ""; position: absolute; inset: 30%; border-radius: 50%; border: 2px solid rgba(128, 128, 128, .5); border-top-color: transparent; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes turn { to { --angle: 360deg; } }
+@keyframes sheen { 0% { transform: translateX(-160%); } 55%, 100% { transform: translateX(160%); } }
+@keyframes mask-sheen { 0% { background-position: 100% 0; } 55%, 100% { background-position: 0% 0; } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(var(--size) * -.08)); } }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow) 35%, transparent), 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow) 80%, white), 0 0 calc(var(--size) * .35) color-mix(in srgb, var(--glow) 70%, transparent); }
+}
+@keyframes glow { 0%, 100% { filter: drop-shadow(0 0 0 transparent); } 50% { filter: drop-shadow(0 0 calc(var(--size) * .12) var(--glow)); } }
+
+.toasts { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); z-index: 100; display: grid; gap: 10px; width: min(440px, calc(100% - 32px)); transform: translateX(-50%); pointer-events: none; }
+.toast {
+  display: flex; align-items: center; gap: .75rem; padding: .85rem 1rem; border-radius: 14px; pointer-events: auto;
+  color: var(--text); font-size: .9rem; border: 1px solid var(--line-2);
+  background: rgba(23, 26, 33, .92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .5);
+  animation: toast-in .45s var(--ease) both;
+}
+.toast.out { animation: toast-out .35s var(--ease) forwards; }
+.toast .ic { width: 22px; height: 22px; flex: none; display: grid; place-items: center; border-radius: 50%; font-size: .8rem; font-weight: 800; }
+.toast.ok .ic { background: rgba(74, 222, 128, .18); color: var(--ok); }
+.toast.bad .ic { background: rgba(248, 113, 113, .18); color: var(--error); }
+.toast span { flex: 1; min-width: 0; }
+.toast a { color: var(--violet-2); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.toast a:hover { text-decoration: underline; }
+@keyframes toast-in { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+@keyframes toast-out { to { opacity: 0; transform: translateY(10px) scale(.97); } }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86rem; color: var(--muted); }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; }
+.foot .brand { color: var(--text-2); }
+.foot nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
+.foot nav a { color: var(--text-2); text-decoration: none; }
+.foot nav a:hover { color: #fff; }
+
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; }
+  .preview { position: static; order: -1; grid-template-columns: 1fr 1fr; }
+  .preview > .eyebrow { display: none; }
+  .stage { height: 240px; }
+}
+@media (max-width: 600px) {
+  .row { grid-template-columns: 1fr; }
+  .preview { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+  .slider { grid-template-columns: 80px minmax(0, 1fr) 44px; gap: .6rem; }
+  .who-name { display: none; }
+  .brand small { display: none; }
+  .tabs { display: flex; }
+  .tabs button { flex: 1 0 auto; justify-content: center; padding: .6rem .8rem; }
+  .submit .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="dbChrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f6f9fc"/>
+      <stop offset="15%" stop-color="#d4dbe3"/>
+      <stop offset="34%" stop-color="#a7b1bd"/>
+      <stop offset="49%" stop-color="#757f8b"/>
+      <stop offset="51%" stop-color="#6a7480"/>
+      <stop offset="66%" stop-color="#b6c0cb"/>
+      <stop offset="82%" stop-color="#e9eef4"/>
+      <stop offset="100%" stop-color="#c3ccd6"/>
+    </linearGradient>
+    <g id="dbMark">
+      <rect x="4" y="15" width="160" height="160" rx="36" fill="#171A21"/>
+      <g transform="translate(84,95) scale(1.45)">
+        <path d="M0 -4 L -32 -50" stroke="url(#dbChrome)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M0 -4 L 32 -50" stroke="url(#dbChrome)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <rect x="-9" y="-10" width="18" height="60" rx="9" fill="url(#dbChrome)"/>
+        <rect x="-26" y="26" width="52" height="16" rx="8" fill="url(#dbChrome)"/>
+      </g>
+    </g>
+    <symbol id="i-discord" viewBox="0 0 24 24"><path fill="currentColor" d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.87-.61 1.25a18.27 18.27 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.74 19.74 0 0 0-4.89 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-1.99a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.36 1.22 1.99a.08.08 0 0 0 .09.03 19.84 19.84 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42Z"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M22 12h-6l-2 3h-4l-2-3H2M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.2 13.6 7 22l5-3 5 3-1.2-8.4"/></g></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../" aria-label="Deadbolt home">
+      <svg viewBox="4 15 160 160" aria-hidden="true"><use href="#dbMark"/></svg>
+      Deadbolt
+      <small>Studio</small>
+    </a>
+    <div class="who" id="who" hidden>
+      <img class="who-av" id="who-av" alt="">
+      <span class="who-name" id="who-name"></span>
+      <button type="button" class="icon-btn" id="logout" aria-label="Log out" title="Log out"><svg aria-hidden="true"><use href="#i-out"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="boot" id="boot" role="status" aria-label="Loading"><div class="boot-ring"></div></div>
+
+    <section class="gate" id="gate" hidden>
+      <div class="gate-card">
+        <svg class="gate-crest" viewBox="4 15 160 160" aria-hidden="true"><use href="#dbMark"/></svg>
+        <div class="eyebrow">Deadbolt</div>
+        <h1>Badge studio</h1>
+        <p>Review badge requests, design new ones and ship them to everyone on Deadbolt in one click.</p>
+        <p class="gate-err" id="gate-err" role="alert" hidden></p>
+        <a class="btn btn-primary btn-discord" id="login" href="https://api.xan.gripe/v1/admin/auth/login">
+          <svg aria-hidden="true"><use href="#i-discord"/></svg>
+          Continue with Discord
+        </a>
+        <p class="note">Only Deadbolt's owner can get in. No passwords, just your Discord account.</p>
+      </div>
+    </section>
+
+    <section id="app" hidden>
+      <div class="head">
+        <div>
+          <div class="eyebrow">Badge studio</div>
+          <h1 id="hello">Welcome back</h1>
+          <p id="summary">Loading your badges&hellip;</p>
+        </div>
+      </div>
+
+      <div class="tabs-bar">
+        <div class="tabs" role="tablist" aria-label="Sections" id="tabs">
+          <span class="ind" aria-hidden="true"></span>
+          <button type="button" role="tab" data-tab="requests" aria-selected="true">Requests <span class="count" id="count-new"></span></button>
+          <button type="button" role="tab" data-tab="create" aria-selected="false">Create</button>
+          <button type="button" role="tab" data-tab="published" aria-selected="false">Published <span class="count" id="count-live"></span></button>
+        </div>
+      </div>
+
+      <div id="view-requests" class="view" role="tabpanel">
+        <div class="toolbar">
+          <div class="chips" id="filters">
+            <button type="button" data-status="new" aria-pressed="true">New <small></small></button>
+            <button type="button" data-status="approved" aria-pressed="false">Approved <small></small></button>
+            <button type="button" data-status="denied" aria-pressed="false">Denied <small></small></button>
+            <button type="button" data-status="done" aria-pressed="false">Done <small></small></button>
+            <button type="button" data-status="all" aria-pressed="false">All <small></small></button>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" id="reload-requests"><svg aria-hidden="true"><use href="#i-refresh"/></svg>Refresh</button>
+        </div>
+        <div class="grid" id="requests"></div>
+      </div>
+
+      <div id="view-create" class="view" role="tabpanel" hidden>
+        <div class="layout">
+          <div class="panel">
+            <form id="form" novalidate>
+              <div class="source" id="source" hidden>
+                <span id="source-text"></span>
+                <button type="button" class="link" id="source-clear">Start fresh</button>
+              </div>
+
+              <div class="row">
+                <label class="field">
+                  <span class="label">Discord ID <span class="opt">who gets it, comma for more</span></span>
+                  <input type="text" id="users" inputmode="numeric" autocomplete="off" placeholder="195516525631897600">
+                </label>
+                <label class="field">
+                  <span class="label">Made for <span class="opt">username</span></span>
+                  <input type="text" id="for" autocomplete="off" maxlength="32" placeholder="their.name">
+                </label>
+              </div>
+
+              <div class="row">
+                <div class="field">
+                  <span class="label" id="kind-label">Badges</span>
+                  <div class="seg" role="radiogroup" aria-labelledby="kind-label" data-key="kind">
+                    <button type="button" role="radio" data-value="single">One badge</button>
+                    <button type="button" role="radio" data-value="pair">Matching pair</button>
+                  </div>
+                </div>
+                <div class="field" id="editing-field" hidden>
+                  <span class="label" id="editing-label">Editing</span>
+                  <div class="seg" role="radiogroup" aria-labelledby="editing-label" id="editing"></div>
+                </div>
+              </div>
+
+              <label class="field">
+                <span class="label" id="badge-label">Badge name</span>
+                <input type="text" id="badge" autocomplete="off" maxlength="40" placeholder="What it says when someone hovers it">
+              </label>
+
+              <div class="field drop" id="drop">
+                <span class="label">Image <span class="opt">optional, animated works too</span></span>
+                <div class="file">
+                  <button type="button" class="btn btn-ghost btn-sm" id="pick">Upload image</button>
+                  <span class="hint" id="file-hint">PNG, JPG, GIF or WebP, up to 5 MB. You can drop it here too.</span>
+                  <span class="file-name" id="file-name" hidden></span>
+                  <button type="button" class="link danger" id="file-clear" hidden>Remove</button>
+                </div>
+                <input type="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+              </div>
+
+              <div class="field" id="fit" hidden>
+                <span class="label">Position <span class="opt">or drag the preview and scroll to zoom</span><span class="act"><button type="button" class="link" id="fit-reset" hidden>Reset</button></span></span>
+                <div class="sliders">
+                  <label class="slider"><span>Zoom</span><input type="range" id="zoom" min="0.1" max="5" step="0.01"><output id="zoom-out"></output></label>
+                  <label class="slider"><span>Left / right</span><input type="range" id="x" min="-1" max="1" step="0.005"><output id="x-out"></output></label>
+                  <label class="slider"><span>Up / down</span><input type="range" id="y" min="-1" max="1" step="0.005"><output id="y-out"></output></label>
+                  <label class="slider"><span>Rotate</span><input type="range" id="rotate" min="-180" max="180" step="1"><output id="rotate-out"></output></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="field">
+                  <span class="label" id="shape-label">Frame</span>
+                  <div class="seg" role="radiogroup" aria-labelledby="shape-label" data-key="shape">
+                    <button type="button" role="radio" data-value="circle">Circle</button>
+                    <button type="button" role="radio" data-value="rounded">Rounded</button>
+                    <button type="button" role="radio" data-value="none">No frame</button>
+                  </div>
+                </div>
+                <div class="field" id="bg-field">
+                  <span class="label" id="bg-label">Background <span class="opt" id="bg-hint" hidden>needs a frame</span></span>
+                  <div class="seg" role="radiogroup" aria-labelledby="bg-label" data-key="background">
+                    <button type="button" role="radio" data-value="gradient">Gradient</button>
+                    <button type="button" role="radio" data-value="solid">Solid</button>
+                    <button type="button" role="radio" data-value="none">None</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="label" id="colors-label">Colors</span>
+                <div class="colors" id="colors" role="group" aria-labelledby="colors-label"></div>
+              </div>
+
+              <div class="field">
+                <span class="label" id="fx-label">Effects</span>
+                <div class="fx" id="effects" role="group" aria-labelledby="fx-label">
+                  <button type="button" data-fx="shine">Shine</button>
+                  <button type="button" data-fx="glint">Glint</button>
+                  <button type="button" data-fx="pulse">Pulse</button>
+                  <button type="button" data-fx="float">Float</button>
+                  <button type="button" data-fx="spin">Spin</button>
+                </div>
+                <div class="sliders" id="speed-row">
+                  <label class="slider"><span>Speed</span><input type="range" id="speed" min="0.25" max="3" step="0.05"><output id="speed-out"></output></label>
+                </div>
+              </div>
+
+              <div class="submit">
+                <button type="submit" class="btn btn-primary" id="publish">
+                  <svg aria-hidden="true"><use href="#i-send"/></svg>
+                  <span id="publish-label">Publish badge</span>
+                </button>
+                <p class="err" id="err" role="alert" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+
+          <aside class="panel preview" aria-label="Preview">
+            <div class="eyebrow">Live preview</div>
+            <div class="stage dark" id="stage">
+              <div class="stage-medals" id="stage-medals"></div>
+              <div class="stage-toggle">
+                <div class="seg" role="radiogroup" aria-label="Preview background" data-key="stage">
+                  <button type="button" role="radio" data-value="dark">Dark</button>
+                  <button type="button" role="radio" data-value="light">Light</button>
+                </div>
+              </div>
+            </div>
+            <div class="profile dark" id="profile">
+              <div class="eyebrow">On a profile</div>
+              <div class="profile-row">
+                <div class="avatar" id="avatar" aria-hidden="true">?</div>
+                <div style="min-width: 0">
+                  <div class="profile-name" id="profile-name">them</div>
+                  <div class="profile-badges" id="mini"></div>
+                </div>
+              </div>
+              <div class="pills" id="pills"></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div id="view-published" class="view" role="tabpanel" hidden>
+        <div class="toolbar">
+          <p class="hint" id="published-hint" style="margin:0">Everything in badges.json on Deadbolt's main branch.</p>
+          <button type="button" class="btn btn-ghost btn-sm" id="reload-published"><svg aria-hidden="true"><use href="#i-refresh"/></svg>Refresh</button>
+        </div>
+        <div class="grid" id="published"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../">
+      <svg viewBox="4 15 160 160" aria-hidden="true"><use href="#dbMark"/></svg>
+      Deadbolt
+    </a>
+    <nav aria-label="Project links">
+      <a href="../badge/">Badge designer</a>
+      <a href="https://github.com/kelcum/Deadbolt" rel="noopener">GitHub</a>
+      <a href="https://github.com/kelcum/Deadbolt/commits/main/src/plugins/_api/badges/requested" rel="noopener">Badge history</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const API = "https://api.xan.gripe/v1/admin";
+  const REPO = "https://github.com/kelcum/Deadbolt";
+  const MAX_COLORS = 4;
+  const MAX_IMAGE = 5000000;
+  const TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"];
+  const FIT = { zoom: 1, x: 0, y: 0, rotate: 0 };
+  const DEFAULT_DESIGN = { shape: "circle", background: "gradient", effects: ["shine", "glint"], speed: 1, ...FIT };
+  const STATUS_LABEL = { new: "New", approved: "Approved", denied: "Denied", done: "Done" };
+  const LOGIN_ERRORS = {
+    not_owner: "That Discord account isn't Deadbolt's owner, so it can't get in here.",
+    access_denied: "Discord login was cancelled.",
+    cancelled: "Discord login was cancelled.",
+    expired: "That login took too long. Try again.",
+    failed: "Discord login didn't work. Try again.",
+    session: "Your session ended. Log in again."
+  };
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  };
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const round = (v, p) => Math.round(v * p) / p;
+  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+  const ago = ts => {
+    const s = (ts - Date.now()) / 1000;
+    for (const [u, n] of [["year", 31536000], ["month", 2592000], ["week", 604800], ["day", 86400], ["hour", 3600], ["minute", 60]]) {
+      if (Math.abs(s) >= n) return rtf.format(Math.round(s / n), u);
+    }
+    return "just now";
+  };
+
+  class SessionEnded extends Error {}
+  const api = async (path, opts = {}) => {
+    let res;
+    try {
+      res = await fetch(API + path, {
+        credentials: "include",
+        method: opts.method || "GET",
+        headers: opts.body ? { "content-type": "application/json" } : {},
+        body: opts.body ? JSON.stringify(opts.body) : undefined
+      });
+    } catch {
+      throw new Error("Couldn't reach the server. Check your connection and try again.");
+    }
+    const body = await res.json().catch(() => ({}));
+    if (res.status === 401) {
+      showGate("session");
+      throw new SessionEnded("Your session ended.");
+    }
+    if (!res.ok) throw new Error(body.error || `Something went wrong (${res.status}). Try again in a bit.`);
+    return body;
+  };
+
+  const blobs = new Map();
+  const blobUrl = url => {
+    if (!blobs.has(url)) {
+      const p = fetch(url, { credentials: url.startsWith(API) ? "include" : "omit" })
+        .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.blob(); })
+        .then(b => URL.createObjectURL(b));
+      p.catch(() => blobs.delete(url));
+      blobs.set(url, p);
+    }
+    return blobs.get(url);
+  };
+  const toBase64 = async url => {
+    const blob = await (await fetch(url)).blob();
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).replace(/^data:[^,]*,/, ""));
+      r.onerror = () => reject(r.error);
+      r.readAsDataURL(blob);
+    });
+  };
+
+  const toast = (msg, kind = "ok", link) => {
+    const t = el("div", "toast " + kind);
+    t.setAttribute("role", kind === "bad" ? "alert" : "status");
+    t.append(el("span", "ic", kind === "ok" ? "✓" : "!"), el("span", "", msg));
+    if (link) {
+      const a = el("a", "", link.text);
+      a.href = link.href;
+      a.target = "_blank";
+      a.rel = "noopener";
+      t.append(a);
+    }
+    $("toasts").append(t);
+    const gone = () => { t.classList.add("out"); setTimeout(() => t.remove(), 360); };
+    setTimeout(gone, kind === "bad" ? 7000 : 5200);
+    t.addEventListener("click", e => { if (e.target.tagName !== "A") gone(); });
+    while ($("toasts").children.length > 3) $("toasts").firstChild.remove();
+  };
+
+  const bgFill = d => {
+    if (d.background === "none") return "transparent";
+    if (d.background === "solid" || d.colors.length === 1) return d.colors[0];
+    return `linear-gradient(135deg, ${d.colors.join(", ")})`;
+  };
+  const nameGradient = c => {
+    const stops = c.length === 1 ? [c[0], `color-mix(in srgb, ${c[0]} 45%, white)`, c[0]] : [...c, c[0]];
+    return `linear-gradient(100deg, ${stops.join(", ")})`;
+  };
+
+  const createMedal = (host, size) => {
+    const float = el("div", "float");
+    float.innerHTML = '<div class="medal"><div class="art"><img alt="" draggable="false"><span class="art-glint"></span><span class="art-shine"></span></div><span class="glint"></span><span class="shine"></span></div>';
+    float.style.setProperty("--size", size + "px");
+    host.append(float);
+    return { float, medal: float.firstChild, art: float.querySelector(".art"), img: float.querySelector("img"), size };
+  };
+  const paintMedal = (m, design, image, extra = []) => {
+    const filled = design.shape !== "none" && design.background !== "none";
+    m.float.classList.toggle("fx-float", design.effects.includes("float"));
+    m.float.style.setProperty("--speed", design.speed);
+    m.medal.className = ["medal", "shape-" + design.shape, filled && "filled", ...design.effects.map(f => "fx-" + f), !image && !filled && "empty", ...extra].filter(Boolean).join(" ");
+    m.medal.style.setProperty("--bg-fill", bgFill(design));
+    m.medal.style.setProperty("--glow", design.colors[0] || "#ffffff");
+    m.art.hidden = !image;
+    m.art.style.transform = `translate(${(design.x * 100).toFixed(2)}%, ${(design.y * 100).toFixed(2)}%) rotate(${design.rotate}deg) scale(${design.zoom})`;
+    if (image) {
+      if (m.img.getAttribute("src") !== image) m.img.src = image;
+      m.art.style.setProperty("--mask", `url("${image}")`);
+    }
+  };
+  const staticMedal = (host, design, imageUrl, size) => {
+    const m = createMedal(host, size);
+    if (!imageUrl) return paintMedal(m, design, null);
+    paintMedal(m, design, null, ["loading"]);
+    m.medal.classList.remove("empty");
+    blobUrl(imageUrl).then(u => paintMedal(m, design, u), () => paintMedal(m, design, null));
+  };
+  const pillFor = (host, design, imageUrl, name) => {
+    const pill = el("div", "pill");
+    const badge = el("span", "pill-badge");
+    pill.append(badge, el("span", "pill-name", name));
+    pill.style.setProperty("--name-gradient", nameGradient(design.colors));
+    host.append(pill);
+    staticMedal(badge, design, imageUrl, 18);
+  };
+
+  let me = null;
+  let tab = "requests";
+  let filter = "new";
+  let requests = null;
+  let published = null;
+  const loading = new Set();
+
+  const showGate = code => {
+    me = null;
+    $("boot").hidden = true;
+    $("app").hidden = true;
+    $("who").hidden = true;
+    $("gate").hidden = false;
+    $("gate-err").hidden = !code;
+    $("gate-err").textContent = LOGIN_ERRORS[code] || (code ? LOGIN_ERRORS.failed : "");
+  };
+
+  const setSummary = () => {
+    const fresh = requests ? requests.filter(r => r.status === "new").length : null;
+    const live = published ? published.badges.length : null;
+    $("count-new").textContent = fresh || "";
+    $("count-live").textContent = live ?? "";
+    const parts = [];
+    if (fresh !== null) parts.push(fresh ? `${fresh} new request${fresh === 1 ? "" : "s"} waiting` : "No new requests");
+    if (live !== null) parts.push(`${live} badge${live === 1 ? "" : "s"} live on Deadbolt`);
+    $("summary").textContent = parts.length ? parts.join(", ") + "." : "Loading your badges…";
+  };
+
+  const moveIndicator = () => {
+    const b = $("tabs").querySelector('[aria-selected="true"]');
+    const ind = $("tabs").querySelector(".ind");
+    ind.style.setProperty("--x", b.offsetLeft + "px");
+    ind.style.setProperty("--w", b.offsetWidth + "px");
+  };
+  const showTab = name => {
+    tab = name;
+    $("tabs").querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+    for (const v of ["requests", "create", "published"]) {
+      const view = $("view-" + v);
+      if (v === name && view.hidden) {
+        view.hidden = false;
+        view.style.animation = "none";
+        void view.offsetWidth;
+        view.style.animation = "";
+      } else if (v !== name) view.hidden = true;
+    }
+    moveIndicator();
+    if (name === "published" && !published && !loading.has("published")) loadPublished();
+    if (name === "requests" && !requests && !loading.has("requests")) loadRequests();
+  };
+  $("tabs").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (b) showTab(b.dataset.tab);
+  });
+  addEventListener("resize", moveIndicator);
+
+  const skeletons = host => {
+    host.textContent = "";
+    for (let i = 0; i < 3; i++) {
+      const c = el("div", "card skel");
+      c.style.setProperty("--i", i);
+      const s = el("div", "card-stage");
+      s.append(el("div", "orb"));
+      const b = el("div", "card-body");
+      b.append(el("div", "bar w1"), el("div", "bar w2"), el("div", "bar w3"));
+      c.append(s, b);
+      host.append(c);
+    }
+  };
+  const emptyState = (host, icon, title, text, action) => {
+    host.textContent = "";
+    const box = el("div", "blank");
+    box.style.gridColumn = "1 / -1";
+    const ghost = el("div", "ghost");
+    ghost.innerHTML = `<svg aria-hidden="true"><use href="#${icon}"/></svg>`;
+    box.append(ghost, el("h3", "", title), el("p", "", text));
+    if (action) box.append(action);
+    host.append(box);
+  };
+
+  const designOf = (d, colors) => ({ ...DEFAULT_DESIGN, ...(d || {}), effects: [...((d && d.effects) || [])], colors: [...colors] });
+
+  const stageFor = (items, size) => {
+    const stage = el("div", "card-stage");
+    for (const it of items) staticMedal(stage, it.design, it.image, size);
+    const flip = el("button", "icon-btn flip");
+    flip.type = "button";
+    flip.setAttribute("aria-label", "Switch preview background");
+    flip.innerHTML = '<svg aria-hidden="true"><use href="#i-sun"/></svg>';
+    flip.addEventListener("click", () => stage.classList.toggle("light"));
+    stage.append(flip);
+    return stage;
+  };
+
+  const busy = (btn, label) => {
+    btn.disabled = true;
+    btn.dataset.label = btn.innerHTML;
+    btn.innerHTML = `<span class="spin"></span>${label}`;
+    return () => { btn.disabled = false; btn.innerHTML = btn.dataset.label; };
+  };
+  const confirmButton = (btn, armedLabel, run) => {
+    let timer = 0;
+    const original = btn.textContent;
+    btn.addEventListener("click", () => {
+      if (!btn.classList.contains("armed")) {
+        btn.classList.add("armed");
+        btn.textContent = armedLabel;
+        timer = setTimeout(() => { btn.classList.remove("armed"); btn.textContent = original; }, 3500);
+        return;
+      }
+      clearTimeout(timer);
+      btn.classList.remove("armed");
+      btn.textContent = original;
+      run();
+    });
+  };
+
+  const requestParts = r => [r, ...(r.pair ? [r.pair] : [])].map(p => ({ id: p.id, badge: p.badge, colors: p.colors, design: designOf(p.design, p.colors), image: p.image ? p.image.url : null }));
+
+  const publishRequest = async (r, btn) => {
+    const done = busy(btn, "Publishing");
+    try {
+      const res = await api("/badges", {
+        method: "POST",
+        body: {
+          requestId: r.id,
+          users: [r.discordId],
+          for: r.name,
+          parts: requestParts(r).map(p => ({ badge: p.badge, colors: p.colors, design: stripColors(p.design), image: p.image ? "request" : undefined }))
+        }
+      });
+      afterPublish(res);
+      for (const x of requests) if (x.id === r.id) { x.status = "done"; if (x.pair) x.pair.status = "done"; }
+      renderRequests();
+    } catch (e) {
+      if (!(e instanceof SessionEnded)) toast(e.message, "bad");
+      done();
+    }
+  };
+
+  const setStatus = async (r, status, btn) => {
+    const done = busy(btn, status === "approved" ? "Approving" : "Denying");
+    try {
+      const out = await api(`/badge-requests/${r.id}`, { method: "POST", body: { status } });
+      Object.assign(r, { status: out.status });
+      if (r.pair) r.pair.status = out.status;
+      toast(`${status === "approved" ? "Approved" : "Denied"} ${requestTitle(r)}.`);
+      renderRequests();
+    } catch (e) {
+      if (!(e instanceof SessionEnded)) toast(e.message, "bad");
+      done();
+    }
+  };
+
+  const requestTitle = r => r.pair ? `${r.badge} + ${r.pair.badge}` : r.badge;
+
+  const requestCard = (r, i) => {
+    const parts = requestParts(r);
+    const card = el("article", "card");
+    card.style.setProperty("--i", i);
+    card.append(stageFor(parts, parts.length > 1 ? 76 : 96));
+    const body = el("div", "card-body");
+    const top = el("div", "card-top");
+    top.append(el("h3", "", requestTitle(r)), el("span", "status " + r.status, STATUS_LABEL[r.status] || r.status));
+    const meta = el("div", "meta");
+    const who = el("span");
+    who.append("for ", el("b", "", r.name));
+    const id = el("code", "", r.discordId);
+    id.title = "Copy Discord ID";
+    id.addEventListener("click", () => navigator.clipboard?.writeText(r.discordId).then(() => toast("Copied the Discord ID.")));
+    const when = el("span", "", ago(r.created));
+    when.title = new Date(r.created).toLocaleString();
+    meta.append(who, el("span", "dot"), id, el("span", "dot"), when, el("span", "dot"), el("span", "", r.source === "deadbolt" ? "from Deadbolt" : "from the web"));
+    const pills = el("div", "pills");
+    for (const p of parts) pillFor(pills, p.design, p.image, p.badge);
+    body.append(top, meta, pills);
+    if (r.details) body.append(el("p", "details", r.details));
+    const actions = el("div", "actions");
+    const pub = el("button", "btn btn-primary btn-sm grow");
+    pub.type = "button";
+    pub.innerHTML = '<svg aria-hidden="true"><use href="#i-send"/></svg>' + (r.status === "done" ? "Publish again" : "Publish");
+    pub.addEventListener("click", () => publishRequest(r, pub));
+    const edit = el("button", "btn btn-ghost btn-sm", "Edit first");
+    edit.type = "button";
+    edit.addEventListener("click", () => openInDesigner({ kind: "request", request: r }));
+    actions.append(pub, edit);
+    if (r.status !== "approved" && r.status !== "done") {
+      const ok = el("button", "btn btn-ok btn-sm", "Approve");
+      ok.type = "button";
+      ok.addEventListener("click", () => setStatus(r, "approved", ok));
+      actions.append(ok);
+    }
+    if (r.status !== "denied") {
+      const no = el("button", "btn btn-danger btn-sm", "Deny");
+      no.type = "button";
+      confirmButton(no, "Deny it?", () => setStatus(r, "denied", no));
+      actions.append(no);
+    }
+    body.append(actions);
+    card.append(body);
+    return card;
+  };
+
+  const renderRequests = () => {
+    const host = $("requests");
+    if (!requests) return skeletons(host);
+    const counts = { all: requests.length };
+    for (const r of requests) counts[r.status] = (counts[r.status] || 0) + 1;
+    $("filters").querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed", String(b.dataset.status === filter));
+      b.querySelector("small").textContent = counts[b.dataset.status] || "";
+    });
+    setSummary();
+    const list = requests.filter(r => filter === "all" || r.status === filter);
+    host.textContent = "";
+    if (!list.length) {
+      const text = filter === "new" ? "When someone sends a design from the website or from Deadbolt, it lands here." : "Nothing here right now.";
+      const go = el("button", "btn btn-ghost btn-sm", "Design one yourself");
+      go.type = "button";
+      go.addEventListener("click", () => showTab("create"));
+      return emptyState(host, "i-inbox", filter === "new" ? "You're all caught up" : `No ${filter === "all" ? "" : filter + " "}requests`, text, filter === "new" ? go : null);
+    }
+    list.forEach((r, i) => host.append(requestCard(r, i)));
+  };
+
+  const loadRequests = async () => {
+    requests = null;
+    renderRequests();
+    loading.add("requests");
+    try {
+      requests = (await api("/badge-requests?limit=100")).requests;
+      renderRequests();
+    } catch (e) {
+      if (e instanceof SessionEnded) return;
+      const retry = el("button", "btn btn-ghost btn-sm", "Try again");
+      retry.type = "button";
+      retry.addEventListener("click", loadRequests);
+      emptyState($("requests"), "i-inbox", "Couldn't load requests", e.message, retry);
+    } finally {
+      loading.delete("requests");
+    }
+  };
+  $("filters").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    filter = b.dataset.status;
+    renderRequests();
+  });
+  $("reload-requests").addEventListener("click", loadRequests);
+
+  const publishedGroups = () => {
+    const seen = new Set();
+    const groups = [];
+    for (const e of published.badges) {
+      if (seen.has(e.id)) continue;
+      const mate = e.request && e.request.pair && published.badges.find(x => x.id === e.request.pair);
+      seen.add(e.id);
+      if (mate) seen.add(mate.id);
+      groups.push(mate ? [e, mate] : [e]);
+    }
+    return groups.reverse();
+  };
+  const publishedParts = group => group.map(e => ({ id: e.id, badge: e.name, colors: e.colors, design: designOf(e.design, e.colors), image: e.image ? published.base + e.image : null }));
+
+  const unpublish = async (group, btn) => {
+    const done = busy(btn, "Removing");
+    const card = btn.closest(".card");
+    try {
+      const res = await api(`/badges/${group[0].id}`, { method: "DELETE" });
+      card.classList.add("leaving");
+      toast(`Removed ${group.map(e => e.name).join(" and ")}.`, "ok", { text: "View commit", href: `${REPO}/commit/${res.commit}` });
+      setTimeout(loadPublished, 380);
+    } catch (e) {
+      if (!(e instanceof SessionEnded)) toast(e.message, "bad");
+      done();
+    }
+  };
+
+  const publishedCard = (group, i) => {
+    const parts = publishedParts(group);
+    const card = el("article", "card");
+    card.style.setProperty("--i", i);
+    card.append(stageFor(parts, parts.length > 1 ? 76 : 96));
+    const body = el("div", "card-body");
+    const top = el("div", "card-top");
+    top.append(el("h3", "", group.map(e => e.name).join(" + ")), el("span", "status live", "Live"));
+    const meta = el("div", "meta");
+    const who = el("span");
+    who.append("for ", el("b", "", (group[0].request && group[0].request.for) || "someone"));
+    meta.append(who);
+    for (const u of group[0].users) {
+      const c = el("code", "", u);
+      c.title = "Copy Discord ID";
+      c.addEventListener("click", () => navigator.clipboard?.writeText(u).then(() => toast("Copied the Discord ID.")));
+      meta.append(el("span", "dot"), c);
+    }
+    const pills = el("div", "pills");
+    for (const p of parts) pillFor(pills, p.design, p.image, p.badge);
+    const actions = el("div", "actions");
+    const edit = el("button", "btn btn-ghost btn-sm", "Edit");
+    edit.type = "button";
+    edit.addEventListener("click", () => openInDesigner({ kind: "published", group }));
+    const rm = el("button", "btn btn-danger btn-sm", "Unpublish");
+    rm.type = "button";
+    confirmButton(rm, "Unpublish it?", () => unpublish(group, rm));
+    actions.append(edit, rm);
+    body.append(top, meta, pills, actions);
+    card.append(body);
+    return card;
+  };
+
+  const renderPublished = () => {
+    const host = $("published");
+    if (!published) return skeletons(host);
+    setSummary();
+    host.textContent = "";
+    const groups = publishedGroups();
+    if (!groups.length) {
+      const go = el("button", "btn btn-ghost btn-sm", "Make the first one");
+      go.type = "button";
+      go.addEventListener("click", () => showTab("create"));
+      return emptyState(host, "i-badge", "No badges yet", "Publish a request or design one from scratch and it shows up here.", go);
+    }
+    groups.forEach((g, i) => host.append(publishedCard(g, i)));
+  };
+  const loadPublished = async () => {
+    published = null;
+    renderPublished();
+    loading.add("published");
+    try {
+      published = await api("/badges");
+      renderPublished();
+    } catch (e) {
+      if (e instanceof SessionEnded) return;
+      const retry = el("button", "btn btn-ghost btn-sm", "Try again");
+      retry.type = "button";
+      retry.addEventListener("click", loadPublished);
+      emptyState($("published"), "i-badge", "Couldn't load badges", e.message, retry);
+    } finally {
+      loading.delete("published");
+    }
+  };
+  $("reload-published").addEventListener("click", loadPublished);
+
+  const afterPublish = res => {
+    const names = res.badges.map(b => b.name).join(" and ");
+    toast(`Published ${names}. It's live for everyone within a few minutes.`, "ok", { text: "View commit", href: `${REPO}/commit/${res.commit}` });
+    loadPublished();
+  };
+
+  const stripColors = d => {
+    const { colors, ...rest } = d;
+    return rest;
+  };
+
+  let parts = [];
+  let editing = 0;
+  let stage = "dark";
+  let source = null;
+  let medals = [];
+  let pillNames = [];
+  const cur = () => parts[editing];
+  const freshPart = design => ({ id: null, badge: "", image: null, imageSource: null, file: "", design: structuredClone(design || { ...DEFAULT_DESIGN, colors: ["#7c6ff0", "#1e1a4d"] }) });
+
+  const designerMedal = (host, size, idx, movable) => {
+    const m = createMedal(host, size);
+    m.idx = idx;
+    m.movable = movable;
+    medals.push(m);
+    if (!movable) return m;
+    let drag = null;
+    const mine = () => m.idx === editing && cur().image;
+    m.medal.addEventListener("pointerdown", e => {
+      if (!mine()) return;
+      m.medal.setPointerCapture(e.pointerId);
+      drag = { px: e.clientX, py: e.clientY, x: cur().design.x, y: cur().design.y };
+    });
+    m.medal.addEventListener("pointermove", e => {
+      if (!drag) return;
+      cur().design.x = round(clamp(drag.x + (e.clientX - drag.px) / size, -1, 1), 1000);
+      cur().design.y = round(clamp(drag.y + (e.clientY - drag.py) / size, -1, 1), 1000);
+      render();
+    });
+    const stop = () => { drag = null; };
+    m.medal.addEventListener("pointerup", stop);
+    m.medal.addEventListener("pointercancel", stop);
+    m.medal.addEventListener("wheel", e => {
+      if (!mine()) return;
+      e.preventDefault();
+      cur().design.zoom = round(clamp(cur().design.zoom * Math.pow(1.1, -e.deltaY / 100), 0.1, 5), 100);
+      render();
+    }, { passive: false });
+    return m;
+  };
+
+  const buildMedals = () => {
+    medals = [];
+    pillNames = [];
+    for (const id of ["stage-medals", "mini", "pills"]) $(id).textContent = "";
+    parts.forEach((_, i) => {
+      let host = $("stage-medals");
+      if (parts.length > 1) {
+        host = el("div", "pick-medal");
+        host.addEventListener("pointerdown", () => { if (editing !== i) select(i); });
+        $("stage-medals").append(host);
+      }
+      designerMedal(host, parts.length > 1 ? 96 : 176, i, true);
+      designerMedal($("mini"), 22, i, false);
+      const pill = el("div", "pill");
+      const badge = el("span", "pill-badge");
+      const name = el("span", "pill-name");
+      pill.append(badge, name);
+      $("pills").append(pill);
+      designerMedal(badge, 18, i, false);
+      pillNames.push(name);
+    });
+  };
+
+  const syncSeg = () => {
+    document.querySelectorAll("#view-create .seg[data-key]").forEach(seg => {
+      const k = seg.dataset.key;
+      const value = k === "stage" ? stage : k === "kind" ? (parts.length > 1 ? "pair" : "single") : cur().design[k];
+      seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-checked", String(b.dataset.value === value)));
+    });
+    $("editing").querySelectorAll("button").forEach((b, i) => {
+      b.textContent = parts[i].badge.trim() || (i ? "Second" : "First");
+      b.setAttribute("aria-checked", String(i === editing));
+    });
+  };
+
+  const fmt = {
+    zoom: v => Math.round(v * 100) + "%",
+    x: v => String(Math.round(v * 100)),
+    y: v => String(Math.round(v * 100)),
+    rotate: v => v + "°",
+    speed: v => v.toFixed(2).replace(/\.?0+$/, "") + "x"
+  };
+
+  const render = () => {
+    const { design, image } = cur();
+    for (const m of medals) {
+      const p = parts[m.idx];
+      paintMedal(m, p.design, p.image, [m.movable && p.image && m.idx === editing && "movable"]);
+      if (m.movable && parts.length > 1) m.float.parentElement.classList.toggle("on", m.idx === editing);
+    }
+    syncSeg();
+    for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
+      $(k).value = design[k];
+      $(k + "-out").textContent = fmt[k](design[k]);
+    }
+    $("fit").hidden = !image;
+    $("fit-reset").hidden = !(design.zoom !== 1 || design.x || design.y || design.rotate);
+    $("bg-field").classList.toggle("off", design.shape === "none");
+    $("bg-hint").hidden = design.shape !== "none";
+    $("speed-row").hidden = !design.effects.length;
+    document.querySelectorAll("#effects button").forEach(b => b.setAttribute("aria-pressed", String(design.effects.includes(b.dataset.fx))));
+    pillNames.forEach((name, i) => {
+      name.textContent = parts[i].badge.trim() || (parts.length > 1 ? (i ? "Second badge" : "First badge") : "Badge name");
+      name.classList.toggle("empty", !parts[i].badge.trim());
+      name.parentElement.style.setProperty("--name-gradient", nameGradient(parts[i].design.colors));
+    });
+    $("stage").className = "stage " + stage;
+    $("profile").className = "profile " + stage;
+  };
+
+  const renderColors = () => {
+    const { design } = cur();
+    const box = $("colors");
+    box.textContent = "";
+    design.colors.forEach((c, i) => {
+      const chip = el("span", "swatch");
+      const input = el("input");
+      input.type = "color";
+      input.value = c;
+      input.setAttribute("aria-label", `Color ${i + 1}`);
+      const code = el("code", "", c);
+      input.addEventListener("input", () => { design.colors[i] = input.value.toLowerCase(); code.textContent = design.colors[i]; render(); });
+      chip.append(input, code);
+      if (design.colors.length > 1) {
+        const x = el("button", "x");
+        x.type = "button";
+        x.innerHTML = "&times;";
+        x.setAttribute("aria-label", `Remove color ${i + 1}`);
+        x.addEventListener("click", () => { design.colors.splice(i, 1); renderColors(); });
+        chip.append(x);
+      }
+      box.append(chip);
+    });
+    if (design.colors.length < MAX_COLORS) {
+      const add = el("button", "btn btn-ghost btn-sm", "Add color");
+      add.type = "button";
+      add.addEventListener("click", () => { design.colors.push("#ffffff"); renderColors(); });
+      box.append(add);
+    }
+    render();
+  };
+
+  const syncFile = () => {
+    const { image, file } = cur();
+    $("file-name").textContent = file;
+    $("file-name").hidden = $("file-clear").hidden = !image;
+    $("file-hint").hidden = !!image;
+    $("pick").textContent = image ? "Change image" : "Upload image";
+  };
+
+  const select = i => {
+    editing = i;
+    $("badge").value = cur().badge;
+    $("badge-label").textContent = parts.length > 1 ? (i ? "Second badge name" : "First badge name") : "Badge name";
+    syncFile();
+    renderColors();
+  };
+
+  const rebuildEditing = () => {
+    $("editing-field").hidden = parts.length < 2;
+    $("editing").textContent = "";
+    parts.forEach((_, i) => {
+      const b = el("button");
+      b.type = "button";
+      b.setAttribute("role", "radio");
+      b.addEventListener("click", () => select(i));
+      $("editing").append(b);
+    });
+    buildMedals();
+  };
+
+  const setPaired = paired => {
+    if (paired === parts.length > 1) return;
+    if (source) return setError(source.kind === "request" ? "This request's badge count is fixed. Start fresh to change it." : "A live badge keeps its badge count. Start fresh to change it.");
+    if (paired) parts.push(freshPart(parts[0].design));
+    else parts.length = 1;
+    rebuildEditing();
+    select(paired ? 1 : 0);
+  };
+
+  const setSource = s => {
+    source = s;
+    $("source").hidden = !s;
+    if (!s) return;
+    $("source-text").textContent = "";
+    if (s.kind === "request") $("source-text").append("Editing the request from ", el("b", "", s.request.name), ". Publishing marks it done.");
+    else $("source-text").append("Editing the live ", el("b", "", s.group.map(e => e.name).join(" + ")), " badge. Publishing replaces it.");
+  };
+
+  const syncProfile = () => {
+    const v = $("for").value.trim();
+    $("profile-name").textContent = v || "them";
+    $("avatar").textContent = (v[0] || "?").toUpperCase();
+  };
+
+  const resetDesigner = () => {
+    parts = [freshPart()];
+    setSource(null);
+    $("users").value = "";
+    $("for").value = "";
+    $("users").removeAttribute("aria-invalid");
+    setError("");
+    syncProfile();
+    rebuildEditing();
+    select(0);
+  };
+
+  const openInDesigner = async s => {
+    const items = s.kind === "request" ? requestParts(s.request) : publishedParts(s.group);
+    parts = items.map(p => ({ id: p.id, badge: p.badge, image: null, imageSource: p.image ? "loading" : null, file: p.image ? "Loading image…" : "", design: structuredClone(p.design) }));
+    setSource(s);
+    $("users").value = s.kind === "request" ? s.request.discordId : s.group[0].users.join(", ");
+    $("for").value = s.kind === "request" ? s.request.name : (s.group[0].request && s.group[0].request.for) || "";
+    setError("");
+    syncProfile();
+    rebuildEditing();
+    select(0);
+    showTab("create");
+    scrollTo({ top: 0, behavior: "smooth" });
+    await Promise.all(items.map(async (p, i) => {
+      if (!p.image) return;
+      try {
+        const url = await blobUrl(p.image);
+        if (parts[i] && parts[i].imageSource === "loading") {
+          parts[i].image = url;
+          parts[i].imageSource = s.kind === "request" ? "request" : "url";
+          parts[i].file = s.kind === "request" ? "Image from the request" : "Current image";
+        }
+      } catch {
+        if (parts[i]) { parts[i].imageSource = null; parts[i].file = ""; }
+        toast("Couldn't load that image. Upload it again before publishing.", "bad");
+      }
+      if (parts[i] === cur()) syncFile();
+      render();
+    }));
+  };
+
+  const setError = msg => { $("err").textContent = msg || ""; };
+
+  document.querySelectorAll("#view-create .seg[data-key]").forEach(seg => seg.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (seg.dataset.key === "stage") stage = b.dataset.value;
+    else if (seg.dataset.key === "kind") return setPaired(b.dataset.value === "pair");
+    else cur().design[seg.dataset.key] = b.dataset.value;
+    render();
+  }));
+  $("effects").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const fx = b.dataset.fx;
+    const { design } = cur();
+    design.effects = design.effects.includes(fx) ? design.effects.filter(f => f !== fx) : [...design.effects, fx];
+    render();
+  });
+  for (const k of ["zoom", "x", "y", "rotate", "speed"]) {
+    $(k).addEventListener("input", e => { cur().design[k] = Number(e.target.value); render(); });
+  }
+  $("fit-reset").addEventListener("click", () => { Object.assign(cur().design, FIT); render(); });
+  $("users").addEventListener("input", e => {
+    e.target.value = e.target.value.replace(/[^\d,\s]/g, "");
+    e.target.removeAttribute("aria-invalid");
+  });
+  $("for").addEventListener("input", syncProfile);
+  $("badge").addEventListener("input", e => { cur().badge = e.target.value; render(); });
+  $("source-clear").addEventListener("click", resetDesigner);
+
+  const takeFile = file => {
+    const p = cur();
+    if (!file) return;
+    if (!TYPES.includes(file.type)) return setError("The image has to be a PNG, JPG, GIF or WebP.");
+    if (file.size > MAX_IMAGE) return setError("That image is too big. Keep it under 5 MB.");
+    const reader = new FileReader();
+    reader.onload = () => {
+      p.image = String(reader.result);
+      p.imageSource = "data";
+      p.file = file.name;
+      Object.assign(p.design, FIT);
+      setError("");
+      syncFile();
+      render();
+    };
+    reader.onerror = () => setError("Couldn't read that image. Try another one.");
+    reader.readAsDataURL(file);
+  };
+  const fileInput = $("file");
+  $("pick").addEventListener("click", () => fileInput.click());
+  $("file-clear").addEventListener("click", () => {
+    Object.assign(cur(), { image: null, imageSource: null, file: "" });
+    syncFile();
+    render();
+  });
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    fileInput.value = "";
+    takeFile(file);
+  });
+  const drop = $("drop");
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", e => { if (!drop.contains(e.relatedTarget)) drop.classList.remove("over"); });
+  drop.addEventListener("drop", e => {
+    e.preventDefault();
+    drop.classList.remove("over");
+    takeFile(e.dataTransfer.files[0]);
+  });
+
+  $("form").addEventListener("submit", async e => {
+    e.preventDefault();
+    setError("");
+    const users = [...new Set($("users").value.split(/[\s,]+/).filter(Boolean))];
+    if (!users.length || !users.every(u => /^\d{17,20}$/.test(u))) {
+      $("users").setAttribute("aria-invalid", "true");
+      $("users").focus();
+      return setError("Add the Discord ID of who gets it. It's a number 17 to 20 digits long.");
+    }
+    const unnamed = parts.findIndex(p => !p.badge.trim());
+    if (unnamed >= 0) {
+      select(unnamed);
+      $("badge").focus();
+      return setError(parts.length > 1 ? `Give the ${unnamed ? "second" : "first"} badge a name.` : "Give the badge a name.");
+    }
+    if (parts.some(p => p.imageSource === "loading")) return setError("Hang on, the image is still loading.");
+    const done = busy($("publish"), "Publishing");
+    try {
+      const body = {
+        users,
+        for: $("for").value.trim(),
+        parts: await Promise.all(parts.map(async p => ({
+          id: p.id || undefined,
+          badge: p.badge.trim(),
+          colors: p.design.colors,
+          design: stripColors(p.design),
+          image: !p.image ? undefined : p.imageSource === "request" ? "request" : await toBase64(p.image)
+        })))
+      };
+      if (source && source.kind === "request") body.requestId = source.request.id;
+      const res = await api("/badges", { method: "POST", body });
+      if (source && source.kind === "request" && requests) {
+        for (const x of requests) if (x.id === source.request.id) { x.status = "done"; if (x.pair) x.pair.status = "done"; }
+      }
+      afterPublish(res);
+      done();
+      resetDesigner();
+      showTab("published");
+    } catch (ex) {
+      done();
+      if (!(ex instanceof SessionEnded)) setError(ex.message);
+    }
+  });
+
+  $("logout").addEventListener("click", async () => {
+    await fetch(API + "/auth/logout", { method: "POST", credentials: "include" }).catch(() => {});
+    showGate(null);
+  });
+
+  const boot = async () => {
+    const q = new URLSearchParams(location.search);
+    const loginError = q.get("login");
+    if (loginError) history.replaceState(null, "", location.pathname);
+    let res;
+    try {
+      res = await fetch(API + "/me", { credentials: "include" });
+    } catch {
+      $("boot").hidden = true;
+      $("gate").hidden = false;
+      $("gate-err").hidden = false;
+      $("gate-err").textContent = "Couldn't reach the server. Check your connection and refresh.";
+      return;
+    }
+    if (!res.ok) return showGate(loginError);
+    me = await res.json();
+    $("boot").hidden = true;
+    $("gate").hidden = true;
+    $("app").hidden = false;
+    $("who").hidden = false;
+    $("who-name").textContent = me.name;
+    if (me.avatar) $("who-av").src = me.avatar;
+    else $("who-av").removeAttribute("src");
+    const hour = new Date().getHours();
+    $("hello").textContent = `${hour < 5 ? "Up late" : hour < 12 ? "Morning" : hour < 18 ? "Afternoon" : "Evening"}, ${me.name || "boss"}`;
+    resetDesigner();
+    showTab(tab);
+    loadPublished();
+    document.fonts.ready.then(moveIndicator);
+  };
+
+  addEventListener("pageshow", e => { if (e.persisted && !me) boot(); });
+  boot();
+})();
+</script>
+</body>
+</html>
