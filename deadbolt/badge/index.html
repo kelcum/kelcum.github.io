@@ -131,9 +131,9 @@ input[aria-invalid="true"] { border-color: rgba(248, 113, 113, .6); }
 textarea { min-height: 100px; resize: vertical; }
 .count { justify-self: end; font: 500 .72rem/1 var(--font-mono); color: var(--muted); }
 
-.seg { display: inline-flex; justify-self: start; gap: 2px; padding: 3px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+.seg { display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
 .seg button {
-  appearance: none; border: 0; cursor: pointer; padding: .5rem .9rem; border-radius: 9px;
+  flex: 1 1 0; white-space: nowrap; appearance: none; border: 0; cursor: pointer; padding: .55rem .9rem; border-radius: 9px;
   background: transparent; color: var(--text-2); font: 600 .85rem/1 var(--font-body); transition: color .2s, background .2s;
 }
 .seg button:hover { color: #fff; }
@@ -148,7 +148,7 @@ textarea { min-height: 100px; resize: vertical; }
 .chips button:hover { color: #fff; border-color: rgba(255, 255, 255, .24); }
 .chips button[aria-pressed="true"] { color: #fff; border-color: rgba(201, 192, 255, .7); background: rgba(124, 111, 240, .22); }
 
-.sliders { display: grid; gap: .2rem; }
+.sliders { display: grid; gap: .1rem; padding: .5rem .9rem; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-2); }
 .slider { display: grid; grid-template-columns: 96px minmax(0, 1fr) 52px; align-items: center; gap: .8rem; }
 .slider span:first-child { font-size: .85rem; color: var(--text-2); }
 .slider output { font: 500 .78rem/1 var(--font-mono); color: var(--text); text-align: right; }
@@ -192,6 +192,7 @@ textarea { min-height: 100px; resize: vertical; }
 .btn:disabled { opacity: .55; cursor: default; }
 .link { padding: 0; border: 0; background: none; color: #c9c0ff; font: 500 .82rem/1.2 var(--font-body); cursor: pointer; }
 .link:hover { text-decoration: underline; }
+.link.danger { color: var(--error); }
 
 .file { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
 .file-name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: .9rem; }
@@ -204,34 +205,37 @@ textarea { min-height: 100px; resize: vertical; }
 .preview { position: sticky; top: 88px; display: grid; gap: .8rem; }
 .preview > .eyebrow { text-align: center; }
 .stage {
-  display: grid; place-items: center; height: 220px; border-radius: 16px; border: 1px solid var(--line);
+  position: relative; display: grid; place-items: center; height: 280px; border-radius: 16px; border: 1px solid var(--line);
   background-image: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, .07), transparent 65%);
   transition: background-color .2s;
 }
 .stage.dark, .profile.dark { background-color: #111214; }
 .stage.light, .profile.light { background-color: #f2f3f5; }
-.preview .seg { justify-self: center; }
-.profile { padding: .9rem; border-radius: 16px; border: 1px solid var(--line); }
-.profile .eyebrow { margin-bottom: .7rem; font-size: .66rem; }
+.stage-toggle { position: absolute; left: 10px; right: 10px; bottom: 10px; }
+.stage.light .seg { background: rgba(255, 255, 255, .85); border-color: rgba(0, 0, 0, .1); }
+.stage.light .seg button { color: #4e5058; }
+.profile { display: grid; gap: .75rem; padding: .9rem; border-radius: 16px; border: 1px solid var(--line); }
+.profile .eyebrow { font-size: .66rem; }
+.profile.light .eyebrow { color: #5c5e66; }
 .profile-row { display: flex; align-items: center; gap: .7rem; }
-.avatar { width: 40px; height: 40px; flex: none; border-radius: 50%; background: linear-gradient(135deg, #5865f2, #7c6ff0); display: grid; place-items: center; color: #fff; font-weight: 700; }
+.avatar { width: 48px; height: 48px; flex: none; border-radius: 50%; background: linear-gradient(135deg, #5865f2, #7c6ff0); display: grid; place-items: center; color: #fff; font-weight: 700; }
 .profile-name { font-weight: 700; font-size: .95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .profile.dark .profile-name { color: #f2f3f5; }
 .profile.light .profile-name { color: #060607; }
 .profile-badges { display: flex; width: fit-content; margin-top: 4px; padding: 3px 5px; border-radius: 6px; }
 .profile.dark .profile-badges { background: rgba(255, 255, 255, .06); }
 .profile.light .profile-badges { background: rgba(0, 0, 0, .06); }
-.tip {
-  width: fit-content; max-width: 100%; margin-top: .7rem; padding: .4rem .7rem; border-radius: 6px;
-  background: #18191c; color: #f2f3f5; font-weight: 600; font-size: .82rem; overflow-wrap: anywhere;
+.pill {
+  display: flex; align-items: center; gap: .5rem; width: fit-content; max-width: 100%;
+  padding: 5px 12px 5px 6px; border-radius: 999px; border: 1.5px solid transparent;
+  background: linear-gradient(#1e1f22, #1e1f22) padding-box, var(--name-gradient, #4e5058) border-box;
   box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
 }
-.tip-name {
-  background: var(--name-gradient, currentColor); background-size: 200% auto;
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-  filter: drop-shadow(0 0 .6px rgba(255, 255, 255, .35)); animation: name-sheen 3s linear infinite;
-}
-@keyframes name-sheen { to { background-position: 200% center; } }
+.profile.light .pill { background: linear-gradient(#fff, #fff) padding-box, var(--name-gradient, #c4c9ce) border-box; box-shadow: 0 2px 8px rgba(0, 0, 0, .12); }
+.pill-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f2f3f5; font-weight: 600; font-size: .875rem; line-height: 18px; }
+.profile.light .pill-name { color: #060607; }
+.pill-name.empty { opacity: .55; }
+#pill-badge { display: flex; }
 .preview p { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
 
 .float { width: var(--size); height: var(--size); flex: none; }
@@ -304,8 +308,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
   .layout { grid-template-columns: 1fr; }
   .preview { position: static; order: -1; grid-template-columns: 1fr 1fr; }
   .preview > .eyebrow, .preview p { display: none; }
-  .stage { height: 180px; }
-  .preview .seg { grid-column: 1 / -1; }
+  .stage { height: 220px; }
 }
 @media (max-width: 560px) {
   .row { grid-template-columns: 1fr; }
@@ -392,7 +395,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
               <button type="button" class="btn btn-ghost btn-sm" id="pick">Upload image</button>
               <span class="hint" id="file-hint">PNG, JPG, GIF or WebP, up to 1.5 MB</span>
               <span class="file-name" id="file-name" hidden></span>
-              <button type="button" class="x" id="file-clear" aria-label="Remove image" hidden>&times;</button>
+              <button type="button" class="link danger" id="file-clear" hidden>Remove</button>
             </div>
             <input type="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
           </div>
@@ -474,10 +477,13 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
 
       <aside class="panel preview" aria-label="Preview">
         <div class="eyebrow">Preview</div>
-        <div class="stage dark" id="stage"></div>
-        <div class="seg" role="radiogroup" aria-label="Preview background" data-key="stage">
-          <button type="button" role="radio" data-value="dark">Dark</button>
-          <button type="button" role="radio" data-value="light">Light</button>
+        <div class="stage dark" id="stage">
+          <div class="stage-toggle">
+            <div class="seg" role="radiogroup" aria-label="Preview background" data-key="stage">
+              <button type="button" role="radio" data-value="dark">Dark</button>
+              <button type="button" role="radio" data-value="light">Light</button>
+            </div>
+          </div>
         </div>
         <div class="profile dark" id="profile">
           <div class="eyebrow">On a profile</div>
@@ -488,7 +494,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
               <div class="profile-badges" id="mini"></div>
             </div>
           </div>
-          <div class="tip"><span class="tip-name" id="tip">Badge name</span></div>
+          <div class="pill" id="pill"><span id="pill-badge"></span><span class="pill-name empty" id="tip">Badge name</span></div>
         </div>
         <p>A rough idea of the look. The real badge gets made by hand.</p>
       </aside>
@@ -614,7 +620,7 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     document.querySelectorAll("#effects button").forEach(b => b.setAttribute("aria-pressed", String(design.effects.includes(b.dataset.fx))));
     const c = design.colors;
     const stops = c.length === 1 ? [c[0], `color-mix(in srgb, ${c[0]} 45%, white)`, c[0]] : [...c, c[0]];
-    $("tip").style.setProperty("--name-gradient", `linear-gradient(100deg, ${stops.join(", ")})`);
+    $("pill").style.setProperty("--name-gradient", `linear-gradient(100deg, ${stops.join(", ")})`);
     $("stage").className = "stage " + stage;
     $("profile").className = "profile " + stage;
   };
@@ -725,7 +731,11 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     $("profile-name").textContent = v || "you";
     $("avatar").textContent = (v[0] || "?").toUpperCase();
   });
-  $("badge").addEventListener("input", e => { $("tip").textContent = e.target.value.trim() || "Badge name"; });
+  $("badge").addEventListener("input", e => {
+    const v = e.target.value.trim();
+    $("tip").textContent = v || "Badge name";
+    $("tip").classList.toggle("empty", !v);
+  });
   $("details").addEventListener("input", e => { $("count").textContent = `${e.target.value.length} / 1000`; });
 
   const fileInput = $("file");
@@ -805,8 +815,9 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 44px; font-size: .86
     }
   });
 
-  makeMedal($("stage"), 140, true);
+  makeMedal($("stage"), 168, true);
   makeMedal($("mini"), 22, false);
+  makeMedal($("pill-badge"), 18, false);
   renderColors();
 })();
 </script>
