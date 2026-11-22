@@ -293,12 +293,29 @@ h2 { margin: 10px 0 0; color: var(--text); font: 850 clamp(2rem, 4.6vw, 3.1rem)/
 .card .go svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
 .card:hover .go svg { transform: translateX(4px); }
 
-.feature { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 0; overflow: hidden; border-radius: 30px; }
+.feature { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0; align-items: stretch; overflow: hidden; border-radius: 30px; }
 .feature.flip .media { order: 2; }
-.media { position: relative; min-height: 340px; background: #000; }
-.media video, .media img.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(6, 7, 8, .35)); pointer-events: none; }
-.feature.flip .media::after { background: linear-gradient(270deg, transparent 60%, rgba(6, 7, 8, .35)); }
+.media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(18px, 3.2vw, 38px);
+    background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, .07), rgba(0, 0, 0, .28) 70%);
+    border-right: 1px solid var(--line);
+}
+.feature.flip .media { border-right: 0; border-left: 1px solid var(--line); }
+.screen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .1), inset 0 1px 0 rgba(255, 255, 255, .12);
+    transition: transform .5s var(--ease);
+}
+.feature:hover .screen { transform: translateY(-3px) scale(1.01); }
+.screen video, .screen img.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .feat-body { display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 4vw, 44px); }
 .feat-title { display: flex; align-items: center; gap: 14px; }
 .feat-title img { width: 46px; height: 46px; object-fit: contain; }
@@ -364,8 +381,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .feature, .feature.flip { grid-template-columns: 1fr; }
     .feature.flip .media { order: 0; }
-    .media { min-height: 0; aspect-ratio: 16 / 9; }
-    .media::after { display: none; }
+    .media, .feature.flip .media { border: 0; border-bottom: 1px solid var(--line); }
     .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
@@ -509,8 +525,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <section class="wrap" id="deadbolt">
         <article class="feature glass reveal">
             <div class="media">
-                <img class="poster" src="/k3/media/deadbolt.jpg" alt="" loading="lazy">
-                <video muted loop playsinline preload="none" poster="/k3/media/deadbolt.jpg" data-src="/k3/media/deadbolt.mp4" aria-label="Deadbolt in action"></video>
+                <div class="screen">
+                    <img class="poster" src="/k3/media/deadbolt-loop.jpg" alt="" loading="lazy">
+                    <video muted loop playsinline preload="none" poster="/k3/media/deadbolt-loop.jpg" data-src="/k3/media/deadbolt-loop.mp4" aria-label="Deadbolt in action"></video>
+                </div>
             </div>
             <div class="feat-body">
                 <div class="kicker">Discord</div>
@@ -538,8 +556,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <section class="wrap" id="vitra">
         <article class="feature flip glass reveal">
             <div class="media">
-                <img class="poster" src="/k3/media/vitra.jpg" alt="" loading="lazy">
-                <video muted loop playsinline preload="none" poster="/k3/media/vitra.jpg" data-src="/k3/media/vitra.mp4" aria-label="Vitra in action"></video>
+                <div class="screen">
+                    <img class="poster" src="/k3/media/vitra-loop.jpg" alt="" loading="lazy">
+                    <video muted loop playsinline preload="none" poster="/k3/media/vitra-loop.jpg" data-src="/k3/media/vitra-loop.mp4" aria-label="Vitra in action"></video>
+                </div>
             </div>
             <div class="feat-body">
                 <div class="kicker">Minecraft</div>
@@ -573,8 +593,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <section class="wrap" id="vesper">
         <article class="feature glass reveal">
             <div class="media">
-                <img class="poster" src="/k3/media/vesper.jpg" alt="" loading="lazy">
-                <video muted loop playsinline preload="none" poster="/k3/media/vesper.jpg" data-src="/k3/media/vesper.mp4" aria-label="Vesper in action"></video>
+                <div class="screen">
+                    <img class="poster" src="/k3/media/vesper-loop.jpg" alt="" loading="lazy">
+                    <video muted loop playsinline preload="none" poster="/k3/media/vesper-loop.jpg" data-src="/k3/media/vesper-loop.mp4" aria-label="Vesper in action"></video>
+                </div>
             </div>
             <div class="feat-body">
                 <div class="kicker">Roblox</div>
