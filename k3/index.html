@@ -233,8 +233,8 @@ a { color: inherit; }
 .np-times { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font: 500 .74rem/1 var(--font-mono); }
 .np-actions { display: flex; gap: 10px; margin-top: 16px; }
 .np-actions .btn { flex: 1; padding: .7rem 1rem; font-size: .88rem; border-radius: 12px; }
-.np-embed { margin-top: 14px; border-radius: 14px; overflow: hidden; }
-.np-embed iframe { display: block; width: 100%; height: 152px; border: 0; }
+.np-actions .btn[hidden] { display: none; }
+.np.paused .bars i { animation-play-state: paused; }
 .np.idle .np-body { grid-template-columns: 1fr; }
 .np.idle .np-art, .np.idle .np-bar, .np.idle .np-times, .np.idle .np-actions, .np.idle .np-album { display: none; }
 
@@ -425,10 +425,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             <div class="np-bar"><span id="np-progress"></span></div>
             <div class="np-times"><span id="np-now">0:00</span><span id="np-end">0:00</span></div>
             <div class="np-actions">
-                <button class="btn btn-primary" type="button" id="np-play">Play here</button>
+                <button class="btn btn-primary" type="button" id="np-play" hidden>Play preview</button>
                 <a class="btn btn-glass" id="np-open" href="https://open.spotify.com" target="_blank" rel="noopener">Open Spotify</a>
             </div>
-            <div class="np-embed" id="np-embed" hidden></div>
+            <audio id="np-audio" preload="none"></audio>
         </aside>
         <a class="feat-card glass" href="#deadbolt">
             <span class="crest"><img src="/deadbolt/assets/crest.svg" alt=""></span>
@@ -742,7 +742,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     }
 
     const np = $("np");
-    let track = null;
+    const audio = $("np-audio");
+    const playBtn = $("np-play");
+    let current = null;
+    let posAt = 0;
+    let posMs = 0;
     let pollTimer;
 
     function fmt(ms) {
@@ -751,79 +755,111 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     }
 
     function tick() {
-        if (!track || !track.timestamps) return;
-        const { start, end } = track.timestamps;
-        const total = end - start;
-        const now = Math.min(Date.now() - start, total);
-        $("np-progress").style.width = (total > 0 ? (now / total) * 100 : 0) + "%";
-        $("np-now").textContent = fmt(now);
-        $("np-end").textContent = fmt(total);
+        if (!current || !current.duration_ms) return;
+        const pos = Math.min(posMs + (current.playing ? Date.now() - posAt : 0), current.duration_ms);
+        $("np-progress").style.width = (pos / current.duration_ms) * 100 + "%";
+        $("np-now").textContent = fmt(pos);
+        $("np-end").textContent = fmt(current.duration_ms);
     }
+
+    function stopPreview() {
+        audio.pause();
+        playBtn.textContent = "Play preview";
+    }
+
+    function renderTrack(t, serverNow, updated) {
+        const key = t.title + "\u0001" + t.artist;
+        const changed = !current || current.key !== key;
+        current = Object.assign({ key }, t);
+        np.hidden = false;
+        np.classList.remove("idle");
+        np.classList.toggle("paused", !t.playing);
+        $("np-label").textContent = (t.playing ? "Listening on " : "Paused on ") + (t.source || "Spotify");
+        if (changed) {
+            stopPreview();
+            audio.removeAttribute("src");
+            const art = $("np-art");
+            if (t.cover) {
+                art.src = t.cover;
+                art.style.visibility = "";
+            } else {
+                art.removeAttribute("src");
+                art.style.visibility = "hidden";
+            }
+            art.alt = t.album ? "Cover of " + t.album : "";
+            $("np-song").textContent = t.title || "Unknown song";
+            $("np-artist").textContent = t.artist || "";
+            $("np-album").textContent = t.album || "";
+            $("np-open").href = t.link || "https://open.spotify.com";
+            $("np-open").textContent = "Open in " + (t.source || "Spotify");
+            playBtn.hidden = !t.preview;
+        }
+        if (t.position_ms != null) {
+            posMs = t.position_ms + (t.playing ? Math.max(0, serverNow - updated) : 0);
+            posAt = Date.now();
+        }
+        tick();
+    }
+
+    function renderIdle() {
+        current = null;
+        stopPreview();
+        np.hidden = false;
+        np.classList.add("idle");
+        np.classList.remove("paused");
+        $("np-label").textContent = "Now playing";
+        $("np-song").textContent = "Not listening right now";
+        $("np-artist").textContent = "Check back in a bit";
+    }
+
+    playBtn.addEventListener("click", () => {
+        if (!current || !current.preview) return;
+        if (!audio.paused) {
+            stopPreview();
+            return;
+        }
+        if (audio.getAttribute("src") !== current.preview) audio.src = current.preview;
+        audio.volume = .6;
+        audio.play().then(() => { playBtn.textContent = "Pause preview"; }).catch(() => toast("Couldn't play the preview"));
+    });
+    audio.addEventListener("ended", stopPreview);
 
     const STATUS_TEXT = { online: "Online", idle: "Away", dnd: "Do not disturb", offline: "Offline" };
 
-    function render(data) {
-        const status = data.discord_status || "offline";
-        $("status-dot").dataset.s = status;
-        $("status-text").textContent = STATUS_TEXT[status] || "xan.gripe";
-        np.hidden = false;
-        if (data.listening_to_spotify && data.spotify) {
-            const s = data.spotify;
-            const changed = !track || track.track_id !== s.track_id;
-            track = s;
-            np.classList.remove("idle");
-            $("np-label").textContent = "Listening on Spotify";
-            if (changed) {
-                $("np-art").src = s.album_art_url || "";
-                $("np-art").alt = s.album ? "Cover of " + s.album : "";
-                $("np-song").textContent = s.song || "Unknown song";
-                $("np-artist").textContent = (s.artist || "").replace(/;\s*/g, ", ");
-                $("np-album").textContent = s.album || "";
-                $("np-open").href = "https://open.spotify.com/track/" + s.track_id;
-            }
-            tick();
-        } else {
-            track = null;
-            np.classList.add("idle");
-            $("np-label").textContent = "Spotify";
-            $("np-song").textContent = "Not listening right now";
-            $("np-artist").textContent = "Check back in a bit";
-        }
-    }
-
-    $("np-play").addEventListener("click", () => {
-        if (!track) return;
-        const box = $("np-embed");
-        box.hidden = false;
-        box.innerHTML = "";
-        const frame = document.createElement("iframe");
-        frame.src = "https://open.spotify.com/embed/track/" + encodeURIComponent(track.track_id) + "?theme=0";
-        frame.title = "Spotify player: " + (track.song || "current song");
-        frame.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-        frame.loading = "lazy";
-        box.appendChild(frame);
-    });
-
-    async function poll() {
+    async function pollStatus() {
         try {
             const res = await fetch("https://api.lanyard.rest/v1/users/" + DISCORD_ID, { cache: "no-store" });
             const json = await res.json();
-            if (json && json.success && json.data) render(json.data);
-            else np.hidden = true;
+            if (json && json.success && json.data) {
+                const status = json.data.discord_status || "offline";
+                $("status-dot").dataset.s = status;
+                $("status-text").textContent = STATUS_TEXT[status] || "xan.gripe";
+            }
+        } catch {}
+    }
+
+    async function poll() {
+        try {
+            const res = await fetch("https://api.xan.gripe/v1/nowplaying", { cache: "no-store" });
+            const data = await res.json();
+            if (data && data.active && data.track) renderTrack(data.track, data.now, data.updated);
+            else renderIdle();
         } catch {
-            np.hidden = true;
+            if (!current) np.hidden = true;
         }
-        pollTimer = setTimeout(poll, document.hidden ? 60000 : 12000);
+        pollTimer = setTimeout(poll, document.hidden ? 60000 : 10000);
     }
 
     document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
             clearTimeout(pollTimer);
             poll();
+            pollStatus();
         }
     });
     setInterval(tick, 1000);
     poll();
+    pollStatus();
 })();
 </script>
 </body>
