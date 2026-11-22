@@ -246,6 +246,10 @@ h2 { margin: 0; color: var(--text); font: 800 1.25rem/1.2 var(--font-display); f
 .status.denied { color: #fca5a5; border-color: rgba(248, 113, 113, .3); background: rgba(248, 113, 113, .08); }
 .status.done { color: #e9eef4; border-color: rgba(255, 255, 255, .2); background: rgba(255, 255, 255, .06); }
 .status.live { color: #86efac; border-color: rgba(74, 222, 128, .3); background: rgba(74, 222, 128, .08); }
+.status.pending { color: var(--violet-2); border-color: rgba(201, 192, 255, .35); background: rgba(124, 111, 240, .12); }
+.status.accepted { color: #86efac; border-color: rgba(74, 222, 128, .3); background: rgba(74, 222, 128, .08); }
+.status.declined, .status.revoked { color: #fca5a5; border-color: rgba(248, 113, 113, .3); background: rgba(248, 113, 113, .08); }
+.status.expired, .status.gone { color: #e9eef4; border-color: rgba(255, 255, 255, .2); background: rgba(255, 255, 255, .06); }
 @keyframes blink { 50% { opacity: .3; } }
 
 .blank { display: grid; justify-items: center; gap: .9rem; padding: clamp(3rem, 8vw, 5rem) 1rem; text-align: center; border-radius: 22px; border: 1px dashed var(--line-2); animation: rise .5s var(--ease) both; }
@@ -536,6 +540,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
           <button type="button" role="tab" data-tab="requests" aria-selected="true">Requests <span class="count" id="count-new"></span></button>
           <button type="button" role="tab" data-tab="create" aria-selected="false">Create</button>
           <button type="button" role="tab" data-tab="published" aria-selected="false">Published <span class="count" id="count-live"></span></button>
+          <button type="button" role="tab" data-tab="shares" aria-selected="false">Shares <span class="count" id="count-shares"></span></button>
         </div>
       </div>
 
@@ -694,6 +699,14 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
         </div>
         <div class="grid" id="published"></div>
       </div>
+
+      <div id="view-shares" class="view" role="tabpanel" hidden>
+        <div class="toolbar">
+          <p class="hint" style="margin:0">Badges people asked each other to share from Deadbolt. Removing a share takes the badge off the person it was shared with.</p>
+          <button type="button" class="btn btn-ghost btn-sm" id="reload-shares"><svg aria-hidden="true"><use href="#i-refresh"/></svg>Refresh</button>
+        </div>
+        <div class="grid" id="shares"></div>
+      </div>
     </section>
   </div>
 </main>
@@ -724,6 +737,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
   const FIT = { zoom: 1, x: 0, y: 0, rotate: 0 };
   const DEFAULT_DESIGN = { shape: "circle", background: "gradient", effects: ["shine", "glint"], speed: 1, ...FIT };
   const STATUS_LABEL = { new: "New", approved: "Approved", denied: "Denied", done: "Done" };
+  const SHARE_LABEL = { pending: "Pending", accepted: "Shared", declined: "Declined", expired: "Expired", revoked: "Removed", gone: "Badge gone" };
   const LOGIN_ERRORS = {
     not_owner: "That Discord account isn't Deadbolt's owner, so it can't get in here.",
     access_denied: "Discord login was cancelled.",
@@ -863,6 +877,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
   let filter = "new";
   let requests = null;
   let published = null;
+  let shares = null;
   const loading = new Set();
 
   const showGate = code => {
@@ -895,7 +910,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
   const showTab = name => {
     tab = name;
     $("tabs").querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
-    for (const v of ["requests", "create", "published"]) {
+    for (const v of ["requests", "create", "published", "shares"]) {
       const view = $("view-" + v);
       if (v === name && view.hidden) {
         view.hidden = false;
@@ -907,6 +922,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
     moveIndicator();
     if (name === "published" && !published && !loading.has("published")) loadPublished();
     if (name === "requests" && !requests && !loading.has("requests")) loadRequests();
+    if (name === "shares" && !shares && !loading.has("shares")) loadShares();
   };
   $("tabs").addEventListener("click", e => {
     const b = e.target.closest("button");
@@ -1190,6 +1206,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
     try {
       published = await api("/badges");
       renderPublished();
+      if (shares) renderShares();
     } catch (e) {
       if (e instanceof SessionEnded) return;
       const retry = el("button", "btn btn-ghost btn-sm", "Try again");
@@ -1201,6 +1218,79 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: .86
     }
   };
   $("reload-published").addEventListener("click", loadPublished);
+
+  const removeShare = async (share, btn) => {
+    const done = busy(btn, "Removing");
+    try {
+      await api(`/badge-shares/${share.id}`, { method: "DELETE" });
+      toast(`Took ${[share.badgeName, share.pairName].filter(Boolean).join(" and ")} off ${share.requester}.`);
+      loadShares();
+      loadPublished();
+    } catch (e) {
+      if (!(e instanceof SessionEnded)) toast(e.message, "bad");
+      done();
+    }
+  };
+
+  const idCode = id => {
+    const c = el("code", "", id);
+    c.title = "Copy Discord ID";
+    c.addEventListener("click", () => navigator.clipboard?.writeText(id).then(() => toast("Copied the Discord ID.")));
+    return c;
+  };
+
+  const shareCard = (share, i) => {
+    const card = el("article", "card");
+    card.style.setProperty("--i", i);
+    const parts = [share.badge, share.pair].filter(Boolean).map(id => published && published.badges.find(e => e.id === id)).filter(Boolean);
+    if (parts.length) card.append(stageFor(publishedParts(parts), parts.length > 1 ? 76 : 96));
+    const body = el("div", "card-body");
+    const top = el("div", "card-top");
+    top.append(el("h3", "", [share.badgeName, share.pairName].filter(Boolean).join(" + ")), el("span", "status " + share.status, SHARE_LABEL[share.status] || share.status));
+    const meta = el("div", "meta");
+    meta.append("from ", idCode(share.owner), el("span", "dot"), "to ", idCode(share.requester), el("span", "dot"), el("span", "", ago(share.decided || share.created)));
+    if (share.status === "pending" && !share.delivered) meta.append(el("span", "dot"), el("span", "", "not delivered"));
+    body.append(top, meta);
+    if (share.note) body.append(el("p", "details", share.note));
+    if (share.status === "accepted") {
+      const actions = el("div", "actions");
+      const rm = el("button", "btn btn-danger btn-sm", "Remove share");
+      rm.type = "button";
+      confirmButton(rm, "Remove it?", () => removeShare(share, rm));
+      actions.append(rm);
+      body.append(actions);
+    }
+    card.append(body);
+    return card;
+  };
+
+  const renderShares = () => {
+    const host = $("shares");
+    if (!shares) return skeletons(host);
+    const live = shares.filter(s => s.status === "accepted").length;
+    $("count-shares").textContent = live || "";
+    host.textContent = "";
+    if (!shares.length) return emptyState(host, "i-badge", "No shares yet", "When someone asks for a badge on Deadbolt it shows up here, along with the answer.");
+    shares.forEach((s, i) => host.append(shareCard(s, i)));
+  };
+  const loadShares = async () => {
+    shares = null;
+    renderShares();
+    loading.add("shares");
+    try {
+      shares = (await api("/badge-shares")).shares;
+      renderShares();
+    } catch (e) {
+      if (e instanceof SessionEnded) return;
+      const retry = el("button", "btn btn-ghost btn-sm", "Try again");
+      retry.type = "button";
+      retry.addEventListener("click", loadShares);
+      emptyState($("shares"), "i-badge", "Couldn't load shares", e.message, retry);
+    } finally {
+      loading.delete("shares");
+    }
+  };
+  $("reload-shares").addEventListener("click", loadShares);
 
   const afterPublish = res => {
     const names = res.badges.map(b => b.name).join(" and ");
